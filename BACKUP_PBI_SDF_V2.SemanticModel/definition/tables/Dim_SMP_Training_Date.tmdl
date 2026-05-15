@@ -1,0 +1,185 @@
+table Dim_SMP_Training_Date
+	lineageTag: 95ebce90-323c-4fd5-84fe-8dd440fb60d0
+
+	column ID
+		dataType: string
+		lineageTag: 1486257f-158b-4754-a390-2c2da6ef4d50
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: string
+		lineageTag: 13c117f3-46b2-41a8-89cb-e574f4d57be2
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Stage'
+		dataType: string
+		lineageTag: 8eaa1d51-d729-4225-9c27-cec805b3b09f
+		summarizeBy: none
+		sourceColumn: Year Stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4800ff6b-a263-4180-82b7-ee563d577040
+		summarizeBy: none
+		sourceColumn: Start Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Year Start'
+		dataType: string
+		lineageTag: fbe7560e-0fd8-4bb9-91bf-c7db06043477
+		summarizeBy: none
+		sourceColumn: Year Start
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'End Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: df768eeb-2ba3-4360-a1fc-b74f348ea030
+		summarizeBy: none
+		sourceColumn: End Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Year Ended'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 10438cac-4fb5-47ab-a71d-3b0620b2411d
+		summarizeBy: none
+		sourceColumn: Year Ended
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Training Progress'
+		dataType: string
+		lineageTag: 8c91bd88-026a-4621-b374-e006c687c796
+		summarizeBy: none
+		sourceColumn: Training Progress
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Track_Training Date'
+		dataType: string
+		lineageTag: adb319e8-f6fd-448f-be89-89a3e010bc58
+		summarizeBy: none
+		sourceColumn: Track_Training Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Doc Submit 1st'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2029daff-14d6-45a5-b68c-700d91d752c4
+		summarizeBy: none
+		sourceColumn: Date Doc Submit 1st
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Approved 1st Doc'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2a632c6f-e355-4e83-8bba-2d712b4b787a
+		summarizeBy: none
+		sourceColumn: Date Approved 1st Doc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Received Budget 1st'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1e24a765-b6ae-4fc3-9480-81c797cf922b
+		summarizeBy: none
+		sourceColumn: Date Received Budget 1st
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Doc Submit 2nd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3963f716-ce50-472c-89bd-c6f07818cf38
+		summarizeBy: none
+		sourceColumn: Date Doc Submit 2nd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Approved 2nd Doc'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d866c386-a95c-42f5-8888-f46cd8ea27b3
+		summarizeBy: none
+		sourceColumn: Date Approved 2nd Doc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Received Budget 2nd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d0a3eb40-3638-4125-ae14-f72b2dd63a9f
+		summarizeBy: none
+		sourceColumn: Date Received Budget 2nd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Date_Visit
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b57fa2b3-21e3-4147-9b23-4e6b5718692c
+		summarizeBy: none
+		sourceColumn: Date_Visit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Dim_SMP_Training_Date = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"3-SMP Training_Sheet" = Source{[Item="3-SMP Training",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"3-SMP Training_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", type text}, {"Year", type text}, {"Year Stage", type text}, {"Training Provider", type text}, {"Enterprise", type text}, {"Course Title", type text}, {"Session", type text}, {"Unit Cost", type number}, {"Unit Cost $", Currency.Type}, {"% SDF", Percentage.Type}, {"% Employer", Percentage.Type}, {"Certificate Type", type text}, {"Start Date", type date}, {"Year Start", type text}, {"End Date", type date}, {"Year Ended", type date}, {"Training Progress", type text}, {"Track_Training Date", type text}, {"Recruited Trainees", Int64.Type}, {"Recruited Trainees Female", Int64.Type}, {"Total Cost", type number}, {"Total Cost $", Currency.Type}, {"SDF Budget", type number}, {"SDF Budget $", Currency.Type}, {"Enterprise Contribution", type number}, {"Enterprise Contribution $", Currency.Type}, {"Date Doc Submit 1st", type date}, {"Date Approved 1st Doc", type date}, {"Date Received Budget 1st", type date}, {"Disbursed 1st Riels", type number}, {"Disbursed 1st $", Currency.Type}, {"Track_Disburse 1", type text}, {"Date Doc Submit 2nd", type date}, {"Date Approved 2nd Doc", type date}, {"Date Received Budget 2nd", type date}, {"Disbursed 2nd Riels", type number}, {"Disbursed 2nd $", Currency.Type}, {"Track_Disburse 2", type text}, {"Date_Visit", type date}, {"Budget Source", type text}, {"M and E", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"M and E", null}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Replaced Errors"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates", {"ID", "Year", "Year Stage", "Training Provider", "Enterprise", "Course Title", "Session", "Unit Cost", "Unit Cost $", "% SDF", "% Employer", "Certificate Type", "Start Date", "Year Start", "End Date", "Year Ended", "Training Progress", "Track_Training Date", "Recruited Trainees", "Recruited Trainees Female", "Total Cost", "Total Cost $", "SDF Budget", "SDF Budget $", "Enterprise Contribution", "Enterprise Contribution $", "Date Doc Submit 1st", "Date Approved 1st Doc", "Date Received Budget 1st", "Disbursed 1st Riels", "Disbursed 1st $", "Track_Disburse 1", "Date Doc Submit 2nd", "Date Approved 2nd Doc", "Date Received Budget 2nd", "Disbursed 2nd Riels", "Disbursed 2nd $", "Track_Disburse 2", "Date_Visit", "Budget Source", "M and E"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Errors"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Blank Rows",{"ID", "Year", "Year Stage", "Start Date", "Year Start", "End Date", "Year Ended", "Training Progress", "Track_Training Date", "Date Doc Submit 1st", "Date Approved 1st Doc", "Date Received Budget 1st", "Date Doc Submit 2nd", "Date Approved 2nd Doc", "Date Received Budget 2nd", "Date_Visit"}),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Other Columns", {"ID"}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Duplicates2", {"ID", "Year", "Year Stage", "Start Date", "Year Start", "End Date", "Year Ended", "Training Progress", "Track_Training Date", "Date Doc Submit 1st", "Date Approved 1st Doc", "Date Received Budget 1st", "Date Doc Submit 2nd", "Date Approved 2nd Doc", "Date Received Budget 2nd", "Date_Visit"})
+				in
+				    #"Removed Errors1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

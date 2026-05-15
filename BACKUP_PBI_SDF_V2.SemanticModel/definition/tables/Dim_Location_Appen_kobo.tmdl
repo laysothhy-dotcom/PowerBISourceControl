@@ -1,0 +1,34 @@
+table Dim_Location_Appen_kobo
+	lineageTag: d7364013-dfef-42e8-b988-a540d2c4e679
+
+	column ID
+		dataType: string
+		lineageTag: 10a4b92a-815f-4a1d-88b1-5af4aa46ff82
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 4e54d46e-7f79-4167-b0af-80d855e333fe
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Location_Appen_kobo = m
+		mode: import
+		queryGroup: Proposal\KOBO_Proposal
+		source =
+				let
+				    Source = Dim_Proposal_Location_kobo,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"id", "Province"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"id", "ID"}, {"Province", "Location"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

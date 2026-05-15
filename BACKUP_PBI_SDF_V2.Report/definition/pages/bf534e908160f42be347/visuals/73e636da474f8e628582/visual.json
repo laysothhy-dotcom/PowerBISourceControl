@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "73e636da474f8e628582",
+  "position": {
+    "x": 915.71072319201994,
+    "y": 390.5236907730673,
+    "z": 11000,
+    "height": 102.34413965087282,
+    "width": 102.34413965087282,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "simpleImageEBC4593F96F1425FB3D84C5BF02B5075",
+    "query": {
+      "queryState": {
+        "imageURL": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "optimized_new_icons"
+                    }
+                  },
+                  "Property": "Icon_Name"
+                }
+              },
+              "queryRef": "optimized_new_icons.Icon_Name",
+              "nativeQueryRef": "Icon_Name"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

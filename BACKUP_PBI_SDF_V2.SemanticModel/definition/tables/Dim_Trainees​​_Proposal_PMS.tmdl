@@ -1,0 +1,67 @@
+table Dim_Trainees​​_Proposal_PMS
+	lineageTag: 630beb58-6434-4749-97ad-640319069ac8
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 467f9c12-2fa6-4a8a-a58f-135e09dc2d02
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c3f0f18-ae55-4dd2-983a-2e1fec255de8
+		summarizeBy: sum
+		sourceColumn: Female_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 31ea616f-8475-4fb1-8aba-d0bfbddafb13
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: a3c9bb42-a76b-4739-9110-c3876d0261d1
+		summarizeBy: count
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Trainees​​_Proposal_PMS = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Trainees,
+				    Data = Source[Data],
+				    Data1 = Data{1},
+				    #"Promoted Headers" = Table.PromoteHeaders(Data1, [PromoteAllScalars=true]),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Promoted Headers",{{"Proposal Number", "ID"}, {"Institute Name (KH)", "Institute Name (Khmer)"}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Proposal ID", Int64.Type}, {"ID", Int64.Type}, {"Proposal Code", type text}, {"Institute Name", type text}, {"Institute Name (Khmer)", type text}, {"Title", type text}, {"Target Trainee", Int64.Type}, {"Female", Int64.Type}, {"Training Batch Number", Int64.Type}, {"Certification Type", type text}, {"Recognized By", type text}, {"Sector", type text}, {"Course Description", type text}, {"CourseObjective", type text}, {"Learning Outcome", type text}, {"Training Assessment Method", type text}, {"Course Outline", type text}, {"Training Content", type text}, {"Created At", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type3",{"Column20", "Column21", "Column22", "Column23", "Column24", "Column25", "Column26", "Created At_1"}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Removed Columns",{{"Created At", type date}}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Changed Type4",{{"CourseObjective", "Course Objective"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns3",{{"ID", type text}, {"Proposal ID", type text}, {"Institute Name", type text}, {"Title", type text}, {"Target Trainee", Int64.Type}, {"Female", Int64.Type}, {"Training Batch Number", Int64.Type}, {"Certification Type", type text}, {"Recognized By", type text}, {"Sector", type text}, {"Course Description", type text}, {"Course Objective", type text}, {"Learning Outcome", type text}, {"Training Assessment Method", type text}, {"Course Outline", type text}, {"Training Content", type text}, {"Created At", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Female", "Trainee Female"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "Unified_ID", each "PMS-" & Text.From([ID])),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type1", "New_ID", each [ID] + 1000),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom1",{{"New_ID", Int64.Type}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type2",{"Target Trainee", "Trainee Female", "Unified_ID", "New_ID"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns",{{"Target Trainee", "Trainees_Proposal"}, {"Trainee Female", "Female_Proposal"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

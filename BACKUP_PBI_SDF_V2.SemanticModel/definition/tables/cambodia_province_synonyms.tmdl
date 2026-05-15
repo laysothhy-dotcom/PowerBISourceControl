@@ -1,0 +1,32 @@
+table cambodia_province_synonyms
+	lineageTag: 89f45427-0a9e-4d08-801a-85624aec3d96
+
+	column User_Input
+		dataType: string
+		lineageTag: 6acabdc5-f17b-42d8-aac0-025f7cc93010
+		summarizeBy: none
+		sourceColumn: User_Input
+
+		annotation SummarizationSetBy = Automatic
+
+	column Correct_Name
+		dataType: string
+		lineageTag: 3fa9cecf-c201-4b5a-aa67-c2d5ad8ccf97
+		summarizeBy: none
+		sourceColumn: Correct_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition cambodia_province_synonyms = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\cambodia_province_synonyms.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+				in
+				    #"Promoted Headers"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

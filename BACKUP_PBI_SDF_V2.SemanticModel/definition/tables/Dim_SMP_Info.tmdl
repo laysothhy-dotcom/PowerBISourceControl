@@ -1,0 +1,106 @@
+table Dim_SMP_Info
+	lineageTag: 9596ee7e-3f68-446e-b5a1-9e0475ff3f90
+
+	column ID
+		dataType: string
+		lineageTag: d8c13860-0b5a-4d3c-a9e6-a4269a04e5d5
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: dcfa9087-7d1b-49ca-8737-c41d0966436c
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider Type'
+		dataType: string
+		lineageTag: bf1d321b-7960-4d18-ad2d-7a81db8191a3
+		summarizeBy: none
+		sourceColumn: Training Provider Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sector
+		dataType: string
+		lineageTag: e2f6845e-bb85-4775-9a69-d509060213b2
+		summarizeBy: none
+		sourceColumn: Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Person'
+		dataType: string
+		lineageTag: 35e3d3a5-2635-420b-942e-a4f5f64d9f84
+		summarizeBy: none
+		sourceColumn: Contact Person
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: 05759c49-8e95-4335-9e0f-4b4918ab0880
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Phone
+		dataType: string
+		lineageTag: 2ff26096-39e6-4f23-8ac3-9c9f33f71250
+		summarizeBy: none
+		sourceColumn: Phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course Title'
+		dataType: string
+		lineageTag: 7e029d89-4d87-4dc4-83a1-2707d394079c
+		summarizeBy: none
+		sourceColumn: Course Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Certificate Type'
+		dataType: string
+		lineageTag: eac9254d-8b9e-47a4-b622-712ceac42a7b
+		summarizeBy: none
+		sourceColumn: Certificate Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_SMP_Info = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"1-SMP_Application_Sheet" = Source{[Item="1-SMP_Application",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"1-SMP_Application_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Hours/Day/Month", type text}, {"Unit Cost", type number}, {"Total Min Trainee", Int64.Type}, {"% SDF", type number}, {"% Employer", type number}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"% Employer", null}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Errors",{{"Certificate Type", type text}}),
+				    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Changed Type1", {{"Unit Cost", null}}),
+				    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Replaced Errors1", {{"% SDF", null}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Errors2",{{"Result", type text}, {"Approved Date", type date}, {"Approval Time", type text}, {"Budget Source", type text}, {"ID", type text}, {"Year", type text}, {"Year Stage", type text}, {"Code", type text}, {"Application Date", type date}, {"Training Provider", type text}, {"Training Provider Type", type text}, {"Sector", type text}, {"Contact Person", type text}, {"Email", type text}, {"Phone", type text}, {"Course Title", type text}, {"Hours/Session", type number}, {"Theory", type number}, {"Practice", type number}, {"Training Days/Session", type text}, {"Training Length M", type number}, {"Hours/Day/Month", type text}}),
+				    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Changed Type2", {{"Hours/Session", null}}),
+				    #"Replaced Errors4" = Table.ReplaceErrorValues(#"Replaced Errors3", {{"Theory", null}}),
+				    #"Replaced Errors5" = Table.ReplaceErrorValues(#"Replaced Errors4", {{"Training Length M", null}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Replaced Errors5",{"ID", "Training Provider", "Training Provider Type", "Sector", "Contact Person", "Email", "Phone", "Course Title", "Certificate Type"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"ID"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Duplicates1"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates2", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Blank Rows", {"ID", "Training Provider", "Training Provider Type", "Sector", "Contact Person", "Email", "Phone", "Course Title", "Certificate Type"}),
+				    #"Removed Duplicates3" = Table.Distinct(#"Removed Errors", {"ID"})
+				in
+				    #"Removed Duplicates3"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

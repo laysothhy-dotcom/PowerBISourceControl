@@ -1,0 +1,64 @@
+table 'Dim_Training Provider_Master'
+	lineageTag: 0ca98af5-6ac3-4227-a3ca-713bffcad3b0
+
+	measure Total_Unique_TP_EX =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Dim_Training Provider_Master'[Training Provider]),
+			    ALLSELECTED('Dim_Training Provider_Master')
+			)
+		formatString: 0
+		lineageTag: 1d378cc5-df18-4fdb-bbf6-2e5d928cc055
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 862448b5-b444-4b8d-b6cb-6ff0626a25b9
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: 1a208e57-def6-49c8-a180-615644b5caea
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: e711815c-b0c6-4a1d-abbe-c8892cdaa1d5
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: string
+		lineageTag: 9062b45f-2273-43b4-b9bb-f5e0247e37b2
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_Training Provider_Master' = m
+		mode: import
+		queryGroup: Proposal\PMS_Proposals
+		source =
+				let
+				    Source = #"Dim_ Training Provider_ Combine",
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Unified_ID", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "New_ID", each if [ID] <= 616 then [ID]
+				else if [ID] <= 1000 then [ID]
+				else [ID] + 1000),
+				    #"Appended Query" = Table.Combine({#"Added Custom", #"Dim_Training Provider_Kb"}),
+				    #"Appended Query1" = Table.Combine({#"Appended Query", #"Dim_Training Provider_PMS"})
+				in
+				    #"Appended Query1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

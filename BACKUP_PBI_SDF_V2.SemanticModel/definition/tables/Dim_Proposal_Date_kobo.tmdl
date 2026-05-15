@@ -1,0 +1,69 @@
+table Dim_Proposal_Date_kobo
+	lineageTag: d4ce5b98-6394-4066-9169-6d1f73c89f3e
+
+	column id
+		dataType: string
+		lineageTag: 6cd98a98-4dcb-441b-abd7-3d1178ec52b2
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column prop_id
+		dataType: string
+		lineageTag: e5b35377-a278-4625-9658-c4b7ee23db47
+		summarizeBy: none
+		sourceColumn: prop_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 83e03b46-3cbe-4eff-913e-2e161d49ab08
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column submission_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 692ae694-d41c-4efa-9265-99ece5042fdf
+		summarizeBy: none
+		sourceColumn: submission_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Index'
+		dataType: int64
+		formatString: 0
+		lineageTag: 089aca72-a266-4405-9f1c-1d294cd83fbb
+		summarizeBy: sum
+		sourceColumn: Date Index
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Date_kobo = m
+		mode: import
+		queryGroup: Proposal
+		source =
+				let
+				    Source = #"Proposal Record Form_kobo",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"id", "prop_id", "date", "submission_date"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"date", type date}, {"submission_date", type date}}),
+				    #"Added Index" = Table.AddIndexColumn(#"Changed Type", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Date Index"}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates", {"date"})
+				in
+				    #"Removed Duplicates1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

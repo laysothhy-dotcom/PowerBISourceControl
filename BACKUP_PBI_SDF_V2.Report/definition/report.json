@@ -1,0 +1,88 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.2.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY25SU10",
+      "reportVersionAtImport": {
+        "visual": "2.1.0",
+        "report": "3.0.0",
+        "page": "2.3.0"
+      },
+      "type": "SharedResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "publicCustomVisuals": [
+    "dg5AAA90EFEFE747CB9357C4FC19B85A58",
+    "simpleImageEBC4593F96F1425FB3D84C5BF02B5075",
+    "maps",
+    "PBI_CV_16948668_E17D_454B_8664_2F2C470EA8C1",
+    "Timeline1447991079100",
+    "doubleDonut2B2DE03D219E04DFF80684A45ECA4D25E",
+    "PBI_CV_73744D90_4DC9_4F18_8BA5_EE8FA5C98035"
+  ],
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY25SU10",
+          "path": "BaseThemes/CY25SU10.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "kh_mapes_Json_(1)47287149377462856.json",
+          "path": "kh_mapes_Json_(1)47287149377462856.json",
+          "type": "ShapeMap"
+        },
+        {
+          "name": "PBI_SDF_Backround7693212077834833.svg",
+          "path": "PBI_SDF_Backround7693212077834833.svg",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

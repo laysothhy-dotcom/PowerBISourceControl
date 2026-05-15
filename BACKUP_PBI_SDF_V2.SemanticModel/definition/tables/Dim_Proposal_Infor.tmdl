@@ -1,0 +1,195 @@
+table Dim_Proposal_Infor
+	lineageTag: 1cac21c3-42a0-4648-993f-c68b5b920567
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: e6e49a8c-4d9a-4c4b-94de-64367bb4749b
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Type'
+		dataType: string
+		lineageTag: b7edf47f-e989-41d8-949b-945b5245404f
+		summarizeBy: none
+		sourceColumn: Proposal Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Type PS'
+		dataType: string
+		lineageTag: bd393656-6442-4a89-a987-1694d4bb95f8
+		summarizeBy: none
+		sourceColumn: Proposal Type PS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Type Code'
+		dataType: string
+		lineageTag: fe7987be-8f48-4782-9569-9582a043f849
+		summarizeBy: none
+		sourceColumn: Proposal Type Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Initiator
+		dataType: string
+		lineageTag: dcc2184b-d67d-4301-a8dc-2cf4de30ece5
+		summarizeBy: none
+		sourceColumn: Initiator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Initiator Type'
+		dataType: string
+		lineageTag: f34cebd0-7332-4b7b-b1f4-24cc00e2563c
+		summarizeBy: none
+		sourceColumn: Initiator Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Skill Sector SOP'
+		dataType: string
+		lineageTag: a4f12458-5260-454f-b97f-63e4ee534fee
+		summarizeBy: none
+		sourceColumn: Skill Sector SOP
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Skill Sector SOP PS'
+		dataType: string
+		lineageTag: 96a911a5-f60a-4267-bc21-bf84ca4dfcd3
+		summarizeBy: none
+		sourceColumn: Skill Sector SOP PS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill
+		dataType: string
+		lineageTag: 42cc736e-1267-44a7-8d25-659cbdef62e5
+		summarizeBy: none
+		sourceColumn: Skill
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Skills Revised'
+		dataType: string
+		lineageTag: 56dfb70f-6c46-4a8c-a825-aa02fe5e43c0
+		summarizeBy: none
+		sourceColumn: Skills Revised
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Certificate Type Proposal'
+		dataType: string
+		lineageTag: bc01936d-9d42-4a50-a805-9fa5e0c992fa
+		summarizeBy: none
+		sourceColumn: Certificate Type Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Classify CQF Short Course'
+		dataType: string
+		lineageTag: ff85e633-d2c7-4b57-a8e3-fbec98b37fb0
+		summarizeBy: none
+		sourceColumn: Classify CQF Short Course
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CQF PS'
+		dataType: string
+		lineageTag: 614d5097-4eeb-4b48-861f-5f4309b48ac7
+		summarizeBy: none
+		sourceColumn: CQF PS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Scheme
+		dataType: string
+		lineageTag: 66d8a0b9-c346-4c0e-9b6e-68de0d5a80ea
+		summarizeBy: none
+		sourceColumn: Scheme
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 6475b26a-4ad9-4b44-ab12-39371b759902
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Soureces of fund'
+		dataType: string
+		lineageTag: f7b94e06-bc4e-4485-855b-8a2516dbdd28
+		summarizeBy: none
+		sourceColumn: Soureces of fund
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unified_ID '
+		dataType: string
+		lineageTag: 35314509-2d1d-46a8-8ce5-fc43ea78bf65
+		summarizeBy: none
+		sourceColumn: "Unified_ID "
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Infor = m
+		mode: import
+		queryGroup: Proposal
+		source = ```
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"1-Proposals_Sheet" = Source{[Item="1-Proposals",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"1-Proposals_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", type any}, {"Last Submission Date", Int64.Type}, {"Submission Date Month", type text}, {"Proposal Type", type text}, {"Proposal Type PS", type text}, {"Proposal Type Code", type text}, {"Initiator", type text}, {"Initiator Type", type text}, {"Skill Sector SOP", type text}, {"Skill Sector SOP PS", type text}, {"Skill", type text}, {"Skills Revised", type text}, {"Certificate Type Proposal", type text}, {"Classify CQF Short Course", type text}, {"CQF PS", type text}, {"Exact Training Days", Int64.Type}, {"Exact Training Month", type number}, {"TotalTraining Hours", Int64.Type}, {"School Hours", Int64.Type}, {"School Practice", Int64.Type}, {"Company Practice", Int64.Type}, {"Training Type", type text}, {"Training Type PS", type text}, {"Scheme", type text}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", type number}, {"Date_Proposal Review", type any}, {"Date_LPS Review", type any}, {"Date_Appraisal", type any}, {"Date_KYC", type any}, {"Date_Pitching", type any}, {"Pitching Method", type any}, {"Date_Revision after Pitching", type any}, {"Date_Report after Pitching", type any}, {"Training Provider", type text}, {"Training Provider Type", type text}, {"Partnered Commpany", type text}, {"Enterprise Sector", type text}, {"Location", type text}, {"Cost of Proposal Riels", type number}, {"Cost of Proposal $", type number}, {"% Company", type number}, {"Company Contribution Riels", type number}, {"Company Contribution $", type number}, {"Verify Com", type any}, {"% School", type number}, {"School Contribution Riels", type number}, {"School Contribution $", type number}, {"Verify School", type any}, {"% SDF", type number}, {"SDF Contribution Riels", type number}, {"SDF Unit Cost Riels", type number}, {"SDF Contribution $", type number}, {"Verify SDF", type any}, {"SDF Unit Cost $", type number}, {"Awarded", type text}, {"Date Approved", Int64.Type}, {"Date Approved Month", type text}, {"Date_Announce", type any}, {"Budget Source", type text}, {"Trainer Fee", type number}, {"Trainee Allowance", type number}, {"Materials", type number}, {"Utilities", type number}, {"Others", type number}, {"Trainer Fee Company", type number}, {"Trainee Allowance Company", type number}, {"Materials Company", type number}, {"Utilities Company", type number}, {"Others Company", type number}, {"Trainer Fee School", type number}, {"Trainee Allowance School", type number}, {"Materials School", type number}, {"Utilities School", type number}, {"Others School", type number}, {"Trainer Fee SDF", type number}, {"Trainee Allowance SDF", type number}, {"Materials SDF", type number}, {"Utilities SDF", type number}, {"Others SDF", type number}, {"Appraisal PIC", type any}, {"Approval Duration", Int64.Type}, {"Column1", type any}, {"Column86", type any}, {"Column87", type any}, {"Column88", type any}, {"Column89", type any}, {"Column90", type any}, {"Column91", type any}, {"Column92", type any}, {"Column93", type any}, {"Column94", type any}, {"Column95", type any}, {"Column96", type any}, {"Column97", type any}, {"Column98", type any}, {"Column99", type any}, {"Column100", type any}, {"Column101", type any}, {"Column102", type any}, {"Column103", type any}, {"Banteay Meanchey", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1", "Column86", "Column87", "Column88", "Column89", "Column90", "Column91", "Column92", "Column93", "Column94", "Column95", "Column96", "Column97", "Column98", "Column99", "Column100", "Column101", "Column102", "Column103"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"ID", type text}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type1", {"ID"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Errors", {"ID"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Blank Rows",{{"Year Stage", type text}, {"Last Submission Date", type date}, {"Submission Date Month", type text}, {"Female_Proposal", Int64.Type}, {"Date_Proposal Review", type date}, {"Date_LPS Review", type date}, {"Date_Appraisal", type date}, {"Date_KYC", type date}, {"Date_Pitching", type date}, {"Pitching Method", type text}, {"Date_Revision after Pitching", type date}, {"Date_Report after Pitching", type date}, {"Company Contribution $", Currency.Type}, {"Verify Com", type text}, {"School Contribution $", Currency.Type}, {"Verify School", type text}, {"SDF Contribution $", Currency.Type}, {"Verify SDF", type text}, {"SDF Unit Cost $", Currency.Type}, {"Date Approved", type date}, {"Date_Announce", type date}, {"Appraisal PIC", type text}}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Changed Type2", {"ID", "Year", "Year Stage", "Last Submission Date", "Submission Date Month", "Proposal Type", "Proposal Type PS", "Proposal Type Code", "Initiator", "Initiator Type", "Skill Sector SOP", "Skill Sector SOP PS", "Skill", "Skills Revised", "Certificate Type Proposal", "Classify CQF Short Course", "CQF PS", "Exact Training Days", "Exact Training Month", "TotalTraining Hours", "School Hours", "School Practice", "Company Practice", "Training Type", "Training Type PS", "Scheme", "Trainees_Proposal", "Female_Proposal", "Date_Proposal Review", "Date_LPS Review", "Date_Appraisal", "Date_KYC", "Date_Pitching", "Pitching Method", "Date_Revision after Pitching", "Date_Report after Pitching", "Training Provider", "Training Provider Type", "Partnered Commpany", "Enterprise Sector", "Location", "Cost of Proposal Riels", "Cost of Proposal $", "% Company", "Company Contribution Riels", "Company Contribution $", "Verify Com", "% School", "School Contribution Riels", "School Contribution $", "Verify School", "% SDF", "SDF Contribution Riels", "SDF Unit Cost Riels", "SDF Contribution $", "Verify SDF", "SDF Unit Cost $", "Awarded", "Date Approved", "Date Approved Month", "Date_Announce", "Budget Source", "Trainer Fee", "Trainee Allowance", "Materials", "Utilities", "Others", "Trainer Fee Company", "Trainee Allowance Company", "Materials Company", "Utilities Company", "Others Company", "Trainer Fee School", "Trainee Allowance School", "Materials School", "Utilities School", "Others School", "Trainer Fee SDF", "Trainee Allowance SDF", "Materials SDF", "Utilities SDF", "Others SDF", "Appraisal PIC", "Approval Duration", "Banteay Meanchey"}),
+				    #"Removed Blank Rows1" = Table.SelectRows(#"Removed Errors1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Blank Rows1"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Duplicates1",{"ID", "Proposal Type", "Proposal Type PS", "Proposal Type Code", "Initiator", "Initiator Type", "Skill Sector SOP", "Skill Sector SOP PS", "Skill", "Skills Revised", "Certificate Type Proposal", "Classify CQF Short Course", "CQF PS", "Scheme", "Budget Source"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Other Columns", {"Budget Source"}, Dim_Proposal_Info_kobo, {"sourcefunded"}, "Dim_Proposal_Info_kobo", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposal_Info_kobo" = Table.ExpandTableColumn(#"Merged Queries", "Dim_Proposal_Info_kobo", {"sourcefunded"}, {"Dim_Proposal_Info_kobo.sourcefunded"}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Expanded Dim_Proposal_Info_kobo",{"Dim_Proposal_Info_kobo.sourcefunded"}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Removed Columns1", {"Budget Source"}, Dim_Proposal_Budget_Sources_kobo, {"Soureces of fund"}, "Dim_Proposal_Budget_Sources_kobo", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposal_Budget_Sources_kobo" = Table.ExpandTableColumn(#"Merged Queries1", "Dim_Proposal_Budget_Sources_kobo", {"Soureces of fund"}, {"Dim_Proposal_Budget_Sources_kobo.Soureces of fund"}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Expanded Dim_Proposal_Budget_Sources_kobo",{{"Dim_Proposal_Budget_Sources_kobo.Soureces of fund", type text}}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Changed Type3", "Budget Source", "Budget Source - Copy"),
+				    #"Lowercased Text" = Table.TransformColumns(#"Duplicated Column",{{"Budget Source", Text.Lower, type text}}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Lowercased Text",{"Dim_Proposal_Budget_Sources_kobo.Soureces of fund", "Budget Source - Copy"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Removed Columns2", {"Budget Source"}, Dim_Proposal_Info_kobo, {"sourcefunded"}, "Dim_Proposal_Info_kobo", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposal_Info_kobo1" = Table.ExpandTableColumn(#"Merged Queries2", "Dim_Proposal_Info_kobo", {"sourcefunded"}, {"Dim_Proposal_Info_kobo.sourcefunded"}),
+				    #"Removed Columns3" = Table.RemoveColumns(#"Expanded Dim_Proposal_Info_kobo1",{"Dim_Proposal_Info_kobo.sourcefunded"}),
+				    #"Merged Queries3" = Table.NestedJoin(#"Removed Columns3", {"Budget Source"}, Dim_Proposal_Budget_Sources_kobo, {"Soureces of fund"}, "Dim_Proposal_Budget_Sources_kobo", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposal_Budget_Sources_kobo1" = Table.ExpandTableColumn(#"Merged Queries3", "Dim_Proposal_Budget_Sources_kobo", {"Soureces of fund"}, {"Dim_Proposal_Budget_Sources_kobo.Soureces of fund"}),
+				    #"Removed Columns4" = Table.RemoveColumns(#"Expanded Dim_Proposal_Budget_Sources_kobo1",{"Dim_Proposal_Budget_Sources_kobo.Soureces of fund"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns4", each true),
+				    #"Replaced Value" = Table.ReplaceValue(#"Filtered Rows","world bank","wb",Replacer.ReplaceText,{"Budget Source"}),
+				    #"Merged Queries4" = Table.NestedJoin(#"Replaced Value", {"Budget Source"}, Dim_Proposal_Budget_Sources_kobo, {"Soureces of fund"}, "Dim_Proposal_Budget_Sources_kobo", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposal_Budget_Sources_kobo2" = Table.ExpandTableColumn(#"Merged Queries4", "Dim_Proposal_Budget_Sources_kobo", {"Soureces of fund"}, {"Soureces of fund"}),
+				    #"Removed Duplicates2" = Table.Distinct(#"Expanded Dim_Proposal_Budget_Sources_kobo2"),
+				    #"Removed Duplicates3" = Table.Distinct(#"Removed Duplicates2"),
+				    #"Removed Errors2" = Table.RemoveRowsWithErrors(#"Removed Duplicates3", {"ID", "Proposal Type", "Proposal Type PS", "Proposal Type Code", "Initiator", "Initiator Type", "Skill Sector SOP", "Skill Sector SOP PS", "Skill", "Skills Revised", "Certificate Type Proposal", "Classify CQF Short Course", "CQF PS", "Scheme", "Budget Source", "Soureces of fund"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Removed Errors2",{"ID", "Proposal Type", "Proposal Type PS", "Proposal Type Code", "Initiator", "Initiator Type", "Skill Sector SOP", "Skill Sector SOP PS", "Skill", "Skills Revised", "Certificate Type Proposal", "Classify CQF Short Course", "CQF PS", "Scheme", "Budget Source", "Soureces of fund"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Other Columns1", "Unified_ID", each "EX-" & Text.From([ID])),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Removed Columns5" = Table.RemoveColumns(#"Changed Type4",{"Unified_ID"}),
+				    #"Added Custom1" = Table.AddColumn(#"Removed Columns5", "Unified_ID ", each if [ID] <= 616 then "EX-" & Text.From([ID]) 
+				else "KB-" & Text.From([ID]))
+				in
+				    #"Added Custom1"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

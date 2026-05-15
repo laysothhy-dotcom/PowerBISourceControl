@@ -1,0 +1,64 @@
+table 'Dim Cambodia_provinces_gis_SMP'
+	lineageTag: c2c56561-ec6b-43a8-aa2a-198c6b12a497
+
+	column Province
+		dataType: string
+		lineageTag: cf38114c-d1eb-451b-867a-8dcb67559e7e
+		summarizeBy: none
+		sourceColumn: Province
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capital
+		dataType: string
+		lineageTag: fd01009c-c3e7-4c08-97cf-6bc889a670c2
+		summarizeBy: none
+		sourceColumn: Capital
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		lineageTag: 442154b9-0f8d-472d-b096-b16f14ca4475
+		summarizeBy: sum
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		lineageTag: 2fb35888-5cb0-4c16-b552-a9a5605d45b4
+		summarizeBy: sum
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Magnitude
+		dataType: int64
+		formatString: 0
+		lineageTag: b5b566fd-7ef0-4bc4-9105-284af6316884
+		summarizeBy: sum
+		sourceColumn: Magnitude
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim Cambodia_provinces_gis_SMP' = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\SDF_Programe\DataBase_Development\PBI_Doc\SDF_Databas_PBI_V1\Database_Cleaned_Data_PBI\cambodia_provinces_gis.csv"),[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Province", type text}, {"Capital", type text}, {"Latitude", type number}, {"Longitude", type number}, {"Magnitude", Int64.Type}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Changed Type",{{"Capital", Text.Lower, type text}, {"Province", Text.Lower, type text}})
+				in
+				    #"Lowercased Text"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,53 @@
+table Dim_Trainees​​_Proposal_Master
+	lineageTag: cb9ab295-543c-4efd-a5e7-b553e29e92af
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 64b16ec0-f430-4fee-9b80-e633c5bb0d44
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d0fbffa-a8a7-4b15-b4cb-5f5c1a4c0a7d
+		summarizeBy: sum
+		sourceColumn: Female_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: e84251a2-5c93-4339-8915-f2efb8243bd1
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: cadf50a5-b3d8-4c77-9fd2-a3090a6e9aae
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Trainees​​_Proposal_Master = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Dim_Trainees​​_Proposal_PMS_Append,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Trainees_Proposal", "Female_Proposal", "Unified_ID", "New_ID"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"New_ID", "ID"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

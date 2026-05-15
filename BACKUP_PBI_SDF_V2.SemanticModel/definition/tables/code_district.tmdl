@@ -1,0 +1,40 @@
+table code_district
+	lineageTag: d273602d-b5b2-4845-92d1-22c91300ab3e
+
+	column 'Distric Code'
+		dataType: string
+		lineageTag: a882335a-147e-4b7b-9a9b-964bb960207b
+		summarizeBy: none
+		sourceColumn: Distric Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Distric Name'
+		dataType: string
+		lineageTag: bb9499dc-ea24-43c6-8919-915ec1b85cb7
+		summarizeBy: none
+		sourceColumn: Distric Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition code_district = m
+		mode: import
+		queryGroup: Laction_info
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\Cascade_Location\code_district.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers",{{"name", "Distric Code"}, {"label", "Distric Name"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Distric Code", "Distric Name"}),
+				    #"Removed Top Rows" = Table.Skip(#"Removed Other Columns",2),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"Removed Top Rows",1),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Bottom Rows"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates", {"Distric Code", "Distric Name"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Errors")
+				in
+				    #"Removed Duplicates1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

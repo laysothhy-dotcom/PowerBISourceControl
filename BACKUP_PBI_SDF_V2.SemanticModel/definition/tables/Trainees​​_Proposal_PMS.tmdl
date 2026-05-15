@@ -1,0 +1,126 @@
+table Trainees​​_Proposal_PMS
+	lineageTag: 0ca69cfb-2b38-45a7-aa3d-683c96b43f8e
+
+	column 'Proposal ID'
+		dataType: string
+		lineageTag: afe6d628-bd69-4a19-8748-b3baaead8c69
+		summarizeBy: none
+		sourceColumn: Proposal ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ac5fece-1d77-4510-b7dd-a7e5e499840e
+		summarizeBy: count
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Institute Name'
+		dataType: string
+		lineageTag: 0d848452-ea9e-4332-9aa3-e6b5d4b05cc7
+		summarizeBy: none
+		sourceColumn: Institute Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Target Trainee'
+		dataType: int64
+		formatString: 0
+		lineageTag: 146e539c-99ee-4d6a-b3fe-94be31e32e32
+		summarizeBy: sum
+		sourceColumn: Target Trainee
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trainee Female'
+		dataType: int64
+		formatString: 0
+		lineageTag: 397d43d7-02b5-4285-bd01-e9cabddd41e9
+		summarizeBy: sum
+		sourceColumn: Trainee Female
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Batch Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 807c7b13-6f1f-4ad1-bf69-af19295fc908
+		summarizeBy: sum
+		sourceColumn: Training Batch Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sector
+		dataType: string
+		lineageTag: 455f9c78-93a0-49e3-9f5c-e389d00f1272
+		summarizeBy: none
+		sourceColumn: Sector
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 87cc25d7-0cfc-4cd8-bd8a-342078131f48
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: ac9498e2-0505-4580-add1-b4e5b08c6789
+		summarizeBy: count
+		sourceColumn: New_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Trainees​​_Proposal_PMS = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Trainees,
+				    Data = Source[Data],
+				    Data1 = Data{1},
+				    #"Promoted Headers" = Table.PromoteHeaders(Data1, [PromoteAllScalars=true]),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Promoted Headers",{{"Proposal Number", "ID"}, {"Institute Name (KH)", "Institute Name (Khmer)"}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Proposal ID", Int64.Type}, {"ID", Int64.Type}, {"Proposal Code", type text}, {"Institute Name", type text}, {"Institute Name (Khmer)", type text}, {"Title", type text}, {"Target Trainee", Int64.Type}, {"Female", Int64.Type}, {"Training Batch Number", Int64.Type}, {"Certification Type", type text}, {"Recognized By", type text}, {"Sector", type text}, {"Course Description", type text}, {"CourseObjective", type text}, {"Learning Outcome", type text}}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Changed Type3",{{"CourseObjective", "Course Objective"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns2",{{"ID", type text}, {"Proposal ID", type text}, {"Institute Name", type text}, {"Title", type text}, {"Target Trainee", Int64.Type}, {"Female", Int64.Type}, {"Training Batch Number", Int64.Type}, {"Certification Type", type text}, {"Recognized By", type text}, {"Sector", type text}, {"Course Description", type text}, {"Course Objective", type text}, {"Learning Outcome", type text}, {"Training Assessment Method", type text}, {"Course Outline", type text}, {"Training Content", type text}, {"Created At", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Female", "Trainee Female"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "Unified_ID", each "PMS-" & Text.From([ID])),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type1", "New_ID", each [ID] + 1000),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom1",{{"New_ID", Int64.Type}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type2",{"Proposal ID", "ID", "Institute Name", "Target Trainee", "Trainee Female", "Training Batch Number", "Sector", "Unified_ID", "New_ID"})
+				in
+				    #"Removed Other Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

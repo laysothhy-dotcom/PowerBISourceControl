@@ -1,0 +1,230 @@
+table '7-Network Support'
+	lineageTag: 800f18ed-08e8-4346-95aa-033543b4a90f
+
+	column ID
+		dataType: string
+		lineageTag: 5a05b0e7-5ef1-4eba-9819-fd724e0f20f8
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: c815deb8-faa8-44f5-9493-eac0de4e35bf
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Stage'
+		dataType: int64
+		formatString: 0
+		lineageTag: a462ccd2-8a46-44c5-b110-7ce56f5eb5b6
+		summarizeBy: sum
+		sourceColumn: Year Stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Approved'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 88fadfd9-0eb2-4acb-a5a2-fe94fa0adb72
+		summarizeBy: none
+		sourceColumn: Date Approved
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Text Date Approved'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f05717b2-91a6-4370-bf7b-dbec9adca5e9
+		summarizeBy: none
+		sourceColumn: Text Date Approved
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Initiator
+		dataType: string
+		lineageTag: 6f9233dd-c721-4d69-b094-f0fedcd3d55e
+		summarizeBy: none
+		sourceColumn: Initiator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Type'
+		dataType: string
+		lineageTag: 152c0955-1a91-4309-bda2-9a0d7238fae4
+		summarizeBy: none
+		sourceColumn: Proposal Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Skill Sector SOP'
+		dataType: string
+		lineageTag: bf481df0-0167-46d8-a4f0-412ddaddbe54
+		summarizeBy: none
+		sourceColumn: Skill Sector SOP
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill
+		dataType: string
+		lineageTag: 93607c4e-6e9d-4b43-b5c9-658cc5d447e7
+		summarizeBy: none
+		sourceColumn: Skill
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Joint Implementers'
+		dataType: string
+		lineageTag: e5f5d300-2042-4822-89a3-db1b9f6c0ac4
+		summarizeBy: none
+		sourceColumn: Joint Implementers
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enterprise Sector'
+		dataType: string
+		lineageTag: 517d5b61-b691-4faa-881f-ade2116e0e73
+		summarizeBy: none
+		sourceColumn: Enterprise Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Role Detail'
+		dataType: string
+		lineageTag: 9879b81b-ab9c-45f7-8d54-0c894daf195d
+		summarizeBy: none
+		sourceColumn: Role Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Role General'
+		dataType: string
+		lineageTag: ed5f5a8d-9410-4356-8091-f86d3aae986e
+		summarizeBy: none
+		sourceColumn: Role General
+
+		annotation SummarizationSetBy = Automatic
+
+	column Awarded
+		dataType: string
+		lineageTag: 30ce0faa-ff0c-4606-9302-32b13aac5806
+		summarizeBy: none
+		sourceColumn: Awarded
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contract #'
+		dataType: string
+		lineageTag: 913311af-8529-425c-9a79-cc41a930b327
+		summarizeBy: none
+		sourceColumn: Contract #
+
+		annotation SummarizationSetBy = Automatic
+
+	column Establised
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4f66587c-00a0-4feb-b65c-e4d38ae1d504
+		summarizeBy: none
+		sourceColumn: Establised
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Address
+		dataType: string
+		lineageTag: 19724448-3c27-4c9a-855a-d75a87ef47b1
+		summarizeBy: none
+		sourceColumn: Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Province
+		dataType: string
+		lineageTag: 02f5e819-aabb-4d13-b020-7a47bef57a87
+		summarizeBy: none
+		sourceColumn: Province
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Person'
+		dataType: string
+		lineageTag: d541c42f-b13f-493d-9717-9aada53ce081
+		summarizeBy: none
+		sourceColumn: Contact Person
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: 68a124f6-b63c-48ae-a407-491980218ccb
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Phone
+		dataType: string
+		lineageTag: 017b327a-cf31-4bb2-afc5-98f034e61f86
+		summarizeBy: none
+		sourceColumn: Phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 2cb3ee31-f972-46ba-84e1-c94c9dda9572
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Track_Network
+		dataType: string
+		lineageTag: 5b0b8c14-fb3c-431b-93a2-05e3d9d763d9
+		summarizeBy: none
+		sourceColumn: Track_Network
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Focal M&E'
+		dataType: string
+		lineageTag: 5f442c27-1d1d-461d-b446-431ea2b8bc20
+		summarizeBy: none
+		sourceColumn: Focal M&E
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '7-Network Support' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"7-Network Support_Sheet" = Source{[Item="7-Network Support",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"7-Network Support_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", Int64.Type}, {"Date Approved", Int64.Type}, {"Text Date Approved", type date}, {"Initiator", type text}, {"Proposal Type", type text}, {"Skill Sector SOP", type text}, {"Skill", type text}, {"Joint Implementers", type text}, {"Enterprise Sector", type text}, {"Role Detail", type text}, {"Role General", type text}, {"Awarded", type text}, {"Contract #", type any}, {"Establised", type any}, {"Address", type text}, {"Province", type text}, {"Contact Person", type text}, {"Email", type text}, {"Phone", type any}, {"Budget Source", type text}, {"Track_Network", type text}, {"Focal M&E", type any}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"Year Stage", null}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Errors",{{"ID", type text}, {"Date Approved", type date}, {"Contract #", type text}}),
+				    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Changed Type1", {{"Contract #", null}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Errors1",{{"Establised", Int64.Type}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Changed Type2",{{"Establised", type date}}),
+				    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Changed Type3", {{"Establised", null}}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Replaced Errors2",{{"Phone", type text}, {"Focal M&E", type text}}),
+				    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Changed Type4", {{"Focal M&E", null}}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Replaced Errors3", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+				in
+				    #"Removed Blank Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

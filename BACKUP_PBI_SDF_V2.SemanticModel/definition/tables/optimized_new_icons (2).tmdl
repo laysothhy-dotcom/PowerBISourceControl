@@ -1,0 +1,38 @@
+table 'optimized_new_icons (2)'
+	lineageTag: a8ab6c1e-fe32-4072-ac81-ab8cf0855ac7
+
+	column 'Model Names'
+		dataType: string
+		lineageTag: 194f7ae0-320e-44d2-93a9-9117f7dc51d2
+		summarizeBy: none
+		sourceColumn: Model Names
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinaryImage
+		dataType: string
+		lineageTag: 08dbd3e2-3cd7-41a1-8071-cbec4e0ec915
+		summarizeBy: none
+		sourceColumn: BinaryImage
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'optimized_new_icons (2)' = m
+		mode: import
+		queryGroup: Proposal\PMS_Proposals
+		source =
+				let
+				    Source = Folder.Files("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\optimized_new_icons"),
+				    #"Invoked Custom Function" = Table.AddColumn(Source, "BinaryImage", each ImageTobinary1([Content])),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Invoked Custom Function", "Name", Splitter.SplitTextByDelimiter(".", QuoteStyle.Csv), {"Name.1", "Name.2"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Split Column by Delimiter",{{"Name.1", "Model Names"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Name.2"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"Content", "Model Names", "BinaryImage"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"BinaryImage", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

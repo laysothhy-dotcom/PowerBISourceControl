@@ -1,0 +1,119 @@
+relationship 90811da6-d678-59f7-1133-74281dcfc3cd
+	fromColumn: Dim_Progress_Training_Date.'Date Approved'
+	toColumn: 'Dim Date'.Date
+
+relationship a7812325-af59-c277-2c20-a6620c5a6e2f
+	fromColumn: TVET_Image.Name
+	toColumn: TVET_Image_Sources.'Model Names'
+
+relationship 4ec7fe84-1b4c-a4f6-5659-26db6352ad6c
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'SDF_SKill_Images (2)'.'Icons Name'
+	toColumn: SDF_SKill_Images.'Icons Name'
+
+relationship 817fb1fa-fb3b-1b33-a271-72229b86b760
+	fromColumn: Dim_Proposals_Date.'Date Approved'
+	toColumn: 'Dim Date'.Date
+
+relationship 607ca9b4-10fd-cbe8-e2c2-23b1b06dad55
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Dim_KPI_Date.ID
+	toColumn: Dim_Proposals_Date.ID
+
+relationship 6f6078ec-9afa-cbad-a55d-546ec3ff9eee
+	fromColumn: Fact_SBJ_Progress.'No.'
+	toColumn: Fact_SBJ_Archieved.'No.'
+
+relationship 8e0bb56f-160c-9b4a-872f-4db8725118c3
+	fromColumn: Fact_SBJ_Archieved.'No.'
+	toColumn: Dim_SBJ_Info.'No.'
+
+relationship 75f1980d-bc9b-0044-7f2c-471e0d0fb2ca
+	fromColumn: Fact_SBJ_Archieved.'No.'
+	toColumn: Dim_SBJ_Date.No
+
+relationship c8327d66-cde7-b6dd-d848-25de8497308d
+	fromColumn: Fact_SBJ_Archieved.'No.'
+	toColumn: Fact_SBJ_Budget.No
+
+relationship 40c4b2b1-f198-fede-0fb3-552fb2061973
+	fromColumn: Fact_SBJ_Archieved.'No.'
+	toColumn: Dim_SBJ_Rating_Overall.No
+
+relationship 53e4916c-5f0c-b44a-99a1-0838e68e2200
+	fromColumn: Dim_SBJ_Date.'Date of training start'
+	toColumn: 'Dim Date'.Date
+
+relationship c4ed3b24-884a-a593-9c72-94b9818f81f7
+	fromColumn: Dim_SMP_Training_Date.'Date Approved 1st Doc'
+	toColumn: 'Dim Date_A'.Date
+
+relationship 030bb4dc-0882-722d-85c1-fb40372b610b
+	fromColumn: Fact_SMP_Application.ID
+	toColumn: Dim_SMP_Info.ID
+
+relationship beeb0ef6-ef73-6476-09b3-cb27e7e93bb9
+	fromColumn: Fact_SMP_Application.ID
+	toColumn: Dim_SMP_Date.ID
+
+relationship 97f6f9d6-8c1d-2834-1119-575b5fd3db84
+	fromColumn: Dim_Progress_Monitoring_ContractNo.SatisfactionKey
+	toColumn: Dim_SatisfactionContract.SatisfactionKey
+
+relationship e9ce0c2b-473b-df07-5e3e-b2fc8e2148c9
+	fromColumn: Fact_Proposals_Cost_Master.New_ID
+	toColumn: Dim_Proposal_Status_PMS.New_ID
+
+relationship f9fd46d7-87d0-f50a-a180-6d0329081533
+	fromColumn: Fact_Proposals_Cost_Master.New_ID
+	toColumn: Dim_Skills_PMS.New_ID
+
+relationship 46c8e73c-1f08-96c1-afd3-abd13748a608
+	fromColumn: Fact_Proposals_Cost_Master.New_ID
+	toColumn: 'Dim_Proposal Location_PMS'.New_ID
+
+relationship fcf6ca0e-9fcc-d069-e843-8382afb35db8
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'Dim_Proposal Location_PMS'.Location
+	toColumn: 'Dim Cambodia_provinces_gis'.Province
+
+relationship 52207b69-d26a-abc7-52c8-f04721278f8b
+	fromColumn: Fact_Proposals_Cost_Master.New_ID
+	toColumn: Dim_Proposal_Date_PMS.New_ID
+
+relationship 8456fb2a-6ea9-4f87-cdac-4d499a8d4652
+	fromColumn: Dim_Proposal_Date_PMS.'Proposal Date'
+	toColumn: 'Dim Date'.Date
+
+relationship ddc7b871-f6d3-99fb-ddb7-1b5754131b1c
+	fromColumn: Dim_Proposal_Status_PMS.New_ID
+	toColumn: Dim_Proposals_Awarded_Status_Mapping.ID
+
+relationship 4e6ebaf2-a07e-78f7-ca04-b35aaada0a8b
+	fromColumn: Fact_Proposals_Cost_Master.ID
+	toColumn: Dim_Proposals_PMS.New_ID
+
+relationship 30e3e606-3e03-e54a-27e9-bae26e9c3256
+	fromColumn: Fact_Proposals_Cost_Master.New_ID
+	toColumn: 'Dim_Training Sector_Exist'.New_ID
+
+relationship 9d205618-441c-86d6-a429-a0a2297c2785
+	fromColumn: 'Dim_Proposal Location_PMS'.New_ID
+	toColumn: 6-Location.New_ID
+
+relationship 3a95cc6f-0bcf-6879-a9c1-5479dfc2695f
+	fromColumn: Fact_Proposals_Cost_Master.New_ID
+	toColumn: 'Dim_Training Provider_Master'.New_ID
+
+relationship e2d19fac-ec19-39d9-29f7-f715482cfe05
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Dim_Training Provider_Master'.New_ID
+	toColumn: 'Dim_Proposal Location_PMS'.New_ID
+
+relationship a5145c6b-915b-5922-0851-d6ff3d3f4ec0
+	fromColumn: Fact_Traineess_Score_kb._id
+	toColumn: 'Dim_Trainees'' Institute_kb'._id
+

@@ -1,0 +1,322 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+/// Skill Matching Programe
+queryGroup 'SMP Programe'
+
+	annotation PBI_QueryGroupOrder = 0
+
+/// Normal Programe
+queryGroup 'Training Cost Disburshment\Deburshement Normal'
+
+	annotation PBI_QueryGroupOrder = 0
+
+/// Proposal info Detail
+queryGroup Proposal
+
+	annotation PBI_QueryGroupOrder = 2
+
+/// Cost share with partners
+queryGroup 'Budget Cost Share'
+
+	annotation PBI_QueryGroupOrder = 3
+
+/// Indicator
+queryGroup 'KPI Monitoring'
+
+	annotation PBI_QueryGroupOrder = 4
+
+/// TP dishburshment
+queryGroup 'Training Cost Disburshment'
+
+	annotation PBI_QueryGroupOrder = 5
+
+/// Training Progress
+queryGroup 'Progress Monitoring'
+
+	annotation PBI_QueryGroupOrder = 6
+
+/// Errors in queries that were loaded on 11/18/2025 10:51:31 AM.
+queryGroup 'Query Errors - 11/18/2025 10:51:31 AM'
+
+	annotation PBI_QueryGroupOrder = 7
+
+/// Data Pipeline
+queryGroup Kobo_DataCollection_Sources
+
+	annotation PBI_QueryGroupOrder = 8
+
+/// From internal file
+queryGroup ImageBinary
+
+	annotation PBI_QueryGroupOrder = 9
+
+/// Errors in queries that were loaded on 11/26/2025 4:47:11 PM.
+queryGroup 'Query Errors - 11/26/2025 4:47:11 PM'
+
+	annotation PBI_QueryGroupOrder = 11
+
+/// Errors in queries that were loaded on 11/26/2025 5:00:09 PM.
+queryGroup 'Query Errors - 11/26/2025 5:00:09 PM'
+
+	annotation PBI_QueryGroupOrder = 12
+
+/// SKV
+queryGroup Kobo_DataCollection_Sources\SKill_Voucher
+
+	annotation PBI_QueryGroupOrder = 0
+
+/// Errors in queries that were loaded on 11/27/2025 1:42:53 PM.
+queryGroup 'Query Errors - 11/27/2025 1:42:53 PM'
+
+	annotation PBI_QueryGroupOrder = 15
+
+/// Errors in queries that were loaded on 12/26/2025 4:53:58 PM.
+queryGroup 'Query Errors - 12/26/2025 4:53:58 PM'
+
+	annotation PBI_QueryGroupOrder = 16
+
+/// Errors in queries that were loaded on 12/28/2025 2:52:23 PM.
+queryGroup 'Query Errors - 12/28/2025 2:52:23 PM'
+
+	annotation PBI_QueryGroupOrder = 17
+
+/// Errors in queries that were loaded on 12/28/2025 4:09:35 PM.
+queryGroup 'Query Errors - 12/28/2025 4:09:35 PM'
+
+	annotation PBI_QueryGroupOrder = 18
+
+queryGroup Laction_info
+
+	annotation PBI_QueryGroupOrder = 18
+
+/// Errors in queries that were loaded on 12/29/2025 11:39:27 AM.
+queryGroup 'Query Errors - 12/29/2025 11:39:27 AM'
+
+	annotation PBI_QueryGroupOrder = 19
+
+/// Errors in queries that were loaded on 12/29/2025 12:18:46 PM.
+queryGroup 'Query Errors - 12/29/2025 12:18:46 PM'
+
+	annotation PBI_QueryGroupOrder = 20
+
+queryGroup Testing_Kobo
+
+	annotation PBI_QueryGroupOrder = 21
+
+/// Errors in queries that were loaded on 1/2/2026 10:14:08 AM.
+queryGroup 'Query Errors - 1/2/2026 10:14:08 AM'
+
+	annotation PBI_QueryGroupOrder = 22
+
+/// Errors in queries that were loaded on 1/5/2026 1:35:29 PM.
+queryGroup 'Query Errors - 1/5/2026 1:35:29 PM'
+
+	annotation PBI_QueryGroupOrder = 23
+
+/// Errors in queries that were loaded on 1/8/2026 11:03:34 AM.
+queryGroup 'Query Errors - 1/8/2026 11:03:34 AM'
+
+	annotation PBI_QueryGroupOrder = 24
+
+/// Errors in queries that were loaded on 1/8/2026 9:35:42 PM.
+queryGroup 'Query Errors - 1/8/2026 9:35:42 PM'
+
+	annotation PBI_QueryGroupOrder = 25
+
+queryGroup 'SBJ Project'
+
+	annotation PBI_QueryGroupOrder = 26
+
+/// Errors in queries that were loaded on 1/16/2026 2:13:44 PM.
+queryGroup 'Query Errors - 1/16/2026 2:13:44 PM'
+
+	annotation PBI_QueryGroupOrder = 27
+
+/// Proposal Management
+queryGroup Proposal\KOBO_Proposal
+
+	annotation PBI_QueryGroupOrder = 0
+
+/// Share Points Proposal
+queryGroup Proposal\Existing_Proposals
+
+	annotation PBI_QueryGroupOrder = 2
+
+/// Errors in queries that were loaded on 3/6/2026 11:38:55 AM.
+queryGroup 'Query Errors - 3/6/2026 11:38:55 AM'
+
+	annotation PBI_QueryGroupOrder = 30
+
+/// Direct from PMS
+queryGroup Proposal\PMS_Proposals
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_QueryGroupOrder = 0
+
+/// Errors in queries that were loaded on 4/24/2026 10:08:17 AM.
+queryGroup 'Query Errors - 4/24/2026 10:08:17 AM'
+
+	annotation PBI_QueryGroupOrder = 32
+
+/// Errors in queries that were loaded on 4/25/2026 10:59:37 AM.
+queryGroup 'Query Errors - 4/25/2026 10:59:37 AM'
+
+	annotation PBI_QueryGroupOrder = 33
+
+queryGroup 'Trainees'' Satisfaction_KOBO'
+
+	annotation PBI_QueryGroupOrder = 34
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["7-Network Support","6-Location","Dim_KPI_Commit","Dim Cambodia_provinces_gis","Date_Query","Dim Date","Top 10 Skills","Fact_KPI_Archieve","Dim_KPI_ Skill","Dim_KPI_Date","Dim_Disburse_Date_Normal","Dim_Disburse_Projection_Normal","Fact_Disburse_Normal","Dim_Budget_Sources_Normal","Dim_Disburse_School_Date","Dim_Projection_School","Fact_Disburse_School","Dim_Budget_Sources_School","Errors in 7-Network Support","Dim_Progress_Training_Info","Progress Monitoring","Dim_Progress_Training_Date","Fact_Progress_Training_Cost","Dim_Progress_Training","Dim_Cost_Sharing_Info","Fact_Cost Sharing","Unicode_Mapping_Table","fnReplaceUnicode","Invoked Function","SKill_Voucher_Project_Kobo","Invoked Function_Date","ImgToBinary","TVET_Image","TVET_Image_Sources","ImageTobinary","SDF_SKill_Images","SDF_SKill_Images (2)","IconsTobinary","SDF_Skill_Icons","SDF_Skill_Icons_full","Dim_Location_SKey","Dim_Kobo_SKill_Voucher_Info","Dim_Kobo_SKill_Voucher_Date","Fact_Kobo_SKill_Voucher_Cost","Dim_Kobo_SKill_Voucher_Training","Dim_Kobo_SKill_Voucher_Location","PMS_rows","Kobo_Testing","Testing_Cost_Kobo","broken","code_province","code_district","code_commune","Errors in 7-Network Support (5)","Proposal Record Form_kobo","Fact_Proposal_Cost_kobo","Dim_Trainees_Proposal_kobo","Dim_Proposal_Location_kobo","Dim_Proposal_Info_kobo","Dim_Proposal_Taining_kobo","Dim Date_A","Dim_Proposal_Budget_Sources_kobo","Dim_Proposal_BudSources_Combined","Dim_Proposal_Budget_appen_kobo","Dim_Proposal_Awarded_kobo","Dim_Proposals_Awarded_Combined","Dim_Proposal_Date_kobo","Fact_Proposal_Cost_Appen_kobo","Dim_Proposal_Trainees_Appen_kobo","Dim_Proposals_GrandTotal_Trainees","Fact_Shared_Cost_Table_kobo","Dim_Location_Appen_kobo","Dim_TP_Appen_kobo","Dim_ Training Provider_ Combine","Dim_TP_Acronym_Code","Training Costs","Training Batches","Trainer Qualifications","Trainees","Rationale Questions (2)","Support Documents (2)","Budget Plan V2","Trainee Allowances","Support Documents","Skills","Rationale Questions","Proposals","Proposal Partner Infos","Dim_Training_info_PMS","Dim_Proposals_PMS","Dim_Training_Batches_PMS","Trainees​​_Proposal_PMS","Fact_Trainee_ Allowances_PMS","Dim_Skills_PMS","Dim_Proposal Partner_PMS","Dim_Proposal Location_PMS","Dim_Proposal_Date_PMS","PROGRESS PERFORMANCE TRACKING SHEET  (2_ElapeTime)","USD (3_Disburshment)","Fact_SBJ_Progress","Fact_SBJ_Archieved","Dim_SBJ_Date","Dim_SBJ_Info","Dim_SBJ_Rating","Fact_SBJ_Budget","Dim_SBJ_Rating_Overall","Fact_PMS_TrainingCost_Excel","Dim_SBJ_TraineeCompleted","Dim Cambodia_provinces_gis_SMP","Dim_SMP_Info","Dim_SMP_Date","Dim_SMP_TrainingCost","Dim_SMP_Enterprise","Dim_SMP_Training_Info","Fact_SMP_TrainingCost","Dim_SMP_Training_Date","Dim_SMP_Training_disbursh","Invoked Function (2)","Fact_SMP_Application","Training Provider List","Training Provider List_Final","Dim Cambodia_provinces_PMS","Icon_Binary_Appen","SDF_Skill_Icons_Appen","IconBinary_final","Dim_Proposal_Infor","Dim_Proposals_Skills","Dim_Proposals_Training","Dim_Proposals_Date","Fact_Proposals_Cost","Dim_ proposal_ Type","optimized_new_icons","cambodia_province_synonyms","Dim_Proposal_Kobo_Date","Dim_Proposals_Date_Combined","Fact_Proposals_Cost_Master","Dim_Trainees​​_Proposal_PMS","Dim_Progress_Training_Append","3-KPI Monitoring","Progress Monitoring_Updated","Dim_Progress_Monitoring_ContractNo","Dim_Trainees​​_Proposal_PMS_Append","Dim_SatisfactionContract","Dim_Trainees​​_Proposal_Master","Fact_Proposal_Cost_PMS","Fact_Proposal_Cost_PMS_Append","Fact_Proposals_Cost_Ref","Dim_Proposals_Awarded_Status_Mapping","Dim_Proposal_Status_PMS","ImageTobinary1","optimized_new_icons (2)","Dim_Proposal Partner_PMS_Append","Dim_Training Sector_Exist","Dim_Training Provider_PMS","Dim_Training Provider_Master","Traineess' Satisfaction_KOBO","Fact_Traineess_Score_kb","Dim_Trainees' Institute_kb","Dim_Commend_Kb","ImageToBinary2","Invoked Function (3)","multi_tone_yellow_final","Dim_Training Provider_Kb","Fact_Traineess_Score_SBJ_kb"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table '7-Network Support'
+ref table Dim_KPI_Commit
+ref table 'Dim Cambodia_provinces_gis'
+ref table 'Dim Date'
+ref table 'Top 10 Skills'
+ref table Dim_Proposals_Skills
+ref table Dim_Proposals_Training
+ref table Dim_Proposals_Date
+ref table Fact_KPI_Archieve
+ref table 'Dim_KPI_ Skill'
+ref table Dim_KPI_Date
+ref table Dim_Disburse_Date_Normal
+ref table Dim_Disburse_Projection_Normal
+ref table Fact_Disburse_Normal
+ref table Dim_Budget_Sources_Normal
+ref table Dim_Disburse_School_Date
+ref table Dim_Projection_School
+ref table Fact_Disburse_School
+ref table Dim_Budget_Sources_School
+ref table Dim_Progress_Training_Info
+ref table 'Progress Monitoring'
+ref table Dim_Progress_Training_Date
+ref table Fact_Progress_Training_Cost
+ref table Dim_Progress_Training
+ref table Dim_Cost_Sharing_Info
+ref table 'Fact_Cost Sharing'
+ref table Unicode_Mapping_Table
+ref table 'Invoked Function'
+ref table 'Invoked Function_Date'
+ref table TVET_Image
+ref table TVET_Image_Sources
+ref table SDF_SKill_Images
+ref table 'SDF_SKill_Images (2)'
+ref table SDF_Skill_Icons
+ref table SDF_Skill_Icons_full
+ref table Dim_Location_SKey
+ref table 'Dim_ proposal_ Type'
+ref table code_province
+ref table code_district
+ref table code_commune
+ref table 'Dim Date_A'
+ref table Dim_TP_Acronym_Code
+ref table 'Trainer Qualifications'
+ref table CostShareSlection
+ref table 'PROGRESS PERFORMANCE TRACKING SHEET  (2_ElapeTime)'
+ref table 'USD (3_Disburshment)'
+ref table Fact_SBJ_Progress
+ref table Fact_SBJ_Archieved
+ref table Dim_SBJ_Date
+ref table Dim_SBJ_Info
+ref table Dim_SBJ_Rating
+ref table Fact_SBJ_Budget
+ref table Dim_SBJ_Rating_Overall
+ref table Dim_SBJ_TraineeCompleted
+ref table 'Dim Cambodia_provinces_gis_SMP'
+ref table Dim_SMP_Info
+ref table Dim_SMP_Date
+ref table Dim_SMP_TrainingCost
+ref table Dim_SMP_Enterprise
+ref table Dim_SMP_Training_Info
+ref table Fact_SMP_TrainingCost
+ref table Dim_SMP_Training_Date
+ref table Dim_SMP_Training_disbursh
+ref table 'Invoked Function (2)'
+ref table Fact_SMP_Application
+ref table 'Training Provider List'
+ref table 'Training Provider List_Final'
+ref table 'PMS CostCategory$'
+ref table Icon_Binary_Appen
+ref table SDF_Skill_Icons_Appen
+ref table IconBinary_final
+ref table optimized_new_icons
+ref table cambodia_province_synonyms
+ref table '3-KPI Monitoring'
+ref table Dim_Progress_Monitoring_ContractNo
+ref table Dim_SatisfactionContract
+ref table Dim_Training_info_PMS
+ref table Dim_Proposals_PMS
+ref table Dim_Training_Batches_PMS
+ref table Trainees​​_Proposal_PMS
+ref table Dim_Skills_PMS
+ref table 'Fact_Trainee_ Allowances_PMS'
+ref table 'Dim_Proposal Partner_PMS'
+ref table 'Dim Cambodia_provinces_PMS'
+ref table Fact_PMS_TrainingCost_Excel
+ref table 'Dim_Proposal Location_PMS'
+ref table Dim_Proposal_Date_PMS
+ref table 'Proposal Record Form_kobo'
+ref table Fact_Proposal_Cost_kobo
+ref table Dim_Proposal_Location_kobo
+ref table Dim_Trainees_Proposal_kobo
+ref table Dim_Proposal_Info_kobo
+ref table Dim_Proposal_Taining_kobo
+ref table Dim_Proposal_Budget_Sources_kobo
+ref table Dim_Proposal_Trainees_Appen_kobo
+ref table Dim_Proposals_GrandTotal_Trainees
+ref table Fact_Shared_Cost_Table_kobo
+ref table Dim_TP_Appen_kobo
+ref table Dim_Location_Appen_kobo
+ref table Dim_Proposal_Awarded_kobo
+ref table Fact_Proposal_Cost_Appen_kobo
+ref table 'Dim_ Training Provider_ Combine'
+ref table Dim_Proposal_Infor
+ref table Fact_Proposals_Cost
+ref table Dim_Progress_Training_Append
+ref table Dim_Proposal_Budget_appen_kobo
+ref table Dim_Proposal_Date_kobo
+ref table Dim_Proposal_BudSources_Combined
+ref table Dim_Proposals_Awarded_Combined
+ref table Dim_Proposal_Kobo_Date
+ref table Dim_Proposals_Date_Combined
+ref table Fact_Proposals_Cost_Master
+ref table Dim_Trainees​​_Proposal_PMS_Append
+ref table Dim_Trainees​​_Proposal_PMS
+ref table Dim_Trainees​​_Proposal_Master
+ref table Fact_Proposal_Cost_PMS
+ref table Fact_Proposal_Cost_PMS_Append
+ref table Fact_Proposals_Cost_Ref
+ref table Dim_Proposals_Awarded_Status_Mapping
+ref table Dim_Proposal_Status_PMS
+ref table 'optimized_new_icons (2)'
+ref table 'Dim_Proposal Partner_PMS_Append'
+ref table 'Dim_Training Sector_Exist'
+ref table 6-Location
+ref table 'Dim_Training Provider_PMS'
+ref table 'Dim_Training Provider_Master'
+ref table 'Progress Monitoring_Updated'
+ref table 'Traineess'' Satisfaction_KOBO'
+ref table Fact_Traineess_Score_kb
+ref table 'Dim_Trainees'' Institute_kb'
+ref table Dim_Commend_Kb
+ref table multi_tone_yellow_final
+ref table 'Dim_Training Provider_Kb'
+ref table Fact_Traineess_Score_SBJ_kb
+
+ref cultureInfo en-US
+

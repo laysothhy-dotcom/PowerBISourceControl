@@ -1,0 +1,66 @@
+table 'Dim_ Training Provider_ Combine'
+	lineageTag: e4edbff1-b782-4ba2-a20e-d31abde73279
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ab02955-0770-4798-b207-853a6c80de04
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: 90a15fff-e04d-4db5-a488-5cc17ec1f2be
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 60010515-8f97-47cd-acea-5ae1427d046c
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Unique_Partners =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Dim_ Training Provider_ Combine'[Training Provider]),
+			    ALLSELECTED('Dim_ Training Provider_ Combine')
+			)
+		formatString: 0
+		lineageTag: 8b66d4b3-d396-4d1d-890f-6af8b18442d2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_ Training Provider_ Combine' = m
+		mode: import
+		queryGroup: Proposal
+		source =
+				let
+				    Source = #"Dim_ proposal_ Type",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"ID", "Training_Provider"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Training_Provider", "Training Provider"}}),
+				    #"Appended Query" = Table.Combine({#"Renamed Columns", Dim_TP_Appen_kobo}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Appended Query",{{"ID", type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Changed Type"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Blank Rows", {"ID", "Training Provider"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Errors"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Duplicates1",{{"ID", Int64.Type}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type1", "Unified_ID", each if [ID] <= 616 then "EX-" & Text.From([ID])
+				else if [ID] <= 1000 then "KB-" & Text.From([ID])
+				else "PMS-" & Text.From([ID])),
+				    #"Filtered Rows" = Table.SelectRows(#"Added Custom", each ([Unified_ID] <> "KB-617" and [Unified_ID] <> "KB-618" and [Unified_ID] <> "KB-619" and [Unified_ID] <> "KB-623" and [Unified_ID] <> "KB-624" and [Unified_ID] <> "KB-625" and [Unified_ID] <> "KB-699"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

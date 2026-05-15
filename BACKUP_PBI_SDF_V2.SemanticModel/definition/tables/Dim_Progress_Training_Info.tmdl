@@ -1,0 +1,98 @@
+table Dim_Progress_Training_Info
+	lineageTag: 63da24c7-2763-4e7d-888a-6ebc8a77c485
+
+	column ID
+		dataType: string
+		lineageTag: dfa1454c-09e0-4c0a-84d4-6a6960facecc
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Type'
+		dataType: string
+		lineageTag: bdd83339-d78b-4b47-8ac0-03b9d806426d
+		summarizeBy: none
+		sourceColumn: Proposal Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Type PS'
+		dataType: string
+		lineageTag: 32253369-7299-4a03-9075-e4cdbccc555d
+		summarizeBy: none
+		sourceColumn: Proposal Type PS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Initiator
+		dataType: string
+		lineageTag: 0417610c-9228-4d11-b541-fa312a5c667f
+		summarizeBy: none
+		sourceColumn: Initiator
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill
+		dataType: string
+		lineageTag: b0ea5d28-e7c9-478d-9083-1d31c2ac143a
+		summarizeBy: none
+		sourceColumn: Skill
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Type'
+		dataType: string
+		lineageTag: 886a6ad3-7fe8-4a44-88df-3e2187a65f77
+		summarizeBy: none
+		sourceColumn: Training Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: fe6cdaca-d931-46f3-9818-b21ea4eac7ae
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Focal M&E'
+		dataType: string
+		lineageTag: a4bdd684-8bb4-4e37-83c5-8e8825934797
+		summarizeBy: none
+		sourceColumn: Focal M&E
+
+		annotation SummarizationSetBy = Automatic
+
+	column Track_Feeback
+		dataType: string
+		lineageTag: e34d0a5b-0c1d-4d2a-9d00-ad6bb10e0404
+		summarizeBy: none
+		sourceColumn: Track_Feeback
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Progress_Training_Info = m
+		mode: import
+		queryGroup: 'Progress Monitoring'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"2-Progress Monitoring_Sheet" = Source{[Item="2-Progress Monitoring",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"2-Progress Monitoring_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", type any}, {"Proposal Type", type any}, {"Proposal Type PS", type any}, {"Initiator", type any}, {"Skill", type any}, {"Training Type", type any}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", type number}, {"SDF Contribution Riels", type number}, {"SDF Contribution $", type number}, {"Date Approved", Int64.Type}, {"Text Date Approved", type date}, {"Contract #", type text}, {"Date_Draft Contract", type any}, {"Date_Applicant Completed", type any}, {"Date_Finance Completed", type any}, {"Date_M&E Completed", type any}, {"Date_Assistant Completed", type any}, {"Date_To Amin", type any}, {"Date_Admin Out", type any}, {"Track_Review Process", type text}, {"Contract Date", Int64.Type}, {"ContractValid Date", Int64.Type}, {"Contract Duration", Int64.Type}, {"Start Date", Int64.Type}, {"End Date", Int64.Type}, {"End Date in Contract", Int64.Type}, {"Terminated Date", Int64.Type}, {"Track_Contract Duration", type text}, {"Track_Progress Sheet", type text}, {"Training Progress", type text}, {"Disbursement Progress", type text}, {"#Trainee Training", Int64.Type}, {"#Trainee Training Female", Int64.Type}, {"#Trainee Completed", Int64.Type}, {"#Trainee Completed Female", Int64.Type}, {"Orientation Date", type any}, {"1st Visit", Int64.Type}, {"2nd Visit", type any}, {"Budget Source", type any}, {"Focal M&E", type text}, {"Tracer study", type text}, {"Track_Trainee", type any}, {"Track_Feeback", type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"ID", type text}, {"Year Stage", type text}, {"Proposal Type", type text}, {"Proposal Type PS", type text}, {"Initiator", type text}, {"Skill", type text}, {"Training Type", type text}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", Int64.Type}, {"SDF Contribution $", Currency.Type}, {"Date Approved", type date}, {"Date_Draft Contract", type date}, {"Date_Applicant Completed", type date}, {"Date_Finance Completed", type date}, {"Date_M&E Completed", type datetime}, {"Date_Assistant Completed", type date}, {"Date_To Amin", type datetime}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Changed Type1",{{"Date_To Amin", type date}, {"Date_Admin Out", type date}, {"Contract Date", type date}, {"ContractValid Date", type date}, {"Start Date", type date}, {"End Date", type date}, {"End Date in Contract", type date}, {"Terminated Date", type date}, {"Orientation Date", type date}, {"1st Visit", type text}, {"2nd Visit", type text}, {"Budget Source", type text}, {"Track_Trainee", type text}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type2", {"ID", "Year", "Year Stage", "Proposal Type", "Proposal Type PS", "Initiator", "Skill", "Training Type", "Trainees_Proposal", "Female_Proposal", "SDF Contribution Riels", "SDF Contribution $", "Date Approved", "Text Date Approved", "Contract #", "Date_Draft Contract", "Date_Applicant Completed", "Date_Finance Completed", "Date_M&E Completed", "Date_Assistant Completed", "Date_To Amin", "Date_Admin Out", "Track_Review Process", "Contract Date", "ContractValid Date", "Contract Duration", "Start Date", "End Date", "End Date in Contract", "Terminated Date", "Track_Contract Duration", "Track_Progress Sheet", "Training Progress", "Disbursement Progress", "#Trainee Training", "#Trainee Training Female", "#Trainee Completed", "#Trainee Completed Female", "Orientation Date", "1st Visit", "2nd Visit", "Budget Source", "Focal M&E", "Tracer study", "Track_Trainee", "Track_Feeback"}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Errors", {"ID", "Year", "Year Stage", "Proposal Type", "Proposal Type PS", "Initiator", "Skill", "Training Type", "Trainees_Proposal", "Female_Proposal", "SDF Contribution Riels", "SDF Contribution $", "Date Approved", "Text Date Approved", "Contract #", "Date_Draft Contract", "Date_Applicant Completed", "Date_Finance Completed", "Date_M&E Completed", "Date_Assistant Completed", "Date_To Amin", "Date_Admin Out", "Track_Review Process", "Contract Date", "ContractValid Date", "Contract Duration", "Start Date", "End Date", "End Date in Contract", "Terminated Date", "Track_Contract Duration", "Track_Progress Sheet", "Training Progress", "Disbursement Progress", "#Trainee Training", "#Trainee Training Female", "#Trainee Completed", "#Trainee Completed Female", "Orientation Date", "1st Visit", "2nd Visit", "Budget Source", "Focal M&E", "Tracer study", "Track_Trainee", "Track_Feeback"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Errors1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Blank Rows",{"ID", "Proposal Type", "Proposal Type PS", "Initiator", "Skill", "Training Type", "Trainees_Proposal", "Focal M&E", "Track_Feeback"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

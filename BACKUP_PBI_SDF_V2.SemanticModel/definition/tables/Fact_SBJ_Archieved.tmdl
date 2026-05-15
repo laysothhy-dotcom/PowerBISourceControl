@@ -1,0 +1,141 @@
+table Fact_SBJ_Archieved
+	lineageTag: c104e0b0-59ba-4baf-a676-c953414f2c39
+
+	column 'No.'
+		dataType: string
+		lineageTag: 3917f90d-4386-44cd-857e-ff204c005bf3
+		summarizeBy: none
+		sourceColumn: No.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: a0007305-6eca-44b7-899e-5c44f3ba3799
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# of training project'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5691ff90-b303-4c0e-b905-47062be8bc0d
+		summarizeBy: sum
+		sourceColumn: # of training project
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# of trainees'
+		dataType: int64
+		formatString: 0
+		lineageTag: f142b8b1-25c9-42de-a1c1-7a1e4cac96e9
+		summarizeBy: sum
+		sourceColumn: # of trainees
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female
+		dataType: int64
+		formatString: 0
+		lineageTag: f2c839b0-fb1a-48df-ab25-a209c6d8b25d
+		summarizeBy: sum
+		sourceColumn: Female
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget (USD) Total project cost'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: d25c11da-c1e8-4d42-bf9a-03d56b10b62e
+		summarizeBy: sum
+		sourceColumn: Budget (USD) Total project cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Budget (USD) Enterprise cost-share'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 59eb38d0-b9d7-427f-be21-791890be0cc1
+		summarizeBy: sum
+		sourceColumn: Budget (USD) Enterprise cost-share
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Budget (USD) TP cost-share'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 04cbb427-597c-4567-ab4d-9a69a7aee80c
+		summarizeBy: sum
+		sourceColumn: Budget (USD) TP cost-share
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Budget (USD) SDF cost-share'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 779c8142-b484-4e36-ba51-a7518a9c1f3a
+		summarizeBy: sum
+		sourceColumn: Budget (USD) SDF cost-share
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Sectors
+		dataType: string
+		lineageTag: 635cb3d8-e8b3-4321-8cea-d385884c3413
+		summarizeBy: none
+		sourceColumn: Sectors
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skills
+		dataType: string
+		lineageTag: 05541daf-00ad-4974-8137-f5067f0c49b7
+		summarizeBy: none
+		sourceColumn: Skills
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date of training start'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0d835e7f-38ba-430a-9057-41d9131e3dbd
+		summarizeBy: none
+		sourceColumn: Date of training start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Fact_SBJ_Archieved = m
+		mode: import
+		queryGroup: 'SBJ Project'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SBJ_SDF_Enhanced_Rating_System_V2.xlsx"), null, false),
+				    Sheet1_sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    FilterNullAndWhitespace = each List.Select(_, each _ <> null and (not (_ is text) or Text.Trim(_) <> "")),
+				    #"Removed Top Rows" = Table.Skip(Sheet1_sheet, each try List.IsEmpty(List.Skip(FilterNullAndWhitespace(Record.FieldValues(_)), 1)) otherwise false),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Top Rows", List.Select(Table.ColumnNames(#"Removed Top Rows"), each try not List.IsEmpty(FilterNullAndWhitespace(Table.Column(#"Removed Top Rows", _))) otherwise true)),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Other Columns", [PromoteAllScalars=true]),
+				    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each ([#"No."] <> "Total")),
+				    #"Replaced Value" = Table.ReplaceValue(#"Filtered Rows","Not confirm yet",null,Replacer.ReplaceValue,{"Budget (USD) Total project cost"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","Not confirm yet",null,Replacer.ReplaceValue,{"Budget (USD) Enterprise cost-share"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","Not confirm yet",null,Replacer.ReplaceValue,{"No.", "Training Provider", "# of training project", "# of trainees", "Female", "Budget (USD) Total project cost", "Budget (USD) Enterprise cost-share", "Budget (USD) TP cost-share", "Budget (USD) SDF cost-share", "Sectors", "Skills", "Date of training start"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Value2",{{"No.", type text}, {"# of training project", Int64.Type}, {"# of trainees", Int64.Type}, {"Female", Int64.Type}, {"Budget (USD) Total project cost", Currency.Type}, {"Budget (USD) Enterprise cost-share", Currency.Type}, {"Budget (USD) TP cost-share", Currency.Type}, {"Budget (USD) SDF cost-share", Currency.Type}, {"Date of training start", type date}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"Date of training start", null}})
+				in
+				    #"Replaced Errors"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

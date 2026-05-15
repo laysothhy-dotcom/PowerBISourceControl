@@ -1,0 +1,517 @@
+expression Date_Query = ```
+		//Create Date Dimension
+		let
+		    Source = (StartDate as date, EndDate as date)=>
+		
+		let
+		    //Capture the date range from the parameters
+		    StartDate = #date(Date.Year(StartDate), Date.Month(StartDate), 
+		    Date.Day(StartDate)),
+		    EndDate = #date(Date.Year(EndDate), Date.Month(EndDate), 
+		    Date.Day(EndDate)),
+		
+		    //Get the number of dates that will be required for the table
+		    GetDateCount = Duration.Days(EndDate - StartDate),
+		
+		    //Take the count of dates and turn it into a list of dates
+		    GetDateList = List.Dates(StartDate, GetDateCount, 
+		    #duration(1,0,0,0)),
+		
+		    //Convert the list into a table
+		    DateListToTable = Table.FromList(GetDateList, 
+		    Splitter.SplitByNothing(), {"Date"}, null, ExtraValues.Error),
+		
+		    //Create various date attributes from the date column
+		    //Add Year Column
+		    YearNumber = Table.AddColumn(DateListToTable, "Year", 
+		    each Date.Year([Date])),
+		
+		    //Add Quarter Column
+		    QuarterNumber = Table.AddColumn(YearNumber , "Quarter", 
+		    each "Q" & Number.ToText(Date.QuarterOfYear([Date]))),
+		
+		    //Add Week Number Column
+		    WeekNumber= Table.AddColumn(QuarterNumber , "Week Number", 
+		    each Date.WeekOfYear([Date])),
+		
+		    //Add Month Number Column
+		    MonthNumber = Table.AddColumn(WeekNumber, "Month Number", 
+		    each Date.Month([Date])),
+		
+		    //Add Month Name Column
+		    MonthName = Table.AddColumn(MonthNumber , "Month", 
+		    each Date.ToText([Date],"MMMM")),
+		
+		    //Add Day of Week Column
+		    DayOfWeek = Table.AddColumn(MonthName , "Day of Week", 
+		    each Date.ToText([Date],"dddd"))
+		
+		in
+		    DayOfWeek
+		in
+		    Source
+		```
+	lineageTag: 4cbf165f-117c-4553-9f7f-2f6915257ca7
+
+	annotation PBI_ResultType = Function
+
+expression 'Errors in 7-Network Support' =
+		let
+		Source = #"7-Network Support",
+		  #"Detected Type Mismatches" = let
+		    tableWithOnlyPrimitiveTypes = Table.SelectColumns(Source, Table.ColumnsOfType(Source, {type nullable number, type nullable text, type nullable logical, type nullable date, type nullable datetime, type nullable datetimezone, type nullable time, type nullable duration})),
+		    recordTypeFields = Type.RecordFields(Type.TableRow(Value.Type(tableWithOnlyPrimitiveTypes))),
+		    fieldNames = Record.FieldNames(recordTypeFields),
+		    fieldTypes = List.Transform(Record.ToList(recordTypeFields), each [Type]),
+		    pairs = List.Transform(List.Positions(fieldNames), (i) => {fieldNames{i}, (v) => if v = null or Value.Is(v, fieldTypes{i}) then v else error [Message = "The type of the value does not match the type of the column.", Detail = v], fieldTypes{i}})
+		in
+		    Table.TransformColumns(Source, pairs),
+		  #"Added Index" = Table.AddIndexColumn(#"Detected Type Mismatches", "Row Number" ,1),
+		  #"Kept Errors" = Table.SelectRowsWithErrors(#"Added Index", {"ID", "Year", "Year Stage", "Date Approved", "Text Date Approved", "Initiator", "Proposal Type", "Skill Sector SOP", "Skill", "Joint Implementers", "Enterprise Sector", "Role Detail", "Role General", "Awarded", "Contract #", "Establised", "Address", "Province", "Contact Person", "Email", "Phone", "Budget Source", "Track_Network", "Focal M&E"}),
+		  #"Reordered Columns" = Table.ReorderColumns(#"Kept Errors", {"Row Number", "ID", "Year", "Year Stage", "Date Approved", "Text Date Approved", "Initiator", "Proposal Type", "Skill Sector SOP", "Skill", "Joint Implementers", "Enterprise Sector", "Role Detail", "Role General", "Awarded", "Contract #", "Establised", "Address", "Province", "Contact Person", "Email", "Phone", "Budget Source", "Track_Network", "Focal M&E"}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns",{"Text Date Approved"})
+		in
+		  #"Removed Columns"
+	lineageTag: d90aedab-6702-448c-bdae-d1e483499b8a
+	queryGroup: 'Query Errors - 11/18/2025 10:51:31 AM'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression fnReplaceUnicode =
+		(TextValue as text, MappingTable as table, TargetColumn as text, ReplacementColumn as text) as text =>
+		let
+		    // Convert the mapping table to a list of records for easy iteration
+		    MappingList = Table.ToRecords(MappingTable),
+		
+		    // Function to apply a single replacement
+		    ApplyReplacement = (CurrentText as text, MappingRecord as record) as text =>
+		        Text.Replace(
+		            CurrentText,
+		            Record.Field(MappingRecord, TargetColumn),
+		            Record.Field(MappingRecord, ReplacementColumn)
+		        ),
+		
+		    // Iterate through the list of mappings and apply all replacements
+		    Result = List.Accumulate(
+		        MappingList,
+		        TextValue,
+		        (CurrentText, MappingRecord) => ApplyReplacement(CurrentText, MappingRecord)
+		    )
+		in
+		    Result
+	lineageTag: 90d50116-6481-4556-9cc7-06d4700328aa
+	queryGroup: Kobo_DataCollection_Sources
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression ImgToBinary = ```
+		let
+		    BinaryToPbiImage = (BinaryContent as binary) as text=>
+		let    
+		    Base64 ="data:image/jpeg;base64, " & Binary.ToText(BinaryContent, BinaryEncoding.Base64) 
+		in
+		    Base64
+		in
+		    BinaryToPbiImage
+		```
+	lineageTag: e4de4c72-041e-4080-bc25-840c6434dac5
+	queryGroup: 'SMP Programe'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression ImageTobinary = ```
+		let
+		    BinaryToPbiImage = (BinaryContent as binary) as text=>
+		let    
+		    Base64 ="data:image/jpeg;base64, " & Binary.ToText(BinaryContent, BinaryEncoding.Base64) 
+		in
+		    Base64
+		in
+		    BinaryToPbiImage
+		```
+	lineageTag: c2eda716-b524-4316-9ed9-8ae21ad03e21
+	queryGroup: 'SMP Programe'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression IconsTobinary = ```
+		let
+		    BinaryToPbiImage = (BinaryContent as binary) as text=>
+		let    
+		    Base64 ="data:image/jpeg;base64, " & Binary.ToText(BinaryContent, BinaryEncoding.Base64) 
+		in
+		    Base64
+		in
+		    BinaryToPbiImage
+		```
+	lineageTag: 6f5dce56-c64c-410d-b3c4-e2d7ab2ee86c
+	queryGroup: 'SMP Programe'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+/// limit rows
+expression PMS_rows = "A" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: c0a6d169-c44c-49a8-9a02-818c1e2295e0
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression 'Errors in 7-Network Support (5)' =
+		let
+		Source = #"7-Network Support",
+		  #"Detected Type Mismatches" = let
+		    tableWithOnlyPrimitiveTypes = Table.SelectColumns(Source, Table.ColumnsOfType(Source, {type nullable number, type nullable text, type nullable logical, type nullable date, type nullable datetime, type nullable datetimezone, type nullable time, type nullable duration})),
+		    recordTypeFields = Type.RecordFields(Type.TableRow(Value.Type(tableWithOnlyPrimitiveTypes))),
+		    fieldNames = Record.FieldNames(recordTypeFields),
+		    fieldTypes = List.Transform(Record.ToList(recordTypeFields), each [Type]),
+		    pairs = List.Transform(List.Positions(fieldNames), (i) => {fieldNames{i}, (v) => if v = null or Value.Is(v, fieldTypes{i}) then v else error [Message = "The type of the value does not match the type of the column.", Detail = v], fieldTypes{i}})
+		in
+		    Table.TransformColumns(Source, pairs),
+		  #"Added Index" = Table.AddIndexColumn(#"Detected Type Mismatches", "Row Number" ,1),
+		  #"Kept Errors" = Table.SelectRowsWithErrors(#"Added Index", {"ID", "Year", "Year Stage", "Date Approved", "Text Date Approved", "Initiator", "Proposal Type", "Skill Sector SOP", "Skill", "Joint Implementers", "Enterprise Sector", "Role Detail", "Role General", "Awarded", "Contract #", "Establised", "Address", "Province", "Contact Person", "Email", "Phone", "Budget Source", "Track_Network", "Focal M&E"}),
+		  #"Reordered Columns" = Table.ReorderColumns(#"Kept Errors", {"Row Number", "ID", "Year", "Year Stage", "Date Approved", "Text Date Approved", "Initiator", "Proposal Type", "Skill Sector SOP", "Skill", "Joint Implementers", "Enterprise Sector", "Role Detail", "Role General", "Awarded", "Contract #", "Establised", "Address", "Province", "Contact Person", "Email", "Phone", "Budget Source", "Track_Network", "Focal M&E"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Reordered Columns",{{"Text Date Approved", type text}}),
+		    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"Text Date Approved", null}})
+		in
+		    #"Replaced Errors"
+	lineageTag: 9ff7bd06-5448-41d5-bc3c-99f15224a480
+	queryGroup: 'Query Errors - 12/29/2025 12:18:46 PM'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression broken =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aQgjZ2GU8uPeDSfKo7sJx6/export-settings/esuYsgPwD6KxFbH6ZqugGf3/data.csv"),[Delimiter=";", Columns=230, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: d46f235b-f6b5-4f2a-8000-23144c037500
+	queryGroup: Testing_Kobo
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Testing_Cost_Kobo =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aQgjZ2GU8uPeDSfKo7sJx6/export-settings/esuYsgPwD6KxFbH6ZqugGf3/data.csv"),[Delimiter=";", Columns=230, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: ceffe149-6d86-4a8f-a4a8-c34a8c40bfbc
+	queryGroup: Testing_Kobo
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Kobo_Testing =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aQgjZ2GU8uPeDSfKo7sJx6/export-settings/esuYsgPwD6KxFbH6ZqugGf3/data.csv"),[Delimiter=";", Columns=230, Encoding=1252, QuoteStyle=QuoteStyle.None])
+		in
+		    Source
+	lineageTag: 39e7d238-343b-4fbc-988d-537c538ed9af
+	queryGroup: Testing_Kobo
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Training Costs' =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true),
+		    #"Unpivoted Only Selected Columns" = Table.Unpivot(Source, {"Data"}, "Attribute", "Value")
+		in
+		    #"Unpivoted Only Selected Columns"
+	lineageTag: 4759d119-cd1a-4b87-bbf5-8b9d0e85c3ff
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Training Batches' =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true)
+		in
+		    Source
+	lineageTag: dceb3e70-cb1a-4407-aeb5-5745d5d48abf
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Trainees =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true)
+		in
+		    Source
+	lineageTag: cecf41f6-c574-408e-8710-fb6d63ace837
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Trainee Allowances' =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true),
+		    #"Budget Plan V1_Sheet" = Source{[Item="Budget Plan V1",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Budget Plan V1_Sheet", [PromoteAllScalars=true]),
+		    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers",{{"Proposal Number", "ID"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Proposal ID", Int64.Type}, {"ID", Int64.Type}, {"Proposal Code", type text}, {"Institute Name", type text}, {"Institute Name (KH)", type text}, {"Skill ID", type text}, {"Skill Title", type text}, {"Training Program", type text}, {"Total Trainee", Int64.Type}, {"Training Day", type number}, {"Total Trainee Allowance", type number}, {"Total Trainining Cost", type number}, {"Total Cost", type number}, {"SDF Cost", type number}, {"SDF Cost (%)", type number}, {"Training Provider Cost", type number}, {"Training Provider Cost (%)", type number}, {"Enterprise Cost", type number}, {"Enterprise Cost (%)", type number}, {"Created At", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: ba7944b4-0aaa-4f64-989e-aa4d7761b64f
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression 'Support Documents' =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true)
+		in
+		    Source
+	lineageTag: 2a43f95a-85f5-4869-9260-ee0b85b51194
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Skills =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true)
+		in
+		    Source
+	lineageTag: 44577b90-faf6-4246-9b40-4d6d24f3c670
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Rationale Questions' =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true)
+		in
+		    Source
+	lineageTag: 2d324d46-91be-4bdc-b1ed-ea6281b2edee
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Proposals =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true)
+		in
+		    Source
+	lineageTag: 2ebe07dc-78ef-48bf-9729-adf74c8bbfda
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Proposal Partner Infos' =
+		let
+		    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true)
+		in
+		    Source
+	lineageTag: d688a8ab-79bf-4140-8ad2-47d19515303c
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression SKill_Voucher_Project_Kobo =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aafdzjb5dhZvm9xqRmyuve/export-settings/esgPjpjXddmswKQt3bCXR6x/data.csv"),[Delimiter=";", Columns=73, Encoding=65001]),
+		    #"Change Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}, {"Column17", type text}, {"Column18", type text}, {"Column19", type text}, {"Column20", type text}, {"Column21", type text}, {"Column22", type text}, {"Column23", type text}, {"Column24", type text}, {"Column25", type text}, {"Column26", type text}, {"Column27", type text}, {"Column28", type text}, {"Column29", type text}, {"Column30", type text}, {"Column31", type text}, {"Column32", type text}, {"Column33", type text}, {"Column34", type text}, {"Column35", type text}, {"Column36", type text}, {"Column37", type text}, {"Column38", type text}, {"Column39", type text}, {"Column40", type text}, {"Column41", type text}, {"Column42", type text}, {"Column43", type text}, {"Column44", type text}, {"Column45", type text}, {"Column46", type text}, {"Column47", type text}, {"Column48", type text}, {"Column49", type text}, {"Column50", type text}, {"Column51", type text}, {"Column52", type text}, {"Column53", type text}, {"Column54", type text}, {"Column55", type text}, {"Column56", type text}, {"Column57", type text}, {"Column58", type text}, {"Column59", type text}, {"Column60", type text}, {"Column61", type text}, {"Column62", type text}, {"Column63", type text}, {"Column64", type text}, {"Column65", type text}, {"Column66", type text}, {"Column67", type text}, {"Column68", type text}, {"Column69", type text}, {"Column70", type text}, {"Column71", type text}, {"Column72", type text}, {"Column73", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Change Type", [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: 658f345c-d820-411d-a1ba-b8b9b11fed8d
+	queryGroup: Kobo_DataCollection_Sources\SKill_Voucher
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Dim_Kobo_SKill_Voucher_Info =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aafdzjb5dhZvm9xqRmyuve/export-settings/esgPjpjXddmswKQt3bCXR6x/data.csv"),[Delimiter=";", Columns=73, Encoding=65001]),
+		    #"Change Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}, {"Column17", type text}, {"Column18", type text}, {"Column19", type text}, {"Column20", type text}, {"Column21", type text}, {"Column22", type text}, {"Column23", type text}, {"Column24", type text}, {"Column25", type text}, {"Column26", type text}, {"Column27", type text}, {"Column28", type text}, {"Column29", type text}, {"Column30", type text}, {"Column31", type text}, {"Column32", type text}, {"Column33", type text}, {"Column34", type text}, {"Column35", type text}, {"Column36", type text}, {"Column37", type text}, {"Column38", type text}, {"Column39", type text}, {"Column40", type text}, {"Column41", type text}, {"Column42", type text}, {"Column43", type text}, {"Column44", type text}, {"Column45", type text}, {"Column46", type text}, {"Column47", type text}, {"Column48", type text}, {"Column49", type text}, {"Column50", type text}, {"Column51", type text}, {"Column52", type text}, {"Column53", type text}, {"Column54", type text}, {"Column55", type text}, {"Column56", type text}, {"Column57", type text}, {"Column58", type text}, {"Column59", type text}, {"Column60", type text}, {"Column61", type text}, {"Column62", type text}, {"Column63", type text}, {"Column64", type text}, {"Column65", type text}, {"Column66", type text}, {"Column67", type text}, {"Column68", type text}, {"Column69", type text}, {"Column70", type text}, {"Column71", type text}, {"Column72", type text}, {"Column73", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Change Type", [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"provider_info/submission_date", "provider_info/name_en", "provider_info/business_type", "provider_info/business_other", "provider_info/establishedyear", "provider_info/registrationno", "provider_info/provider_email", "provider_info/provider_contact", "male_staff", "contact_person/contact_en", "contact_person/job_title", "contact_person/department", "contact_person/mobile", "group_lm1er02/summary_info_table/_Trainers_Name", "_id", "_index"})
+		in
+		    #"Removed Other Columns"
+	lineageTag: 9d43d568-b998-4f48-b9f6-e08d04bbb5b8
+	queryGroup: Kobo_DataCollection_Sources\SKill_Voucher
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Dim_Kobo_SKill_Voucher_Date =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aafdzjb5dhZvm9xqRmyuve/export-settings/esgPjpjXddmswKQt3bCXR6x/data.csv"),[Delimiter=";", Columns=73, Encoding=65001]),
+		    #"Change Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}, {"Column17", type text}, {"Column18", type text}, {"Column19", type text}, {"Column20", type text}, {"Column21", type text}, {"Column22", type text}, {"Column23", type text}, {"Column24", type text}, {"Column25", type text}, {"Column26", type text}, {"Column27", type text}, {"Column28", type text}, {"Column29", type text}, {"Column30", type text}, {"Column31", type text}, {"Column32", type text}, {"Column33", type text}, {"Column34", type text}, {"Column35", type text}, {"Column36", type text}, {"Column37", type text}, {"Column38", type text}, {"Column39", type text}, {"Column40", type text}, {"Column41", type text}, {"Column42", type text}, {"Column43", type text}, {"Column44", type text}, {"Column45", type text}, {"Column46", type text}, {"Column47", type text}, {"Column48", type text}, {"Column49", type text}, {"Column50", type text}, {"Column51", type text}, {"Column52", type text}, {"Column53", type text}, {"Column54", type text}, {"Column55", type text}, {"Column56", type text}, {"Column57", type text}, {"Column58", type text}, {"Column59", type text}, {"Column60", type text}, {"Column61", type text}, {"Column62", type text}, {"Column63", type text}, {"Column64", type text}, {"Column65", type text}, {"Column66", type text}, {"Column67", type text}, {"Column68", type text}, {"Column69", type text}, {"Column70", type text}, {"Column71", type text}, {"Column72", type text}, {"Column73", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Change Type", [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"provider_info/submission_date", "provider_info/establishedyear", "_id", "_uuid", "_submission_time", "_validation_status", "_index"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"provider_info/submission_date", type date}}),
+		    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Changed Type", {{"provider_info/submission_date", type date}}, "id-ID")
+		in
+		    #"Changed Type with Locale"
+	lineageTag: 59269163-5c67-4bc2-a444-8ebf2f87e98e
+	queryGroup: Kobo_DataCollection_Sources\SKill_Voucher
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Fact_Kobo_SKill_Voucher_Cost =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aafdzjb5dhZvm9xqRmyuve/export-settings/esgPjpjXddmswKQt3bCXR6x/data.csv"),[Delimiter=";", Columns=73, Encoding=65001]),
+		    #"Change Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}, {"Column17", type text}, {"Column18", type text}, {"Column19", type text}, {"Column20", type text}, {"Column21", type text}, {"Column22", type text}, {"Column23", type text}, {"Column24", type text}, {"Column25", type text}, {"Column26", type text}, {"Column27", type text}, {"Column28", type text}, {"Column29", type text}, {"Column30", type text}, {"Column31", type text}, {"Column32", type text}, {"Column33", type text}, {"Column34", type text}, {"Column35", type text}, {"Column36", type text}, {"Column37", type text}, {"Column38", type text}, {"Column39", type text}, {"Column40", type text}, {"Column41", type text}, {"Column42", type text}, {"Column43", type text}, {"Column44", type text}, {"Column45", type text}, {"Column46", type text}, {"Column47", type text}, {"Column48", type text}, {"Column49", type text}, {"Column50", type text}, {"Column51", type text}, {"Column52", type text}, {"Column53", type text}, {"Column54", type text}, {"Column55", type text}, {"Column56", type text}, {"Column57", type text}, {"Column58", type text}, {"Column59", type text}, {"Column60", type text}, {"Column61", type text}, {"Column62", type text}, {"Column63", type text}, {"Column64", type text}, {"Column65", type text}, {"Column66", type text}, {"Column67", type text}, {"Column68", type text}, {"Column69", type text}, {"Column70", type text}, {"Column71", type text}, {"Column72", type text}, {"Column73", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Change Type", [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"group_lm1er02/summary_info_table/header_cost", "group_lm1er02/skill_row_1/unit_cost_1", "group_lm1er02/skill_row_2/unit_cost_2", "group_lm1er02/skill_row_2/total_cost_2", "group_lm1er02/skill_row_3/unit_cost_3", "group_lm1er02/skill_row_3/batches_3", "group_lm1er02/skill_row_3/total_cost_3", "group_lm1er02/skill_row_4/unit_cost_4", "group_lm1er02/skill_row_4/batches_4", "group_lm1er02/skill_row_4/total_cost_4", "_id", "_index"})
+		in
+		    #"Removed Other Columns"
+	lineageTag: 5e4775a2-967d-4945-8707-0eda76a1b455
+	queryGroup: Kobo_DataCollection_Sources\SKill_Voucher
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Dim_Kobo_SKill_Voucher_Training =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aafdzjb5dhZvm9xqRmyuve/export-settings/esgPjpjXddmswKQt3bCXR6x/data.csv"),[Delimiter=";", Columns=73, Encoding=65001]),
+		    #"Change Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}, {"Column17", type text}, {"Column18", type text}, {"Column19", type text}, {"Column20", type text}, {"Column21", type text}, {"Column22", type text}, {"Column23", type text}, {"Column24", type text}, {"Column25", type text}, {"Column26", type text}, {"Column27", type text}, {"Column28", type text}, {"Column29", type text}, {"Column30", type text}, {"Column31", type text}, {"Column32", type text}, {"Column33", type text}, {"Column34", type text}, {"Column35", type text}, {"Column36", type text}, {"Column37", type text}, {"Column38", type text}, {"Column39", type text}, {"Column40", type text}, {"Column41", type text}, {"Column42", type text}, {"Column43", type text}, {"Column44", type text}, {"Column45", type text}, {"Column46", type text}, {"Column47", type text}, {"Column48", type text}, {"Column49", type text}, {"Column50", type text}, {"Column51", type text}, {"Column52", type text}, {"Column53", type text}, {"Column54", type text}, {"Column55", type text}, {"Column56", type text}, {"Column57", type text}, {"Column58", type text}, {"Column59", type text}, {"Column60", type text}, {"Column61", type text}, {"Column62", type text}, {"Column63", type text}, {"Column64", type text}, {"Column65", type text}, {"Column66", type text}, {"Column67", type text}, {"Column68", type text}, {"Column69", type text}, {"Column70", type text}, {"Column71", type text}, {"Column72", type text}, {"Column73", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Change Type", [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"male_staff", "total_trainers", "staff/num_staff", "staff/femalestaff", "staff/num_fulltime_trainers", "staff/num_contractual_trainers", "_id", "_index"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"male_staff", Int64.Type}, {"total_trainers", Int64.Type}, {"staff/num_staff", Int64.Type}, {"staff/femalestaff", Int64.Type}, {"staff/num_fulltime_trainers", Int64.Type}, {"staff/num_contractual_trainers", Int64.Type}, {"_index", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 3786ee9d-06e7-445d-8664-908222911311
+	queryGroup: Kobo_DataCollection_Sources\SKill_Voucher
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Dim_Kobo_SKill_Voucher_Location =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aafdzjb5dhZvm9xqRmyuve/export-settings/esgPjpjXddmswKQt3bCXR6x/data.csv"),[Delimiter=";", Columns=73, Encoding=65001]),
+		    #"Change Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}, {"Column17", type text}, {"Column18", type text}, {"Column19", type text}, {"Column20", type text}, {"Column21", type text}, {"Column22", type text}, {"Column23", type text}, {"Column24", type text}, {"Column25", type text}, {"Column26", type text}, {"Column27", type text}, {"Column28", type text}, {"Column29", type text}, {"Column30", type text}, {"Column31", type text}, {"Column32", type text}, {"Column33", type text}, {"Column34", type text}, {"Column35", type text}, {"Column36", type text}, {"Column37", type text}, {"Column38", type text}, {"Column39", type text}, {"Column40", type text}, {"Column41", type text}, {"Column42", type text}, {"Column43", type text}, {"Column44", type text}, {"Column45", type text}, {"Column46", type text}, {"Column47", type text}, {"Column48", type text}, {"Column49", type text}, {"Column50", type text}, {"Column51", type text}, {"Column52", type text}, {"Column53", type text}, {"Column54", type text}, {"Column55", type text}, {"Column56", type text}, {"Column57", type text}, {"Column58", type text}, {"Column59", type text}, {"Column60", type text}, {"Column61", type text}, {"Column62", type text}, {"Column63", type text}, {"Column64", type text}, {"Column65", type text}, {"Column66", type text}, {"Column67", type text}, {"Column68", type text}, {"Column69", type text}, {"Column70", type text}, {"Column71", type text}, {"Column72", type text}, {"Column73", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Change Type", [PromoteAllScalars=true]),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Promoted Headers",{"provider_info/province", "provider_info/district", "provider_info/commune", "provider_info/village", "_id", "_index"})
+		in
+		    #"Removed Other Columns"
+	lineageTag: b434be06-a9e0-4716-bb5d-dc56f8a67efc
+	queryGroup: Kobo_DataCollection_Sources\SKill_Voucher
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Support Documents (2)' =
+		let
+		    Source = #"Support Documents"
+		in
+		    Source
+	lineageTag: 6e1d0af8-f62a-4bf5-b4c8-224b54016013
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Rationale Questions (2)' =
+		let
+		    Source = #"Rationale Questions"
+		in
+		    Source
+	lineageTag: 4ed7a273-97a8-4ee9-9ef8-f4feecfecf89
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Budget Plan V2' =
+		let
+		    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\Proposals_Prod_V2.xlsx"), null, true)
+		in
+		    Source
+	lineageTag: 6f80cbd9-98d1-4c4a-b04c-58d657a969a2
+	queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression ImageTobinary1 = ```
+		let
+		    BinaryToPbiImage = (BinaryContent as binary) as text =>
+		let 
+		    Base64 = "data:image/jpeg;base64," & Binary.ToText(BinaryContent, BinaryEncoding.Base64)
+		in
+		    Base64 
+		in 
+		    BinaryToPbiImage
+		```
+	lineageTag: 8b33ad46-7623-48f0-bc21-5222247b9eb9
+	queryGroup: 'SMP Programe'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression ImageToBinary2 = ```
+		let
+		    BinaryToPbiImage = (BinaryContent as binary) as text =>
+		let 
+		    Base64 = "data:image/jpeg;base64," & Binary.ToText(BinaryContent, BinaryEncoding.Base64)
+		in
+		    Base64 
+		in 
+		    BinaryToPbiImage
+		```
+	lineageTag: da0169ec-4c0a-4d15-acbd-e5101769b8a9
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression 'Invoked Function (3)' =
+		let
+		    Source = ImageToBinary2(...)
+		in
+		    Source
+	lineageTag: 8ca4cc22-f29a-427c-8857-d2309646d42a
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+

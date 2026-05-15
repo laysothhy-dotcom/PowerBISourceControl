@@ -1,0 +1,37 @@
+table Dim_Proposal_Awarded_kobo
+	lineageTag: 0937c73d-2e0f-403d-a5f7-c0f4714b251a
+
+	column ID
+		dataType: string
+		lineageTag: 3606713b-8082-4582-97ce-676e83874a5b
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Awarded
+		dataType: string
+		lineageTag: 9b991ef5-c573-44d5-ae11-cc2be6154cec
+		summarizeBy: none
+		sourceColumn: Awarded
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Awarded_kobo = m
+		mode: import
+		queryGroup: Proposal
+		source =
+				let
+				    Source = Dim_Proposal_Budget_Sources_kobo,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"id", "Awarded"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"id", "ID"}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates1", {"ID", "Awarded"})
+				in
+				    #"Removed Errors"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

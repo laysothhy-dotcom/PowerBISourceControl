@@ -1,0 +1,73 @@
+table Dim_Proposal_Location_kobo
+	lineageTag: 497a84bf-28f4-4a9d-aac5-4ec91c546f7d
+
+	column id
+		dataType: string
+		lineageTag: 2d23e5fe-d035-4b6a-a681-3319acdacd46
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column prop_id
+		dataType: string
+		lineageTag: 0a7dd99e-eccc-4d63-b373-647de0f276a3
+		summarizeBy: none
+		sourceColumn: prop_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'province code'
+		dataType: string
+		lineageTag: d1d5d13d-3a39-4216-a8e8-7bb5667511fd
+		summarizeBy: none
+		sourceColumn: province code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Province
+		dataType: string
+		lineageTag: 5f88c0f7-afa7-4750-96d9-c60961d8b9c5
+		summarizeBy: none
+		sourceColumn: Province
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Location_kobo = m
+		mode: import
+		queryGroup: Proposal\KOBO_Proposal
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aQgjZ2GU8uPeDSfKo7sJx6/export-settings/esuYsgPwD6KxFbH6ZqugGf3/data.csv"),[Delimiter=";", Columns=501, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Promoted Headers",{{"tpshar_percent", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type2", {{"tpshar_percent", null}}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Replaced Errors",{"id", "prop_id", "tp_id", "province", "district", "commune", "village"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Other Columns1", {"province"}, code_province, {"Province Code"}, "code_province", JoinKind.LeftOuter),
+				    #"Expanded code_province" = Table.ExpandTableColumn(#"Merged Queries", "code_province", {"Province Name"}, {"code_province.Province Name"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded code_province",{{"code_province.Province Name", "Province Name"}}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Renamed Columns", {"district"}, code_district, {"Distric Code"}, "code_district", JoinKind.LeftOuter),
+				    #"Expanded code_district" = Table.ExpandTableColumn(#"Merged Queries1", "code_district", {"Distric Name"}, {"Distric Name"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Expanded code_district", {"commune"}, code_commune, {"Commune Code"}, "code_commune", JoinKind.LeftOuter),
+				    #"Expanded code_commune" = Table.ExpandTableColumn(#"Merged Queries2", "code_commune", {"Commune Code", "Commune Name"}, {"Commune Code", "Commune Name"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Expanded code_commune"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates1", {"id"}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Errors", {"id", "prop_id", "tp_id", "province", "district", "commune", "village", "Province Name", "Distric Name", "Commune Code", "Commune Name"}),
+				    #"Removed Other Columns2" = Table.SelectColumns(#"Removed Errors1",{"id", "prop_id", "province", "Province Name"}),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Other Columns2"),
+				    #"Removed Duplicates3" = Table.Distinct(#"Removed Duplicates2"),
+				    #"Removed Errors2" = Table.RemoveRowsWithErrors(#"Removed Duplicates3", {"id", "prop_id", "province", "Province Name"}),
+				    #"Removed Other Columns3" = Table.SelectColumns(#"Removed Errors2",{"id", "prop_id", "province", "Province Name"}),
+				    #"Removed Duplicates4" = Table.Distinct(#"Removed Other Columns3", {"id"}),
+				    #"Removed Duplicates5" = Table.Distinct(#"Removed Duplicates4"),
+				    #"Removed Duplicates6" = Table.Distinct(#"Removed Duplicates5"),
+				    #"Removed Errors3" = Table.RemoveRowsWithErrors(#"Removed Duplicates6", {"id", "prop_id", "province", "Province Name"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Errors3",{{"province", "province code"}, {"Province Name", "Province"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

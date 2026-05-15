@@ -1,0 +1,132 @@
+table Fact_Proposals_Cost_Ref
+	lineageTag: 5a5c6a81-815c-4c05-bed6-34107bf348e9
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c3af337-056c-4a6f-876a-7302292f93e4
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Cost'
+		dataType: decimal
+		lineageTag: c98d4640-6425-4fa4-9ae8-4be5ee3447d2
+		summarizeBy: sum
+		sourceColumn: Total Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Enterprise Cost (%)'
+		dataType: double
+		lineageTag: 30d09709-8853-4691-b997-dce848561af0
+		summarizeBy: sum
+		sourceColumn: Enterprise Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Enterprise Cost'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 98ca528f-ce68-4cc7-8fa2-77ac1515d1a4
+		summarizeBy: sum
+		sourceColumn: Enterprise Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Training Provider Cost (%)'
+		dataType: double
+		lineageTag: 4de158a6-7428-4e3f-8dd1-a85d211115c5
+		summarizeBy: sum
+		sourceColumn: Training Provider Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Training Provider Cost'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a6352d06-80fe-4889-83df-b21785ef06a2
+		summarizeBy: sum
+		sourceColumn: Training Provider Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'SDF Cost (%)'
+		dataType: double
+		lineageTag: 91c10205-aaec-4884-9a7e-4e01dc3cfcee
+		summarizeBy: sum
+		sourceColumn: SDF Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'SDF Cost'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a71b70e3-f3da-49e6-afba-ef2a16703020
+		summarizeBy: sum
+		sourceColumn: SDF Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 32fcce6f-dd3d-4157-b30d-daa3dea58928
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 785deeeb-8422-4f00-abbc-eb580a9ba585
+		summarizeBy: sum
+		sourceColumn: Female_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 1d34ec54-905e-41b7-8742-2447828b6f6f
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: string
+		lineageTag: 53223ef0-6aed-4857-b917-09d5c8f4ae8d
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Proposals_Cost_Ref = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Fact_Proposals_Cost_Master
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

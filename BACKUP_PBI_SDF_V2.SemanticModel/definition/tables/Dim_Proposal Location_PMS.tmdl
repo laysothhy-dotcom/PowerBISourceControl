@@ -1,0 +1,72 @@
+table 'Dim_Proposal Location_PMS'
+	lineageTag: 659f15a3-a833-493a-a51b-62cd8392631e
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b5460eb-368e-4cfd-be79-1ab30a300771
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 06cd75b6-a481-4064-bb8a-d2aed190d9e0
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: fc797fb1-160a-4e6c-9e88-b2d6d9c3cd46
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: ad061ad6-b1ee-4df1-b531-0c190580d726
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_Proposal Location_PMS' = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = #"Proposal Partner Infos",
+				    Data = Source[Data],
+				    Data1 = Data{0},
+				    #"Promoted Headers" = Table.PromoteHeaders(Data1, [PromoteAllScalars=true]),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Promoted Headers",{{"Proposal Number", "ID"}, {"Institute Name (KH)", "Institute Name (Khmer)"}}),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Proposal ID", Int64.Type}, {"ID", Int64.Type}, {"Proposal Code", type text}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Changed Type5",{{"ID", type text}, {"Institute Name", type text}, {"Institute Name (Khmer)", type text}, {"Status", type text}, {"Registration No", type text}, {"Establishment Year", type text}, {"Staff", Int64.Type}, {"Sector", type text}, {"Expertise", type text}, {"Under Ministry", type text}, {"Website URL", type text}, {"Facebook URL", type text}, {"Contact Person", type text}, {"Job Title", type text}, {"Office", type text}, {"Gender", type text}, {"Telegram No", type text}, {"Email", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"Email", null}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Replaced Errors",{"ID", "Province Name", "District Name", "Training Start Date", "Training End Date"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Training Start Date", type date}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Changed Type2",{{"Province Name", Text.Lower, type text}}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Lowercased Text",{"ID", "Province Name", "District Name"}),
+				    #"Lowercased Text1" = Table.TransformColumns(#"Removed Other Columns1",{{"District Name", Text.Lower, type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Lowercased Text1", {"ID"}, Dim_Proposals_PMS, {"ID"}, "Dim_Proposals_PMS", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposals_PMS" = Table.ExpandTableColumn(#"Merged Queries", "Dim_Proposals_PMS", {"Province"}, {"Province"}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Expanded Dim_Proposals_PMS",{{"Province", Text.Trim, type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Trimmed Text",{{"Province", "Province_right"}, {"Province Name", "Province"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "Unified_ID", each "PMS-" & Text.From([ID])),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type3", "New_ID", each [ID] + 1000),
+				    #"Removed Other Columns2" = Table.SelectColumns(#"Added Custom1",{"ID", "Province", "Unified_ID", "New_ID"}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Removed Other Columns2",{{"New_ID", Int64.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type4",{{"Province", "Location"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,60 @@
+table Dim_Commend_Kb
+	lineageTag: 8b0fbda8-17ac-4ff3-9ff7-2ef8be719842
+
+	column org
+		dataType: string
+		lineageTag: c349ea4a-ba83-4b8a-b208-dbf12434346e
+		summarizeBy: none
+		sourceColumn: org
+
+		annotation SummarizationSetBy = Automatic
+
+	column If_other_specify
+		dataType: string
+		lineageTag: 61a36acc-a558-4c15-825e-75fdfba1b0ba
+		summarizeBy: none
+		sourceColumn: If_other_specify
+
+		annotation SummarizationSetBy = Automatic
+
+	column q2_2
+		dataType: string
+		lineageTag: 79e28e1a-424e-4e0a-8296-4e4a2011ce8c
+		summarizeBy: none
+		sourceColumn: q2_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column _id
+		dataType: string
+		lineageTag: 4693eb3a-0a97-496e-965d-62d0808f234a
+		summarizeBy: none
+		sourceColumn: _id
+
+		annotation SummarizationSetBy = Automatic
+
+	column _index
+		dataType: string
+		lineageTag: 6c207140-2b32-4603-8e32-c2bdc295136b
+		summarizeBy: none
+		sourceColumn: _index
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Commend_Kb = m
+		mode: import
+		queryGroup: 'Trainees'' Satisfaction_KOBO'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/azRmjXmFEJ2QoFnFcEHMML/export-settings/esWg6hvft4DeMa2vHDvZxqG/data.csv"),[Delimiter=";", Columns=56, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"q1_1", type number}, {"q1_2", type number}, {"q1_3", type number}, {"q1_4", type number}, {"q1_5", type number}, {"q1_6", type number}, {"q1_7", type number}, {"q1_8", type number}, {"q1_9", type number}, {"overall_score", type number}, {"overall_score_decimal", type number}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"org", "If_other_specify", "q2_2", "_id", "_index"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([q2_2] <> "" and [q2_2] <> "-ស្នើសុំឯកសារវីដេអូ និង ស្លាយបង្រៀន#(lf)- ស្នើសុំកម្មសិក្សានៅកម្ពុជាបន្ថែម" and [q2_2] <> "aaaaa" and [q2_2] <> "aaaaaaaaaaa" and [q2_2] <> "After completing this course, I gain more knowledge. I want to have more training course in the future." and [q2_2] <> "Everything is good" and [q2_2] <> "Expect to have more courses" and [q2_2] <> "Good training" and [q2_2] <> "I am happy to learn this course" and [q2_2] <> "I am satisfied with this training course and want to have more training course in the future." and [q2_2] <> "I gain more knowledge after completing this course. I request to have more training course in the future." and [q2_2] <> "I hope that all of your team keep this teaching going on forward to the future because it might help some people that really want to learn." and [q2_2] <> "I like so much" and [q2_2] <> "I request to have more training in the future." and [q2_2] <> "I request to have more training." and [q2_2] <> "I think this training course is good and I request to have another training course in the future." and [q2_2] <> "I think this training course is good and request to have more in the future." and [q2_2] <> "I think this training course is good and want to have more training course in the future." and [q2_2] <> "I want to have another training course for improvement." and [q2_2] <> "I want to have more of this training course and improvement." and [q2_2] <> "I want to have more of this training course next time for our community." and [q2_2] <> "I want to have more of this training course." and [q2_2] <> "I want to have more training course in the future." and [q2_2] <> "I want to have more training course." and [q2_2] <> "I wish to join this course again in future." and [q2_2] <> "I would like to learn more" and [q2_2] <> "It would amazing if we get to learn more skill and hospitality." and [q2_2] <> "It would be more helpful or improve able if SDF and ILO should provide industry attachments or do RIS at BYD or at GTV Cambodia for a while in order to build our capacity with the actual workplace." and [q2_2] <> "Keep continue for this programs. This programs help a lot of people to boost their careers and productive." and [q2_2] <> "KPI more couse" and [q2_2] <> "Maybe need to upgrade the training materials to be English version and need more training about diagnostics." and [q2_2] <> "More detailed training on each part" and [q2_2] <> "More paper or notebook for trainers writing section, providing." and [q2_2] <> "more training" and [q2_2] <> "n" and [q2_2] <> "N/A" and [q2_2] <> "NA" and [q2_2] <> "na" and [q2_2] <> "Na" and [q2_2] <> "No" and [q2_2] <> "No everything is good" and [q2_2] <> "No have" and [q2_2] <> "No I like everything so much" and [q2_2] <> "No it's all good" and [q2_2] <> "No, comments #(lf)Thank you to SDF CWEA Trainer and  team work for provide this training to women entrepreneurs in Cambodia" and [q2_2] <> "None" and [q2_2] <> "Nope" and [q2_2] <> "Overall, a really engaging and interesting class with great teachers" and [q2_2] <> "Require​ to​ have​ more​ training​ for​ next​ skills​" and [q2_2] <> "Should be more than two days training" and [q2_2] <> "should develop more training for next" and [q2_2] <> "test" and [q2_2] <> "Thank you" and [q2_2] <> "Thank you NPIA for this course" and [q2_2] <> "Thanks" and [q2_2] <> "Thanks  you!" and [q2_2] <> "Thanks you" and [q2_2] <> "Thanks you!" and [q2_2] <> "គ្មាន" and [q2_2] <> "គ្មានទេ" and [q2_2] <> "គ្មាន​" and [q2_2] <> "អតមានទេ" and [q2_2] <> "អត់ទេ" and [q2_2] <> "អត់មាន" and [q2_2] <> "អត់មានទេ" and [q2_2] <> "អត់មានទេល្អអស់ហើយ" and [q2_2] <> "អត់មានអីទេស្របតាមគ្រប់យ៉ាង" and [q2_2] <> "អរគុណ និងសង្ឃឹមអោយមានវគ្គបណ្ដុះបណ្ដាលបន្ដទៀត" and [q2_2] <> "អរគុណលោកគ្រដែលបានបណ្តុះបណ្តាល គ្រប់វគ្គ គ្រប់មេរៀនធ្វើឲ្យស្រួលស្តាប់ និងយល់" and [q2_2] <> "អរគុណសម្រាប់វាគ្គបណ្ដុះបណ្តាលនេះ" and [q2_2] <> "អ្នកបកប្រែភាសារចិន" and [q2_2] <> "ិមិនមាន" and [q2_2] <> "១. មេរៀនមានតែមិនគ្រប់ ដូចជាមេរៀនទី៥ មិនបានអោយ#(lf)២. សំណូមពរអោយខាងសាលាជួយផ្តល់ video អនុវត្តន៍ដើម្បីអនុវត្តន៍ពេលត្រឡប់ទៅវិញ និងជាគម្រូដើម្បីធ្វើ video ថ្មីជា version ខ្មែរ។" and [q2_2] <> "​សូមអោយមានវគ្គបណ្ដុះបណ្ដាលច្រើនទៀត"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,37 @@
+table SDF_SKill_Images
+	lineageTag: 17d5bc2f-78fe-43b4-af5e-b89518b4a051
+
+	column 'Icons Name'
+		dataType: string
+		lineageTag: 9c8ce1dd-14f6-485a-9a34-8a4a27b39cd7
+		summarizeBy: none
+		sourceColumn: Icons Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinaryIcons
+		dataType: string
+		lineageTag: ecfe17c0-c49b-461c-8d68-28794359d7fe
+		summarizeBy: none
+		sourceColumn: BinaryIcons
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SDF_SKill_Images = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Folder.Files("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_SKill_Images"),
+				    #"Invoked Custom Function" = Table.AddColumn(Source, "BinaryIcons", each ImageTobinary([Content])),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Invoked Custom Function", "Name", Splitter.SplitTextByDelimiter(".", QuoteStyle.Csv), {"Name.1", "Name.2"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Split Column by Delimiter",{{"Name.1", "Icons Name"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Name.2"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"Icons Name", "BinaryIcons"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

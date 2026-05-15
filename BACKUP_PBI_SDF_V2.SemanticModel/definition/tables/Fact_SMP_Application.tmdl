@@ -1,0 +1,172 @@
+table Fact_SMP_Application
+	lineageTag: fee70f57-880a-4755-85e3-dfed08cc5816
+
+	measure 'Total Proposal Sumbited' = COUNTROWS('Fact_SMP_Application')
+		formatString: 0
+		lineageTag: f387c1a9-e031-49d1-81c4-f4ae58980e9b
+
+	column ID
+		dataType: string
+		lineageTag: efab1c7e-9f64-4228-a068-abebf18be231
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Days/Session'
+		dataType: double
+		lineageTag: ee2c62cd-3b6b-4c31-aeff-d067394011ec
+		summarizeBy: sum
+		sourceColumn: Training Days/Session
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Training Length M'
+		dataType: string
+		lineageTag: ba29d37a-31fd-4dde-9de7-40ef4a7479bc
+		summarizeBy: none
+		sourceColumn: Training Length M
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hours/Day/Month
+		dataType: string
+		lineageTag: 68307bf8-9dd6-436d-bd97-76109a365d9b
+		summarizeBy: none
+		sourceColumn: Hours/Day/Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Cost'
+		dataType: double
+		lineageTag: 5a3283bb-dab2-4c0a-89e7-36c07977366c
+		summarizeBy: sum
+		sourceColumn: Unit Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Min Trainee'
+		dataType: double
+		lineageTag: 678853df-74e3-4ff4-a64c-53eb26e964af
+		summarizeBy: sum
+		sourceColumn: Total Min Trainee
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% SDF'
+		dataType: double
+		lineageTag: bac921dd-6b2b-4e98-91e9-731db8733e9b
+		summarizeBy: sum
+		sourceColumn: % SDF
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% Employer'
+		dataType: double
+		lineageTag: 7e829645-18f9-4c7a-bfd4-ece6d2079ab5
+		summarizeBy: sum
+		sourceColumn: % Employer
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Result
+		dataType: string
+		lineageTag: 2fc84248-1cfb-4b55-aaa9-1e0b16c1a5ac
+		summarizeBy: none
+		sourceColumn: Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 19ef7a27-4352-414c-a459-a5c19b29072c
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Code
+		dataType: string
+		lineageTag: 1b5aabac-00d6-4b42-92bd-28c4c48a3bfd
+		summarizeBy: none
+		sourceColumn: Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: b42b38e5-706e-4021-89cc-f5c1abdd858c
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sector
+		dataType: string
+		lineageTag: fe00ccd0-6e0f-4068-83d6-27bd98b438b1
+		summarizeBy: none
+		sourceColumn: Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hours/Session
+		dataType: double
+		lineageTag: 9becc113-d3b4-4842-b4b5-5b47c475a7e2
+		summarizeBy: sum
+		sourceColumn: Hours/Session
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Theory
+		dataType: string
+		lineageTag: 2b8590fe-7db8-4e64-98b9-f835b04370eb
+		summarizeBy: none
+		sourceColumn: Theory
+
+		annotation SummarizationSetBy = Automatic
+
+	column Practice
+		dataType: string
+		lineageTag: 30467325-3643-4753-9c93-2c3b0e8773f2
+		summarizeBy: none
+		sourceColumn: Practice
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_SMP_Application = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"1-SMP_Application_Sheet" = Source{[Item="1-SMP_Application",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"1-SMP_Application_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", type text}, {"Year", type text}, {"Year Stage", type text}, {"Code", type text}, {"Application Date", type date}, {"Training Provider", type text}, {"Training Provider Type", type text}, {"Sector", type text}, {"Contact Person", type text}, {"Email", type text}, {"Phone", type text}, {"Course Title", type text}, {"Hours/Session", type number}, {"Theory", type text}, {"Practice", type text}, {"Training Days/Session", type number}, {"Training Length M", type number}, {"Hours/Day/Month", type text}, {"Unit Cost", type number}, {"Total Min Trainee", type number}, {"% SDF", Percentage.Type}, {"% Employer", Percentage.Type}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"% Employer", null}}),
+				    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Replaced Errors", {{"% SDF", null}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Errors1",{{"Certificate Type", type text}, {"Result", type text}, {"Approved Date", type date}, {"Approval Time", Int64.Type}, {"Budget Source", type text}}),
+				    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Changed Type1", {{"Hours/Session", null}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Errors2",{{"Training Length M", type text}}),
+				    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Changed Type2", {{"Training Length M", null}}),
+				    #"Replaced Errors4" = Table.ReplaceErrorValues(#"Replaced Errors3", {{"Unit Cost", null}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Replaced Errors4",{"ID", "Code", "Training Provider", "Sector", "Hours/Session", "Theory", "Practice", "Training Days/Session", "Training Length M", "Hours/Day/Month", "Unit Cost", "Total Min Trainee", "% SDF", "% Employer", "Result", "Budget Source"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each true)
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,40 @@
+table code_commune
+	lineageTag: 5fa0cb52-3f24-48f1-83b9-e86ed5866fd0
+
+	column 'Commune Code'
+		dataType: string
+		lineageTag: d0d80b5e-30a4-4c0b-87a1-b369ddbe4826
+		summarizeBy: none
+		sourceColumn: Commune Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Commune Name'
+		dataType: string
+		lineageTag: a0215784-b662-46b4-82eb-a06123b17aa1
+		summarizeBy: none
+		sourceColumn: Commune Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition code_commune = m
+		mode: import
+		queryGroup: Laction_info
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\Cascade_Location\code_commune.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers",{{"name", "Commune Code"}, {"label", "Commune Name"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Commune Code", "Commune Name"}),
+				    #"Removed Top Rows" = Table.Skip(#"Removed Other Columns",2),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"Removed Top Rows",1),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Bottom Rows"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates", {"Commune Code", "Commune Name"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Errors")
+				in
+				    #"Removed Duplicates1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

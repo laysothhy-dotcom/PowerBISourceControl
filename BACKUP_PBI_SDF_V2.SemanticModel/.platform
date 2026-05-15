@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "BACKUP_PBI_SDF_V2"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "40a9f465-b5b5-473d-b2d5-c8999211ff83"
+  }
+}

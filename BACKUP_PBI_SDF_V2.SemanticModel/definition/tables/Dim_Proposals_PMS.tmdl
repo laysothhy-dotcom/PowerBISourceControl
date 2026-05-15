@@ -1,0 +1,233 @@
+table Dim_Proposals_PMS
+	lineageTag: 4ba9cca2-fd52-4a44-b2bd-4281cc86bc5c
+
+	column 'Proposal ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: c8ef77e6-419f-42b0-83b0-3939c9c7abc8
+		summarizeBy: none
+		sourceColumn: Proposal ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: f4604a4a-8d1d-4aa3-857d-4604f3d83e0b
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Institute Name'
+		dataType: string
+		lineageTag: f1db7d89-4a6f-4fb1-9766-f916b4101479
+		summarizeBy: none
+		sourceColumn: Institute Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Institute Name (Khmer)'
+		dataType: string
+		lineageTag: db8aa79c-2482-4c77-9965-621aa90b9473
+		summarizeBy: none
+		sourceColumn: Institute Name (Khmer)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 903c7641-3a42-4d95-a9b8-e73f496199b9
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Registration No'
+		dataType: string
+		lineageTag: 25fb733a-c06a-441b-9af4-f1e4b1a07fcb
+		summarizeBy: none
+		sourceColumn: Registration No
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Establishment Year'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 142653ee-3044-4f84-abea-db5958fe9903
+		summarizeBy: none
+		sourceColumn: Establishment Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Sector
+		dataType: string
+		lineageTag: f720b03f-a4a5-4b4d-966a-9d2153437346
+		summarizeBy: none
+		sourceColumn: Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column Expertise
+		dataType: string
+		lineageTag: 7344caa6-66ec-4ae1-aa2b-0184c011860c
+		summarizeBy: none
+		sourceColumn: Expertise
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Under Ministry'
+		dataType: string
+		lineageTag: 0ee75513-35c1-42c8-86bc-116abb688ce9
+		summarizeBy: none
+		sourceColumn: Under Ministry
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Person'
+		dataType: string
+		lineageTag: 29c09815-5f60-464e-badf-f990ff2a50b0
+		summarizeBy: none
+		sourceColumn: Contact Person
+
+		annotation SummarizationSetBy = Automatic
+
+	column Office
+		dataType: string
+		lineageTag: 7f9a3bf2-38c6-4017-9589-ecd24b8b56b4
+		summarizeBy: none
+		sourceColumn: Office
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 4037567d-eec8-43e0-be16-37c4ee00b512
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Initiated By'
+		dataType: string
+		lineageTag: 7465fc7e-8dd3-4d5a-9a02-60119fdf307b
+		summarizeBy: none
+		sourceColumn: Initiated By
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Scheme'
+		dataType: string
+		lineageTag: 97a3f68d-f5ea-43af-824b-c095cbfdbd59
+		summarizeBy: none
+		sourceColumn: Training Scheme
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training License'
+		dataType: string
+		lineageTag: c77d0dcb-a06e-459e-9410-a2e0b6868b95
+		summarizeBy: none
+		sourceColumn: Training License
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Province Name'
+		dataType: string
+		lineageTag: fb45cd22-1fff-47c9-b516-b85cc2d7bc59
+		summarizeBy: none
+		sourceColumn: Province Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'District Name'
+		dataType: string
+		lineageTag: 67c4b743-0992-4190-8f9c-9d5bbdbbfe25
+		summarizeBy: none
+		sourceColumn: District Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Start Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 41baad87-6d32-42d3-94f1-701bffe25e2e
+		summarizeBy: none
+		sourceColumn: Training Start Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Training End Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: acd0fa35-a4e2-4133-b8db-7d62ce66378f
+		summarizeBy: none
+		sourceColumn: Training End Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Created At'
+		dataType: string
+		lineageTag: 6d73b10d-2503-4275-9ea2-a9174ba607cf
+		summarizeBy: none
+		sourceColumn: Created At
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: bbcef5d9-1457-4121-a796-2819feecf8e9
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: string
+		lineageTag: 9c38c07e-5e62-4ad9-979f-252eec1a29fa
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposals_PMS = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true),
+				    Data = Source[Data],
+				    Data1 = Data{0},
+				    #"Promoted Headers" = Table.PromoteHeaders(Data1, [PromoteAllScalars=true]),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Promoted Headers",{{"Proposal Number", "ID"}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Renamed Columns1",{{"ID", Int64.Type}, {"Proposal ID", Int64.Type}, {"Proposal Code", type text}, {"Institute Name", type text}}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Changed Type3",{{"Institute Name (KH)", "Institute Name (Khmer)"}}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Institute Name (Khmer)", type text}, {"Status", type text}, {"Registration No", type text}, {"Establishment Year", type date}, {"Staff", Int64.Type}, {"Sector", type text}, {"Expertise", type text}, {"Under Ministry", type text}, {"Website URL", type text}, {"Facebook URL", type text}, {"Contact Person", type text}, {"Job Title", type text}, {"Office", type text}, {"Gender", type text}, {"Telegram No", type text}, {"Email", type text}, {"Initiated By", type text}, {"Training Scheme", type text}, {"Training License", type text}, {"Province Name", type text}, {"District Name", type text}}),
+				    #"Lowercased Text1" = Table.TransformColumns(#"Changed Type4",{{"Province Name", Text.Lower, type text}, {"District Name", Text.Lower, type text}}),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Lowercased Text1",{{"Training Start Date", type date}, {"Training End Date", type date}, {"Created At", type date}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Changed Type5",{{"Province Name", Text.Lower, type text}, {"District Name", Text.Lower, type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Lowercased Text",{{"Training Start Date", type date}, {"Training End Date", type date}, {"Created At", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type1","siem reab","Siem Reap",Replacer.ReplaceText,{"Province Name"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","phnum penh","Phnom Penh",Replacer.ReplaceText,{"Province Name"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","preah sihanouk","Preah Sihanouk",Replacer.ReplaceText,{"Province Name"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","kampong thum","Kampong Thom",Replacer.ReplaceText,{"Province Name"}),
+				    #"Inserted Lowercased Text" = Table.AddColumn(#"Replaced Value3", "lowercase", each Text.Lower([Province Name]), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Lowercased Text",{{"lowercase", "Province"}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Renamed Columns",{{"Province", Text.Trim, type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Trimmed Text", "Unified_ID", each "PMS-" & Text.From([ID])),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type2", "New_ID", each [ID] + 1000),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Added Custom1",{"Proposal ID", "ID", "Institute Name", "Institute Name (Khmer)", "Status", "Registration No", "Establishment Year", "Sector", "Expertise", "Under Ministry", "Contact Person", "Office", "Gender", "Initiated By", "Training Scheme", "Training License", "Province Name", "District Name", "Training Start Date", "Training End Date", "Created At", "Unified_ID", "New_ID"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

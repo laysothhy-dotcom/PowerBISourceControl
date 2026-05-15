@@ -1,0 +1,79 @@
+table 'Dim_Trainees'' Institute_kb'
+	lineageTag: dabd7202-2c94-42b4-999d-b00d4c8d54d3
+
+	column contract_No
+		dataType: string
+		lineageTag: 51dd16ca-f0e8-4934-9c52-e91756d8968b
+		summarizeBy: none
+		sourceColumn: contract_No
+
+		annotation SummarizationSetBy = Automatic
+
+	column provider
+		dataType: string
+		lineageTag: 59491867-6933-46c9-b2a8-b6b06dd8670e
+		summarizeBy: none
+		sourceColumn: provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column other_tp_name
+		dataType: string
+		lineageTag: 820aaca2-5d46-4588-b523-78efcfef8823
+		summarizeBy: none
+		sourceColumn: other_tp_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column program_type
+		dataType: string
+		lineageTag: 7ef2a827-5a35-4926-ac72-b4325e46f32e
+		summarizeBy: none
+		sourceColumn: program_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column batch_number
+		dataType: string
+		lineageTag: 1956ca2b-4e96-423f-aa6b-064419298f84
+		summarizeBy: none
+		sourceColumn: batch_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column _id
+		dataType: string
+		lineageTag: de62920a-9b53-425a-b2a5-7c19b36a75e8
+		summarizeBy: none
+		sourceColumn: _id
+
+		annotation SummarizationSetBy = Automatic
+
+	column _index
+		dataType: string
+		lineageTag: d2b53a26-6110-4828-b0f9-e037070bc7bf
+		summarizeBy: none
+		sourceColumn: _index
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_Trainees'' Institute_kb' = m
+		mode: import
+		queryGroup: 'Trainees'' Satisfaction_KOBO'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/azRmjXmFEJ2QoFnFcEHMML/export-settings/esWg6hvft4DeMa2vHDvZxqG/data.csv"),[Delimiter=";", Columns=56, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"q1_1", type number}, {"q1_2", type number}, {"q1_3", type number}, {"q1_4", type number}, {"q1_5", type number}, {"q1_6", type number}, {"q1_7", type number}, {"q1_8", type number}, {"q1_9", type number}, {"overall_score", type number}, {"overall_score_decimal", type number}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"contract_No", "provider", "other_tp_name", "program_type", "batch_number", "_id", "_index"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Blank Rows", {"contract_No", "provider", "other_tp_name", "program_type", "batch_number", "_id", "_index"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Errors", each ([provider] = "Camma" or [provider] = "Cammaabiz(Cambodia)CO.,LTD" or [provider] = "CAMMABIZ" or [provider] = "CAMMABIZ ( CAMBODIA) CO.,LTD." or [provider] = "Cammabiz (Cambodia )Co,.LTD" or [provider] = "CAMMABIZ (CAMBODIA) CO LTD" or [provider] = "Cammabiz (Cambodia) co,. Ltd" or [provider] = "CAMMABIZ (CAMBODIA) CO. ,LTD" or [provider] = "CAMMABIZ (CAMBODIA) CO., LTD" or [provider] = "Cammabiz (Cambodia) co., ltd" or [provider] = "CAMMABIZ (Cambodia) co.,ltd" or [provider] = "CAMMABIZ (CAMBODIA)​ CO.,​LTD" or [provider] = "Cammabiz Cambodia co., Ltd" or [provider] = "Cammabiz Cambodia Co., ltd" or [provider] = "CAMMABIZ( Cambodia) CO.,LTD" or [provider] = "CAMMABIZ(CAMBODIA) CO., LTD" or [provider] = "CAMMABIZ(Cambodia) co.,Ltd" or [provider] = "CAMMABIZ​" or [provider] = "CAMMBIZ(CAMBODIA) CO.,LTD" or [provider] = "CAMNMBIZ (CAMBODIA)" or [provider] = "edi" or [provider] = "SDF  RMA Cambodia" or [provider] = "SDF/ILO and RMA Cambodia" or [provider] = "sunrise" or [provider] = "Sunrise Institute" or [provider] = "SunriseInstitute" or [provider] = "sunrise_3"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

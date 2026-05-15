@@ -1,0 +1,23 @@
+table 'Invoked Function'
+	lineageTag: a2ef0db6-518e-45c4-8d65-32f66232897b
+
+	column 'Invoked Function'
+		dataType: string
+		lineageTag: ef28e04a-467f-4f7d-b2c1-43a9c985cc69
+		summarizeBy: none
+		sourceColumn: Invoked Function
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Invoked Function' = m
+		mode: import
+		source =
+				let
+				    Source = fnReplaceUnicode("Problematic_Character", Unicode_Mapping_Table, "Problematic_Character", "Replacement_Text")
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

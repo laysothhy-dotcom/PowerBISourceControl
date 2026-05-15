@@ -1,0 +1,66 @@
+table 'Dim_Training Provider_PMS'
+	lineageTag: a07c1c2c-fca4-4552-96cb-545c4dd0db2e
+
+	measure Total_Unique_TP_PMS =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Dim_Training Provider_PMS'[Training Provider]),
+			    ALLSELECTED('Dim_Training Provider_PMS')
+			)
+		formatString: 0
+		lineageTag: d2b23ab0-333b-493e-8baf-48ddc3b686d1
+
+	measure 'Grand Total_TP' = [Total_Unique_TP_EX] + [Total_Unique_TP_PMS]
+		formatString: 0
+		lineageTag: f1f11a6c-5009-4979-a0f9-6adb193eab8e
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 17616666-e046-4f59-a492-6fdc6cdfa618
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: 44681bcf-a417-4f9b-a03b-02363cd25111
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 6bbc0340-c8ff-491c-b3cd-1521d0330245
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: b12afc56-df1a-4da3-9168-db67eb602769
+		summarizeBy: count
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_Training Provider_PMS' = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = #"Dim_Proposal Partner_PMS",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"ID", "Institute Name", "Unified_ID", "New_ID"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Institute Name", "Training Provider"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"New_ID", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

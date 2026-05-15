@@ -1,0 +1,144 @@
+table Fact_PMS_TrainingCost_Excel
+	lineageTag: 33ac07ff-e09e-4090-83d9-8e14f26296a6
+
+	column 'Proposal ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 20485e21-ad8f-407c-84f7-3a6fc2da0c32
+		summarizeBy: count
+		sourceColumn: Proposal ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Trainee Allowance'
+		dataType: double
+		lineageTag: bc39b742-543c-475c-8a99-c2491da3d886
+		summarizeBy: sum
+		sourceColumn: Total Trainee Allowance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Trainining Cost'
+		dataType: double
+		lineageTag: 0ccc46d8-79e7-45a2-a891-e5cafa2c340a
+		summarizeBy: sum
+		sourceColumn: Total Trainining Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Cost of Proposal $'
+		dataType: double
+		lineageTag: 3803b463-fbfb-4ad8-adca-0b8887054635
+		summarizeBy: sum
+		sourceColumn: Cost of Proposal $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'SDF Contribution $'
+		dataType: double
+		lineageTag: e9b98cf6-6e83-4839-82fc-fb5080ab9ca1
+		summarizeBy: sum
+		sourceColumn: SDF Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% SDF'
+		dataType: double
+		lineageTag: 49243c69-a55d-46b1-8e1a-bf9d186d9c9b
+		summarizeBy: sum
+		sourceColumn: % SDF
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'School Contribution $'
+		dataType: double
+		lineageTag: 83f37f40-8ec1-4349-8337-e6c41c56596f
+		summarizeBy: sum
+		sourceColumn: School Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% School'
+		dataType: double
+		lineageTag: 62352033-3b78-48da-a076-4c31cce9c5c4
+		summarizeBy: sum
+		sourceColumn: % School
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Company Contribution $'
+		dataType: double
+		lineageTag: c13fb145-eddd-44ee-9dea-12ccbe4aecff
+		summarizeBy: sum
+		sourceColumn: Company Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% Company'
+		dataType: double
+		lineageTag: 0ce398f9-02f8-41e4-bb12-26017e6aea3a
+		summarizeBy: sum
+		sourceColumn: % Company
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Unified_ID '
+		dataType: string
+		lineageTag: 4bba7ad8-6b19-43fb-9983-adb329d1d4e8
+		summarizeBy: none
+		sourceColumn: "Unified_ID "
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: ebf820c6-4a6f-4cff-b917-432cc2bac94c
+		summarizeBy: count
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_PMS_TrainingCost_Excel = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\Proposals_Prod_V2.xlsx"), null, true),
+				    #"Budget Plan V1_Sheet" = Source{[Item="Budget Plan V1",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Budget Plan V1_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Proposal ID", type text}, {"Proposal Code", type text}, {"Institute Name", type text}, {"Institute Name (KH)", type text}, {"Skill ID", type text}, {"Skill Title", type text}, {"Training Program", type text}, {"Total Trainee", Int64.Type}, {"Training Day", type number}, {"Total Trainee Allowance", type number}, {"Total Trainining Cost", type number}, {"Total Cost", type number}, {"SDF Cost", type number}, {"SDF Cost (%)", type number}, {"Training Provider Cost", type number}, {"Training Provider Cost (%)", type number}, {"Enterprise Cost", type number}, {"Enterprise Cost (%)", type number}, {"Created At", type datetime}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Unified_ID ", each "PMS-" & Text.From([Proposal ID])),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID ", type text}, {"Proposal ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type1", "New_ID", each [Proposal ID] + 1000),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom1",{{"Total Cost", "Cost of Proposal $"}, {"SDF Cost (%)", "% SDF"}, {"SDF Cost", "SDF Contrubution $"}, {"Training Provider Cost", "School Contribution $"}, {"Training Provider Cost (%)", "%School"}, {"Enterprise Cost (%)", "%Company"}, {"Enterprise Cost", "Company Contribution $"}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Renamed Columns",{{"New_ID", Int64.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type2",{{"Total Trainee", "Trainee​​ Proposal"}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns1", {"Proposal ID"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Duplicates",{"Proposal ID", "Total Trainee Allowance", "Total Trainining Cost", "Cost of Proposal $", "SDF Contrubution $", "% SDF", "School Contribution $", "%School", "Company Contribution $", "%Company", "Unified_ID ", "New_ID"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Other Columns",{{"%School", "% School"}, {"%Company", "% Company"}, {"SDF Contrubution $", "SDF Contribution $"}})
+				in
+				    #"Renamed Columns2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

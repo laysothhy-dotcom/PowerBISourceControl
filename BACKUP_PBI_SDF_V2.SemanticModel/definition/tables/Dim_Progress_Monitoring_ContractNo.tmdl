@@ -1,0 +1,78 @@
+table Dim_Progress_Monitoring_ContractNo
+	lineageTag: 53fc77b0-ecbd-48d2-9f1e-75a82ca52fa1
+
+	column Initiator
+		dataType: string
+		lineageTag: c930d1c3-34af-4313-abef-5502c5cd37eb
+		summarizeBy: none
+		sourceColumn: Initiator
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 14fc9c46-e3c7-453d-9c96-d4a0fe897fa4
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: c8ecf819-c595-4a61-afc7-c280b299b830
+		summarizeBy: sum
+		sourceColumn: Female_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contract #'
+		dataType: string
+		lineageTag: 1032c4de-3a66-444d-bf0e-5c6eb4489cee
+		summarizeBy: none
+		sourceColumn: Contract #
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: ffaaab5f-6270-4b01-8345-dface9183a3b
+		summarizeBy: count
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SatisfactionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: e8da4d31-ab83-4091-b714-083ae82a81b3
+		summarizeBy: none
+		sourceColumn: SatisfactionKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Progress_Monitoring_ContractNo = m
+		mode: import
+		queryGroup: 'Progress Monitoring'
+		source =
+				let
+				    Source = #"Progress Monitoring_Updated",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"ID", "Initiator", "Training Type", "Trainees_Proposal", "Female_Proposal", "Contract #"}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Removed Other Columns", "ID", "ID - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"ID - Copy", "New_ID"}}),
+				    #"Appended Query" = Table.Combine({#"Renamed Columns", Dim_Trainees​​_Proposal_PMS_Append}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Appended Query",{"Initiator", "Trainees_Proposal", "Female_Proposal", "Contract #", "New_ID"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns1"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates", {"Initiator", "Trainees_Proposal", "Female_Proposal", "Contract #"}),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Duplicates1", {"Contract #"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Duplicates2", {"Contract #"}, Dim_SatisfactionContract, {"Contract #"}, "Dim_SatisfactionContract", JoinKind.LeftOuter),
+				    #"Expanded Dim_SatisfactionContract" = Table.ExpandTableColumn(#"Merged Queries", "Dim_SatisfactionContract", {"SatisfactionKey"}, {"SatisfactionKey"})
+				in
+				    #"Expanded Dim_SatisfactionContract"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

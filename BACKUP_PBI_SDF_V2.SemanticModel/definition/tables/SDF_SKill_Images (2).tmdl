@@ -1,0 +1,79 @@
+table 'SDF_SKill_Images (2)'
+	lineageTag: 2f835ffb-66e5-4563-a7b7-43ed5c0ae3d3
+
+	column 'Icons Name'
+		dataType: string
+		lineageTag: 6705f54f-c1c2-4e05-979d-043ae8b2e000
+		summarizeBy: none
+		sourceColumn: Icons Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Extension
+		dataType: string
+		lineageTag: 65eae0f8-ae4d-4f7e-ae47-aa7c290f3a01
+		summarizeBy: none
+		sourceColumn: Extension
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date accessed'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fa149063-ff5b-45c8-808c-82a2e3080eda
+		summarizeBy: none
+		sourceColumn: Date accessed
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date modified'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 680fb6cc-acfa-4acb-a798-b42d06f1b8b5
+		summarizeBy: none
+		sourceColumn: Date modified
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date created'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2e39dd1e-3b31-4f52-bcc1-841d6bd2afae
+		summarizeBy: none
+		sourceColumn: Date created
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder Path'
+		dataType: string
+		lineageTag: 6a288d9e-bcf0-482f-b6fc-7ea2816e0c7a
+		summarizeBy: none
+		sourceColumn: Folder Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinaryIcons
+		dataType: string
+		lineageTag: 47543ca4-9821-4ea5-bd8c-fbaa5f036468
+		summarizeBy: none
+		sourceColumn: BinaryIcons
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'SDF_SKill_Images (2)' = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Folder.Files("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_SKill_Images"),
+				    #"Invoked Custom Function" = Table.AddColumn(Source, "BinaryIcons", each ImageTobinary([Content])),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Invoked Custom Function", "Name", Splitter.SplitTextByDelimiter(".", QuoteStyle.Csv), {"Name.1", "Name.2"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Split Column by Delimiter",{{"Name.1", "Icons Name"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Name.2"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

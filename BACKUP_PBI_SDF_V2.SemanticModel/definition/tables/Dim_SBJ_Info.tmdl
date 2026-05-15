@@ -1,0 +1,130 @@
+table Dim_SBJ_Info
+	lineageTag: 3d23b985-42db-4b06-806f-07ad11743c50
+
+	column 'No.'
+		dataType: string
+		lineageTag: 5a5fa538-5e0f-4576-9965-b129e3ac0c4f
+		summarizeBy: none
+		sourceColumn: No.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: fcef2f76-695b-48d1-89d3-f557dc01a0a8
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# of training project'
+		dataType: int64
+		formatString: 0
+		lineageTag: 234b8bbd-3ca8-4f11-bd76-e8d080e1135b
+		summarizeBy: none
+		sourceColumn: # of training project
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# of trainees'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2cdb25c7-d19e-45a0-aed2-9fcde84369bc
+		summarizeBy: none
+		sourceColumn: # of trainees
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female
+		dataType: int64
+		formatString: 0
+		lineageTag: 5b44340a-7036-4006-a52f-a22016fb4c47
+		summarizeBy: none
+		sourceColumn: Female
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget (USD) Total project cost'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 9ad3fece-3017-43e5-947c-5f1d14c7f739
+		summarizeBy: none
+		sourceColumn: Budget (USD) Total project cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Budget (USD) Enterprise cost-share'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: fbe70e76-1873-4393-9db3-f531848af85a
+		summarizeBy: none
+		sourceColumn: Budget (USD) Enterprise cost-share
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Budget (USD) TP cost-share'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 9dde9dbd-ecbd-42f2-913a-ebafc768da0a
+		summarizeBy: none
+		sourceColumn: Budget (USD) TP cost-share
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Budget (USD) SDF cost-share'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: edb4e89a-0d2f-4dff-ac0f-b0031407c331
+		summarizeBy: none
+		sourceColumn: Budget (USD) SDF cost-share
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Sectors
+		dataType: string
+		lineageTag: c32afa5a-101c-45d1-ad42-90e9c0194d99
+		summarizeBy: none
+		sourceColumn: Sectors
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skills
+		dataType: string
+		lineageTag: 46bf606e-f539-4824-8261-19cbe6bc6383
+		summarizeBy: none
+		sourceColumn: Skills
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date of training start'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3abd4dca-c693-4012-83e2-d0fa6017e34d
+		summarizeBy: none
+		sourceColumn: Date of training start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Dim_SBJ_Info = m
+		mode: import
+		queryGroup: 'SBJ Project'
+		source =
+				let
+				    Source = Fact_SBJ_Archieved
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

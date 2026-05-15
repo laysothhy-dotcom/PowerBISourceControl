@@ -1,0 +1,98 @@
+table SDF_Skill_Icons
+	lineageTag: d02d6fd8-c02f-4ec9-ac50-062119a50682
+
+	column Extension
+		dataType: string
+		lineageTag: 7be65965-48b7-4716-83c3-2d45aaf545fc
+		summarizeBy: none
+		sourceColumn: Extension
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date accessed'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f27496e3-2fed-478e-9f69-7d052604bb8c
+		summarizeBy: none
+		sourceColumn: Date accessed
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date modified'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b7606cb4-3d2f-40fd-9bac-a21101e586cd
+		summarizeBy: none
+		sourceColumn: Date modified
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date created'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fb544089-dc92-4555-8584-32d8287d25e0
+		summarizeBy: none
+		sourceColumn: Date created
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder Path'
+		dataType: string
+		lineageTag: 40b6b02e-0f5f-4271-a70a-bd53eefea003
+		summarizeBy: none
+		sourceColumn: Folder Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Icons Name'
+		dataType: string
+		lineageTag: e403f02c-b1b1-4abc-82fd-d61ed1a5e988
+		summarizeBy: none
+		sourceColumn: Icons Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinaryIcons
+		dataType: string
+		lineageTag: c1b3d52e-98da-4ada-9598-ba581e749b55
+		summarizeBy: none
+		sourceColumn: BinaryIcons
+
+		annotation SummarizationSetBy = Automatic
+
+	column SDF_IconsName
+		dataType: string
+		lineageTag: d7b5601e-8ad2-487d-8bb8-7e4008e4ddff
+		summarizeBy: none
+		sourceColumn: SDF_IconsName
+
+		annotation SummarizationSetBy = Automatic
+
+	column SDF_BinaryIcons
+		dataType: string
+		lineageTag: 4f0ebb4a-3a6c-439e-bbd3-4ce35c38edd2
+		summarizeBy: none
+		sourceColumn: SDF_BinaryIcons
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SDF_Skill_Icons = m
+		mode: import
+		queryGroup: ImageBinary
+		source =
+				let
+				    Source = Folder.Files("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_Skill_Icons"),
+				    #"Invoked Custom Function" = Table.AddColumn(Source, "BinaryIcons", each IconsTobinary([Content])),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Invoked Custom Function", "Name", Splitter.SplitTextByDelimiter(".", QuoteStyle.Csv), {"Name.1", "Name.2"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Split Column by Delimiter",{{"Name.1", "Icons Name"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Name.2"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Columns", {"Icons Name"}, SDF_Skill_Icons_Appen, {"IconsName"}, "SDF_Skill_Icons_Appen", JoinKind.LeftOuter),
+				    #"Expanded SDF_Skill_Icons_Appen" = Table.ExpandTableColumn(#"Merged Queries", "SDF_Skill_Icons_Appen", {"IconsName", "BinaryIcons"}, {"SDF_Skill_Icons_Appen.IconsName", "SDF_Skill_Icons_Appen.BinaryIcons"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Expanded SDF_Skill_Icons_Appen",{{"SDF_Skill_Icons_Appen.BinaryIcons", "SDF_BinaryIcons"}, {"SDF_Skill_Icons_Appen.IconsName", "SDF_IconsName"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

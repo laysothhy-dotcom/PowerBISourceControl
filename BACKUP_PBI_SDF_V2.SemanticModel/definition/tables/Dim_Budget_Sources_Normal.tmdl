@@ -1,0 +1,64 @@
+table Dim_Budget_Sources_Normal
+	lineageTag: 194ce41d-50a1-4e56-a6bb-2826826d1384
+
+	column ID
+		dataType: string
+		lineageTag: 77fce62b-9e00-4994-b4e5-791c7f878b40
+		summarizeBy: none
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 858e4fbd-a996-46c2-9d29-d14b5793808b
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Budget_Sources_Normal = m
+		mode: import
+		queryGroup: 'Training Cost Disburshment\Deburshement Normal'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"4-Disburse_Normal_Sheet" = Source{[Item="4-Disburse_Normal",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"4-Disburse_Normal_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", type any}, {"Proposal Type", type any}, {"Contract #", type any}, {"Initiator", type any}, {"Skill", type any}, {"Trainees_Proposal", Int64.Type}, {"SDF Contribution Riels", type number}, {"Track_Contract Duration", type text}, {"# Disbursements", Int64.Type}, {"Planned Budget 1st#(lf)(10%)", type number}, {"Expected Date 1st", Int64.Type}, {"Text_Expected Date 1st", type text}, {"Track_NP_Estimate 1", type text}, {"Date Doc Submit 1st", Int64.Type}, {"Date Approved 1st Doc", Int64.Type}, {"Date Received Budget 1st", type any}, {"Text Date Received Budget 1st", type text}, {"Disbursed 1 Riels", type number}, {"Disbursed 1 $", type number}, {"Track_NP_Disburse 1", type text}, {"Planned Budget 2nd#(lf)(40%)", type number}, {"Expected Date 2nd", Int64.Type}, {"Text_Expected Date 2nd", type text}, {"Track_NP_Estimate 2", type text}, {"Date Doc Submit 2nd", Int64.Type}, {"Date Approved 2nd Doc", Int64.Type}, {"Date Received Budget 2nd", Int64.Type}, {"Text Date Received Budget 2nd", type text}, {"Disbursed 2 Riels", type number}, {"Disbursed 2 $", type number}, {"Track_NP_Disburse 2", type text}, {"Planned Budget 3rd#(lf)(30%)", type number}, {"Expected Date 3rd", type number}, {"Track_NP_Estimate 3", type text}, {"Text_Expected Date 3rd", type text}, {"Date Doc Submit 3rd", Int64.Type}, {"Date Approved 3rd Doc", Int64.Type}, {"Date Received Budget 3rd", type any}, {"Text Date Received Budget 3rd", type text}, {"Disbursed 3 Riels", type number}, {"Disbursed 3 $", type number}, {"Track_NP_Disburse 3", type text}, {"Planned Budget 4th#(lf)(20%)", type number}, {"Expected Date 4th", Int64.Type}, {"Text_Expected Date 4th", type text}, {"Track_NP_Estimate 4", type text}, {"Date Doc Submit 4th", Int64.Type}, {"Date Approved 4th Doc", Int64.Type}, {"Date Received Budget 4th", type any}, {"Text Date Received Budget 4th", type text}, {"Disbursed 4 Riels", Int64.Type}, {"Disbursed 4 $", type number}, {"Track_NP_Disburse 4", type text}, {"Training Progress", type text}, {"Disbursement Progress", type text}, {"Disbursed Budget Riels", type number}, {"Disbursed $ Exchange Rate", type number}, {"Column1", type text}, {"%Disbursed", type any}, {"Balance Normal Riels", type number}, {"Budget Source", type any}, {"Focal M&E", type any}, {"Recruited Trainee", Int64.Type}, {"Remained Trainee", Int64.Type}, {"Estimated Trainee", Int64.Type}, {"Balanced Remained & Estimated Trainee", Int64.Type}, {"Track_PWS Estimate 1", type text}, {"Track_PWS Estimate 2", type text}, {"Track_PWS Estimate 3", type text}, {"Track_PWS Estimate 4", type text}, {"Disbursed 1 Riels PS", type number}, {"Disbursed 1 $ PS", type number}, {"Disbursed 2 Riels PS", type number}, {"Disbursed 2 $ PS", type number}, {"Disbursed 3 Riels PS", type number}, {"Disbursed 3 $ PS", type number}, {"Disbursed 4 Riels PS", Int64.Type}, {"Disbursed 4 $ PS", Int64.Type}, {"Disbursed Budget Riels PS", type number}, {"Disbursed $ Exchange Rate PS", type number}, {"Track_PWS Disburse 1", type text}, {"Track_PWS Disburse 2", type text}, {"Track_PWS Disburse 3", type text}, {"Track_PWS Disburse 4", type text}, {"Remain Budget Riels PS", type number}, {"Estimated Budget Riels PS", type any}, {"Balance Remained & Estimated Budget PS", type any}, {"Column2", type any}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"ID", type text}, {"Year Stage", type text}, {"Proposal Type", type text}, {"Contract #", type text}, {"Initiator", type text}, {"Skill", type text}, {"Expected Date 1st", type date}, {"Text_Expected Date 1st", type date}, {"Date Doc Submit 1st", type date}, {"Date Approved 1st Doc", type date}, {"Date Received Budget 1st", type date}, {"Text Date Received Budget 1st", type date}, {"Disbursed 1 $", Currency.Type}, {"Expected Date 2nd", type date}, {"Text_Expected Date 2nd", type date}, {"Date Doc Submit 2nd", type date}, {"Date Approved 2nd Doc", type date}, {"Date Received Budget 2nd", type date}, {"Text Date Received Budget 2nd", type date}, {"Disbursed 2 $", Currency.Type}, {"Expected Date 3rd", type date}, {"Text_Expected Date 3rd", type date}, {"Date Doc Submit 3rd", type date}, {"Date Approved 3rd Doc", type date}, {"Date Received Budget 3rd", type date}, {"Text Date Received Budget 3rd", type date}, {"Disbursed 3 Riels", type number}, {"Disbursed 3 $", Currency.Type}, {"Planned Budget 4th#(lf)(20%)", type number}, {"Expected Date 4th", type date}, {"Text_Expected Date 4th", type date}, {"Date Doc Submit 4th", type date}, {"Date Approved 4th Doc", type date}, {"Date Received Budget 4th", type date}, {"Text Date Received Budget 4th", type date}, {"Disbursed 4 Riels", type number}, {"Disbursed 4 $", Currency.Type}, {"Disbursed $ Exchange Rate", Currency.Type}, {"%Disbursed", type number}, {"Budget Source", type text}, {"Focal M&E", type text}, {"Disbursed 4 Riels PS", type number}, {"Disbursed 4 $ PS", type number}, {"Estimated Budget Riels PS", type number}, {"Balance Remained & Estimated Budget PS", type number}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Column2"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Columns", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Removed Blank Rows", {{"Text_Expected Date 1st", type date}}, "id-ID"),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type with Locale", {{"Text_Expected Date 1st", null}}),
+				    #"Changed Type with Locale1" = Table.TransformColumnTypes(#"Replaced Errors", {{"Date Received Budget 1st", type date}}, "id-ID"),
+				    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Changed Type with Locale1", {{"Date Received Budget 1st", null}}),
+				    #"Changed Type with Locale2" = Table.TransformColumnTypes(#"Replaced Errors1", {{"Text Date Received Budget 1st", type date}}, "id-ID"),
+				    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Changed Type with Locale2", {{"Text Date Received Budget 1st", null}}),
+				    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Replaced Errors2", {{"Text_Expected Date 2nd", null}}),
+				    #"Replaced Errors4" = Table.ReplaceErrorValues(#"Replaced Errors3", {{"Text Date Received Budget 2nd", null}}),
+				    #"Replaced Errors5" = Table.ReplaceErrorValues(#"Replaced Errors4", {{"Text_Expected Date 3rd", null}}),
+				    #"Replaced Errors6" = Table.ReplaceErrorValues(#"Replaced Errors5", {{"Date Received Budget 3rd", null}}),
+				    #"Replaced Errors7" = Table.ReplaceErrorValues(#"Replaced Errors6", {{"Text Date Received Budget 3rd", null}}),
+				    #"Replaced Errors8" = Table.ReplaceErrorValues(#"Replaced Errors7", {{"Text_Expected Date 4th", null}}),
+				    #"Replaced Errors9" = Table.ReplaceErrorValues(#"Replaced Errors8", {{"Date Received Budget 4th", null}}),
+				    #"Replaced Errors10" = Table.ReplaceErrorValues(#"Replaced Errors9", {{"Text Date Received Budget 4th", null}}),
+				    #"Replaced Errors11" = Table.ReplaceErrorValues(#"Replaced Errors10", {{"%Disbursed", null}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Errors11",{{"Estimated Budget Riels PS", type number}}),
+				    #"Replaced Errors12" = Table.ReplaceErrorValues(#"Changed Type2", {{"Estimated Budget Riels PS", null}}),
+				    #"Replaced Errors13" = Table.ReplaceErrorValues(#"Replaced Errors12", {{"Balance Remained & Estimated Budget PS", null}}),
+				    #"Removed Blank Rows1" = Table.SelectRows(#"Replaced Errors13", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Blank Rows1",{"ID", "Budget Source"})
+				in
+				    #"Removed Other Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

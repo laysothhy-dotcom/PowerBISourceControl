@@ -1,0 +1,72 @@
+table Fact_Proposal_Cost_Appen_kobo
+	lineageTag: 4e846752-ebe6-4de4-a296-62bfa273fb4b
+
+	column ID
+		dataType: string
+		lineageTag: 1476ad5f-ae6f-4d9b-a315-ef1bc53e9752
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'School Contribution $'
+		dataType: string
+		lineageTag: 494470af-44f0-40a5-96a1-df1d231310d5
+		summarizeBy: none
+		sourceColumn: School Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Company Contribution $'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: f1df76a1-43cf-440d-bb69-013512102bed
+		summarizeBy: sum
+		sourceColumn: Company Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'SDF Contribution $'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 516ae902-91ab-4a5c-bac2-b6fd942ea14f
+		summarizeBy: sum
+		sourceColumn: SDF Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Awarded
+		dataType: string
+		lineageTag: 2b802ff6-108a-4e71-b7b1-ac8bde5f9201
+		summarizeBy: none
+		sourceColumn: Awarded
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Proposal_Cost_Appen_kobo = m
+		mode: import
+		queryGroup: Proposal
+		source =
+				let
+				    Source = Fact_Proposal_Cost_kobo,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"id", "prop_id", "skill_cost", "total_tpshar", "total_comshar", "total_sdfshar", "tpshar_percent", "comshar_percent", "sdfshar_percent", "total_cost", "total_percent", "calc_total_trainees_1_031", "calc_total_female_1_032", "calc_total_trainees_2_065", "calc_total_female_2_066", "calc_total_trainees_3_099", "calc_total_female_3_100", "calc_total_trainees_4_133", "calc_total_female_4_134"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"total_comshar", "Company Contribution $"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Company Contribution $", Currency.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type",{{"total_tpshar", "School Contribution $"}, {"total_sdfshar", "SDF Contribution $"}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns1",{{"SDF Contribution $", Currency.Type}}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Changed Type1",{{"id", "ID"}}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns2",{"ID", "School Contribution $", "Company Contribution $", "SDF Contribution $"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Other Columns1", {"ID"}, Dim_Proposal_Awarded_kobo, {"ID"}, "Dim_Proposal_Awarded_kobo", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposal_Awarded_kobo" = Table.ExpandTableColumn(#"Merged Queries", "Dim_Proposal_Awarded_kobo", {"Awarded"}, {"Dim_Proposal_Awarded_kobo.Awarded"}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Expanded Dim_Proposal_Awarded_kobo",{{"Dim_Proposal_Awarded_kobo.Awarded", "Awarded"}})
+				in
+				    #"Renamed Columns3"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

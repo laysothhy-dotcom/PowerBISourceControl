@@ -1,0 +1,84 @@
+table Fact_SBJ_Progress
+	lineageTag: 7ed19a07-2d08-49d8-b794-cb0c1b52098e
+
+	column 'No.'
+		dataType: string
+		lineageTag: 4d313049-59e3-44ef-a324-8c3aeb565930
+		summarizeBy: none
+		sourceColumn: No.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: b2aee673-3cf8-4d9a-8700-9cf26bd2b938
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sectors
+		dataType: string
+		lineageTag: 36ab3779-8725-4bdc-a87d-969f3fca810d
+		summarizeBy: none
+		sourceColumn: Sectors
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Scheme & Skills'
+		dataType: string
+		lineageTag: 09060e01-1815-465c-acdf-50a332a4d2ef
+		summarizeBy: none
+		sourceColumn: Scheme & Skills
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date of training start'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e750f017-ea6e-40aa-9362-87c0408e688d
+		summarizeBy: none
+		sourceColumn: Date of training start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Budget Items'
+		dataType: string
+		lineageTag: 811fa63f-a337-4141-9f2f-ecf7df9d9413
+		summarizeBy: none
+		sourceColumn: Budget Items
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Metric Value'
+		dataType: string
+		lineageTag: b20f21c4-da41-43f2-abc6-30e5185e35c7
+		summarizeBy: none
+		sourceColumn: Metric Value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_SBJ_Progress = m
+		mode: import
+		queryGroup: 'SBJ Project'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SBJ_SDF_Enhanced_Rating_System_V2.xlsx"), null, false),
+				    #"4-Progress_sheet" = Source{[Item="4-Progress",Kind="Sheet"]}[Data],
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"4-Progress_sheet", 10),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Bottom Rows", [PromoteAllScalars=true]),
+				    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each ([#"No."] <> null and [#"No."] <> "Target" and [#"No."] <> "Target by Oct 2025" and [#"No."] <> "Total")),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"No.", type text}, {"# of training project", Int64.Type}, {"# of trainees", Int64.Type}, {"Female", Int64.Type}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Changed Type", each ([Total Project Cost] <> "Not confirm yet")),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows1",{{"Total Project Cost", type number}, {"Budget (USD) Cost-Share ", Currency.Type}, {"Column8", Currency.Type}, {"Column9", type number}, {"Date of training start", type date}, {"# of trainees#(lf)trained", Int64.Type}, {"Female_1", Int64.Type}}),
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Changed Type1", {"No.", "Training Provider", "Sectors", "Scheme & Skills", "Date of training start"}, "Attribute", "Value"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Unpivoted Other Columns",{{"Attribute", "Budget Items"}, {"Value", "Metric Value"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

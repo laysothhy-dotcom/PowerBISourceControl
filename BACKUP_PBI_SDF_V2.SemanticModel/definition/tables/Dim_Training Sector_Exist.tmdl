@@ -1,0 +1,46 @@
+table 'Dim_Training Sector_Exist'
+	lineageTag: 42e7e968-91ba-433f-a6cf-15b90f211280
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 07f740ac-39cb-4291-a8fd-fc3c9419ca92
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sector
+		dataType: string
+		lineageTag: a408db3a-9d74-499b-9d0c-5a591fc840cb
+		summarizeBy: none
+		sourceColumn: Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unified_ID '
+		dataType: string
+		lineageTag: 18e36a33-442e-4f00-8c6a-17210d23b24c
+		summarizeBy: none
+		sourceColumn: "Unified_ID "
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_Training Sector_Exist' = m
+		mode: import
+		queryGroup: Proposal\PMS_Proposals
+		source =
+				let
+				    Source = Dim_Proposal_Infor,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"ID", "Skill Sector SOP PS", "Unified_ID "}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Unified_ID ", type text}}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Changed Type", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Blank Rows", {"Skill Sector SOP PS"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Errors",{{"Skill Sector SOP PS", "Sector"}, {"ID", "New_ID"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

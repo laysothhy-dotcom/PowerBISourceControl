@@ -1,0 +1,183 @@
+table Fact_Proposals_Cost_Master
+	lineageTag: 940eeb64-aed2-4cf2-ab03-d73c4ed1e436
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 14653978-0bec-420f-a83c-d30b472c91f2
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Cost'
+		dataType: decimal
+		lineageTag: 900347ce-a3e7-4474-8882-c25ddfab0f08
+		summarizeBy: sum
+		sourceColumn: Total Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Enterprise Cost (%)'
+		dataType: double
+		lineageTag: 5fd41c14-5a53-4cf4-b331-b5a21e1387f7
+		summarizeBy: sum
+		sourceColumn: Enterprise Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Enterprise Cost'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: f2b98eb3-f77d-43a2-ac95-3e3e3f086856
+		summarizeBy: sum
+		sourceColumn: Enterprise Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Training Provider Cost (%)'
+		dataType: double
+		lineageTag: 8186f232-5fcf-4325-8483-528678bfd168
+		summarizeBy: sum
+		sourceColumn: Training Provider Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Training Provider Cost'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 29c1c37f-48b0-4073-b77b-e48f06ddedda
+		summarizeBy: sum
+		sourceColumn: Training Provider Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'SDF Cost (%)'
+		dataType: double
+		lineageTag: 195f545b-9c29-4073-900a-e35b7f53207a
+		summarizeBy: sum
+		sourceColumn: SDF Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'SDF Cost'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a6ccaa44-466b-43a9-92a7-6a093c6471c3
+		summarizeBy: sum
+		sourceColumn: SDF Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 6d17880d-3332-4744-9058-1affcc574142
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: de899bf7-e85e-43d4-83b4-5854c72d60a7
+		summarizeBy: sum
+		sourceColumn: Female_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 9bafcfcc-88a6-480b-90a0-ed0673179e7e
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: string
+		lineageTag: e340b101-fdf8-453c-8a6b-7b44f62caef6
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Proposals_Cost_Master = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source = ```
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"1-Proposals_Sheet" = Source{[Item="1-Proposals",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"1-Proposals_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", type any}, {"Last Submission Date", Int64.Type}, {"Submission Date Month", type text}, {"Proposal Type", type text}, {"Proposal Type PS", type text}, {"Proposal Type Code", type text}, {"Initiator", type text}, {"Initiator Type", type text}, {"Skill Sector SOP", type text}, {"Skill Sector SOP PS", type text}, {"Skill", type text}, {"Skills Revised", type text}, {"Certificate Type Proposal", type text}, {"Classify CQF Short Course", type text}, {"CQF PS", type text}, {"Exact Training Days", Int64.Type}, {"Exact Training Month", type number}, {"TotalTraining Hours", Int64.Type}, {"School Hours", Int64.Type}, {"School Practice", Int64.Type}, {"Company Practice", Int64.Type}, {"Training Type", type text}, {"Training Type PS", type text}, {"Scheme", type text}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", type number}, {"Date_Proposal Review", type any}, {"Date_LPS Review", type any}, {"Date_Appraisal", type any}, {"Date_KYC", type any}, {"Date_Pitching", type any}, {"Pitching Method", type any}, {"Date_Revision after Pitching", type any}, {"Date_Report after Pitching", type any}, {"Training Provider", type text}, {"Training Provider Type", type text}, {"Partnered Commpany", type text}, {"Enterprise Sector", type text}, {"Location", type text}, {"Cost of Proposal Riels", type number}, {"Cost of Proposal $", type number}, {"% Company", type number}, {"Company Contribution Riels", type number}, {"Company Contribution $", type number}, {"Verify Com", type any}, {"% School", type number}, {"School Contribution Riels", type number}, {"School Contribution $", type number}, {"Verify School", type any}, {"% SDF", type number}, {"SDF Contribution Riels", type number}, {"SDF Unit Cost Riels", type number}, {"SDF Contribution $", type number}, {"Verify SDF", type any}, {"SDF Unit Cost $", type number}, {"Awarded", type text}, {"Date Approved", Int64.Type}, {"Date Approved Month", type text}, {"Date_Announce", type any}, {"Budget Source", type text}, {"Trainer Fee", type number}, {"Trainee Allowance", type number}, {"Materials", type number}, {"Utilities", type number}, {"Others", type number}, {"Trainer Fee Company", type number}, {"Trainee Allowance Company", type number}, {"Materials Company", type number}, {"Utilities Company", type number}, {"Others Company", type number}, {"Trainer Fee School", type number}, {"Trainee Allowance School", type number}, {"Materials School", type number}, {"Utilities School", type number}, {"Others School", type number}, {"Trainer Fee SDF", type number}, {"Trainee Allowance SDF", type number}, {"Materials SDF", type number}, {"Utilities SDF", type number}, {"Others SDF", type number}, {"Appraisal PIC", type any}, {"Approval Duration", Int64.Type}, {"Column1", type any}, {"Column86", type any}, {"Column87", type any}, {"Column88", type any}, {"Column89", type any}, {"Column90", type any}, {"Column91", type any}, {"Column92", type any}, {"Column93", type any}, {"Column94", type any}, {"Column95", type any}, {"Column96", type any}, {"Column97", type any}, {"Column98", type any}, {"Column99", type any}, {"Column100", type any}, {"Column101", type any}, {"Column102", type any}, {"Column103", type any}, {"Banteay Meanchey", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1", "Column86", "Column87", "Column88", "Column89", "Column90", "Column91", "Column92", "Column93", "Column94", "Column95", "Column96", "Column97", "Column98", "Column99", "Column100", "Column101", "Column102", "Column103"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"ID", type text}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type1", {"ID"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Errors", {"ID"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Blank Rows",{{"Year Stage", type text}, {"Last Submission Date", type date}, {"Submission Date Month", type text}, {"Female_Proposal", Int64.Type}, {"Date_Proposal Review", type date}, {"Date_LPS Review", type date}, {"Date_Appraisal", type date}, {"Date_KYC", type date}, {"Date_Pitching", type date}, {"Pitching Method", type text}, {"Date_Revision after Pitching", type date}, {"Date_Report after Pitching", type date}, {"Company Contribution $", Currency.Type}, {"Verify Com", type text}, {"School Contribution $", Currency.Type}, {"Verify School", type text}, {"SDF Contribution $", Currency.Type}, {"Verify SDF", type text}, {"SDF Unit Cost $", Currency.Type}, {"Date Approved", type date}, {"Date_Announce", type date}, {"Appraisal PIC", type text}}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Changed Type2", {"ID", "Year", "Year Stage", "Last Submission Date", "Submission Date Month", "Proposal Type", "Proposal Type PS", "Proposal Type Code", "Initiator", "Initiator Type", "Skill Sector SOP", "Skill Sector SOP PS", "Skill", "Skills Revised", "Certificate Type Proposal", "Classify CQF Short Course", "CQF PS", "Exact Training Days", "Exact Training Month", "TotalTraining Hours", "School Hours", "School Practice", "Company Practice", "Training Type", "Training Type PS", "Scheme", "Trainees_Proposal", "Female_Proposal", "Date_Proposal Review", "Date_LPS Review", "Date_Appraisal", "Date_KYC", "Date_Pitching", "Pitching Method", "Date_Revision after Pitching", "Date_Report after Pitching", "Training Provider", "Training Provider Type", "Partnered Commpany", "Enterprise Sector", "Location", "Cost of Proposal Riels", "Cost of Proposal $", "% Company", "Company Contribution Riels", "Company Contribution $", "Verify Com", "% School", "School Contribution Riels", "School Contribution $", "Verify School", "% SDF", "SDF Contribution Riels", "SDF Unit Cost Riels", "SDF Contribution $", "Verify SDF", "SDF Unit Cost $", "Awarded", "Date Approved", "Date Approved Month", "Date_Announce", "Budget Source", "Trainer Fee", "Trainee Allowance", "Materials", "Utilities", "Others", "Trainer Fee Company", "Trainee Allowance Company", "Materials Company", "Utilities Company", "Others Company", "Trainer Fee School", "Trainee Allowance School", "Materials School", "Utilities School", "Others School", "Trainer Fee SDF", "Trainee Allowance SDF", "Materials SDF", "Utilities SDF", "Others SDF", "Appraisal PIC", "Approval Duration", "Banteay Meanchey"}),
+				    #"Removed Blank Rows1" = Table.SelectRows(#"Removed Errors1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Blank Rows1"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Duplicates1",{"ID", "Cost of Proposal Riels", "Cost of Proposal $", "% Company", "Company Contribution Riels", "Company Contribution $", "% School", "School Contribution Riels", "School Contribution $", "% SDF", "SDF Contribution Riels", "SDF Unit Cost Riels", "SDF Contribution $", "SDF Unit Cost $", "Awarded"}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Removed Other Columns",{{"Awarded", Text.Lower, type text}}),
+				    #"Removed Errors2" = Table.RemoveRowsWithErrors(#"Lowercased Text", {"ID", "Cost of Proposal Riels", "Cost of Proposal $", "% Company", "Company Contribution Riels", "Company Contribution $", "% School", "School Contribution Riels", "School Contribution $", "% SDF", "SDF Contribution Riels", "SDF Unit Cost Riels", "SDF Contribution $", "SDF Unit Cost $", "Awarded"}),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Errors2"),
+				    #"Removed Blank Rows2" = Table.SelectRows(#"Removed Duplicates2", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates3" = Table.Distinct(#"Removed Blank Rows2"),
+				    #"Removed Errors3" = Table.RemoveRowsWithErrors(#"Removed Duplicates3", {"ID", "Cost of Proposal Riels", "Cost of Proposal $", "% Company", "Company Contribution Riels", "Company Contribution $", "% School", "School Contribution Riels", "School Contribution $", "% SDF", "SDF Contribution Riels", "SDF Unit Cost Riels", "SDF Contribution $", "SDF Unit Cost $", "Awarded"}),
+				    #"Appended Query" = Table.Combine({#"Removed Errors3", Fact_Proposal_Cost_Appen_kobo}),
+				    #"Removed Duplicates4" = Table.Distinct(#"Appended Query", {"ID"}),
+				    #"Removed Blank Rows3" = Table.SelectRows(#"Removed Duplicates4", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates5" = Table.Distinct(#"Removed Blank Rows3"),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Duplicates5", {"ID"}, Dim_Proposals_GrandTotal_Trainees, {"ID"}, "Dim_Proposals_GrandTotal_Trainees", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposals_GrandTotal_Trainees" = Table.ExpandTableColumn(#"Merged Queries", "Dim_Proposals_GrandTotal_Trainees", {"Trainees_Proposal", "Female_Proposal"}, {"Dim_Proposals_GrandTotal_Trainees.Trainees_Proposal", "Dim_Proposals_GrandTotal_Trainees.Female_Proposal"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded Dim_Proposals_GrandTotal_Trainees",{{"Dim_Proposals_GrandTotal_Trainees.Trainees_Proposal", "Trainees_Proposal"}, {"Dim_Proposals_GrandTotal_Trainees.Female_Proposal", "Female_Proposal"}}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Renamed Columns", {"ID"}, #"Dim_ Training Provider_ Combine", {"ID"}, "Dim_ Training Provider_ Combine", JoinKind.LeftOuter),
+				    #"Expanded Dim_ Training Provider_ Combine" = Table.ExpandTableColumn(#"Merged Queries1", "Dim_ Training Provider_ Combine", {"Training Provider"}, {"Training Provider"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Expanded Dim_ Training Provider_ Combine", {"ID"}, Dim_Proposal_Infor, {"ID"}, "Dim_Proposal_Infor", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposal_Infor" = Table.ExpandTableColumn(#"Merged Queries2", "Dim_Proposal_Infor", {"Initiator"}, {"Dim_Proposal_Infor.Initiator"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Expanded Dim_Proposal_Infor",{{"Dim_Proposal_Infor.Initiator", "Initiator"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns1", "Unified_ID", each "EX-" & Text.From([ID])),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Changed Type3",{"Unified_ID"}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Removed Columns1",{{"ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type4", "Unified_ID", each if [ID] <= 616 then "EX-" & Text.From([ID]) 
+				else "KB-" & Text.From([ID])),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Added Custom1",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Changed Type5",{"ID", "Cost of Proposal $", "% Company", "Company Contribution $", "% School", "School Contribution $", "% SDF", "SDF Contribution $", "SDF Unit Cost $", "Trainees_Proposal", "Female_Proposal", "Unified_ID"}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Removed Other Columns1",{"Unified_ID"}),
+				    #"Added Custom2" = Table.AddColumn(#"Removed Columns2", "Unified_ID ", each if [ID] <= 616 then "EX-" & Text.From([ID])
+				else if [ID] <= 1000 then "KB-" & Text.From([ID])
+				else "PMS-" & Text.From([ID])),
+				    #"Changed Type6" = Table.TransformColumnTypes(#"Added Custom2",{{"School Contribution $", Currency.Type}, {"% SDF", type number}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", Int64.Type}, {"Unified_ID ", type text}}),
+				    #"Removed Other Columns2" = Table.SelectColumns(#"Changed Type6",{"ID", "Cost of Proposal $", "% Company", "Company Contribution $", "% School", "School Contribution $", "% SDF", "SDF Contribution $", "Trainees_Proposal", "Female_Proposal", "Unified_ID "}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Removed Other Columns2", "ID", "ID - Copy"),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Duplicated Column",{{"ID - Copy", "New_ID"}, {"Cost of Proposal $", "Total Cost"}, {"SDF Contribution $", "SDF Cost"}, {"% SDF", "SDF Cost (%)"}, {"School Contribution $", "Training Provider Cost"}, {"% School", "Training Provider Cost (%)"}, {"Company Contribution $", "Enterprise Cost"}, {"% Company", "Enterprise Cost (%)"}, {"Unified_ID ", "Unified_ID"}}),
+				    #"Appended Query1" = Table.Combine({#"Renamed Columns2", Fact_Proposal_Cost_PMS_Append}),
+				    #"Changed Type7" = Table.TransformColumnTypes(#"Appended Query1",{{"New_ID", type text}}),
+				    #"Changed Type8" = Table.TransformColumnTypes(#"Changed Type7",{{"Total Cost", Currency.Type}, {"Enterprise Cost", Currency.Type}, {"Training Provider Cost", Currency.Type}, {"SDF Cost", Currency.Type}})
+				in
+				    #"Changed Type8"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

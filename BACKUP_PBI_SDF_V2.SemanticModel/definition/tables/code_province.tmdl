@@ -1,0 +1,43 @@
+table code_province
+	lineageTag: 3b18599c-b662-4b32-a658-dac71169b172
+
+	column 'Province Code'
+		dataType: string
+		lineageTag: 4f070b70-abd7-4aa8-ad31-e0aa68aedebe
+		summarizeBy: none
+		sourceColumn: Province Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Province Name'
+		dataType: string
+		lineageTag: 008b8fd1-297b-4ae4-987e-1a3bdfc3ead1
+		summarizeBy: none
+		sourceColumn: Province Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition code_province = m
+		mode: import
+		queryGroup: Laction_info
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\Cascade_Location\code_province.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers",{{"name", "Province Code"}, {"label", "Province Name"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Province Code", "Province Name"}),
+				    #"Removed Top Rows" = Table.Skip(#"Removed Other Columns",1),
+				    #"Removed Top Rows1" = Table.Skip(#"Removed Top Rows",1),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"Removed Top Rows1",1),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Bottom Rows"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates", {"Province Code", "Province Name"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Errors"),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Duplicates1", {"Province Name"}),
+				    #"Removed Duplicates3" = Table.Distinct(#"Removed Duplicates2", {"Province Code"})
+				in
+				    #"Removed Duplicates3"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

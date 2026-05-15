@@ -1,0 +1,47 @@
+table Dim_KPI_Date
+	lineageTag: bb1700b2-7747-4e67-9ea7-fed8ef68bd50
+
+	column ID
+		dataType: string
+		lineageTag: 4b9b714c-c44a-4885-9598-e07e446934ba
+		summarizeBy: none
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 625aa583-82e0-4350-b7e5-13110b12680f
+		summarizeBy: sum
+		sourceColumn: Year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_KPI_Date = m
+		mode: import
+		queryGroup: 'KPI Monitoring'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"3-KPI Monitoring_Sheet" = Source{[Item="3-KPI Monitoring",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"3-KPI Monitoring_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Contract #", type any}, {"Initiator", type any}, {"Skill Sector SOP", type any}, {"Proposal Type PS", type any}, {"Skill", type any}, {"Scheme", type any}, {"Training Type", type any}, {"Track_Contract Duration", type text}, {"Training Progress", type text}, {"Disbursement Progress", type text}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", type number}, {"Column2", Int64.Type}, {"Column1", type text}, {"Trainee Actual", Int64.Type}, {"Female Actual", Int64.Type}, {"Terminate", Int64.Type}, {"Dead", Int64.Type}, {"Resigned", Int64.Type}, {"Attendance Rate Commit", type number}, {"Drop-out (%) Commit", type number}, {"Graduation Rate Commit", type number}, {"Employment (%) Commit", type number}, {"Satisfaction Commit", type number}, {"Salary Commit $", Int64.Type}, {"%Salary Increase Commit", type number}, {"Track_KPI Commit", type text}, {"Attendance Report", Int64.Type}, {"Attendance Report F", Int64.Type}, {"Attendance Report Rate", type text}, {"Drop-out Report", Int64.Type}, {"Drop-out Report F", Int64.Type}, {"Drop-out Report Rate", type text}, {"Graduation Report", Int64.Type}, {"Graduation Report F", Int64.Type}, {"Graduation Report Rate", type text}, {"Employment Report", Int64.Type}, {"Employment Report F", Int64.Type}, {"Employment Report Rate", type text}, {"Track_KPI Report", type text}, {"Satisfaction Report", type number}, {"Satisfaction Report Rate", type text}, {"Attendance Rate Actual", type any}, {"Attendance Rate Actual Result", type text}, {"Drop-out (%) Actual", type number}, {"Drop-out Actual Result", type text}, {"Graduation % Actual", type number}, {"Graduation (%) Actual Result", type text}, {"Employment (%) Actual", type number}, {"Emaployment (%) Actual Result", type text}, {"Salary Actual", Int64.Type}, {"Salary Actual Result", type text}, {"% Salary Increase Actual", type number}, {"% Salary Increase Actual Result", type text}, {"Track_KPI Actual", type text}, {"Tracer Study", type text}, {"Track_Feeback", type text}, {"Budget Source", type any}, {"Focal M&E", type any}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"ID", type text}, {"Contract #", type text}, {"Initiator", type text}, {"Skill Sector SOP", type text}, {"Proposal Type PS", type text}, {"Skill", type text}, {"Scheme", type text}, {"Training Type", type text}, {"Track_Contract Duration", type text}, {"Female_Proposal", Int64.Type}, {"Salary Commit $", Currency.Type}, {"Attendance Report Rate", type number}, {"Attendance Report F", type number}, {"Drop-out Report", type number}, {"Drop-out Report F", type number}, {"Graduation Report F", type number}, {"Attendance Rate Actual", type number}, {"Attendance Rate Actual Result", type number}, {"Drop-out (%) Actual", type number}, {"Drop-out Actual Result", type text}, {"Graduation (%) Actual Result", type text}, {"Salary Actual", type number}, {"Budget Source", type text}, {"Focal M&E", type text}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type1", {"ID", "Year", "Contract #", "Initiator", "Skill Sector SOP", "Proposal Type PS", "Skill", "Scheme", "Training Type", "Track_Contract Duration", "Training Progress", "Disbursement Progress", "Trainees_Proposal", "Female_Proposal", "Column2", "Column1", "Trainee Actual", "Female Actual", "Terminate", "Dead", "Resigned", "Attendance Rate Commit", "Drop-out (%) Commit", "Graduation Rate Commit", "Employment (%) Commit", "Satisfaction Commit", "Salary Commit $", "%Salary Increase Commit", "Track_KPI Commit", "Attendance Report", "Attendance Report F", "Attendance Report Rate", "Drop-out Report", "Drop-out Report F", "Drop-out Report Rate", "Graduation Report", "Graduation Report F", "Graduation Report Rate", "Employment Report", "Employment Report F", "Employment Report Rate", "Track_KPI Report", "Satisfaction Report", "Satisfaction Report Rate", "Attendance Rate Actual", "Attendance Rate Actual Result", "Drop-out (%) Actual", "Drop-out Actual Result", "Graduation % Actual", "Graduation (%) Actual Result", "Employment (%) Actual", "Emaployment (%) Actual Result", "Salary Actual", "Salary Actual Result", "% Salary Increase Actual", "% Salary Increase Actual Result", "Track_KPI Actual", "Tracer Study", "Track_Feeback", "Budget Source", "Focal M&E"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Errors", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Blank Rows"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Duplicates",{"ID", "Year"})
+				in
+				    #"Removed Other Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

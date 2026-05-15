@@ -1,0 +1,566 @@
+table 'Dim_KPI_ Skill'
+	lineageTag: 5c01553e-7745-434a-a88e-c86393ea08d7
+
+	column ID
+		dataType: string
+		lineageTag: 8a35d214-4ad5-44c0-a66e-25fe433ff4d6
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Skill Sector SOP'
+		dataType: string
+		lineageTag: 157d1480-d769-4044-afb2-489b89d691be
+		summarizeBy: none
+		sourceColumn: Skill Sector SOP
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Type PS'
+		dataType: string
+		lineageTag: 6eaf10af-6224-4595-bafc-f6971171b337
+		summarizeBy: none
+		sourceColumn: Proposal Type PS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill
+		dataType: string
+		lineageTag: 8c92dd0a-c25b-4e7d-ab1b-941752f8af44
+		summarizeBy: none
+		sourceColumn: Skill
+
+		annotation SummarizationSetBy = Automatic
+
+	column Scheme
+		dataType: string
+		lineageTag: 104423fd-9f15-42a0-8b86-84214fb9cce1
+		summarizeBy: none
+		sourceColumn: Scheme
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Type'
+		dataType: string
+		lineageTag: 309b8716-1fe7-4b61-b3a5-18698b74d866
+		summarizeBy: none
+		sourceColumn: Training Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 434c38bc-b461-47f5-8b3f-c67b5018aa66
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contract #'
+		dataType: string
+		lineageTag: df7c7669-d1df-4621-bd2d-5d80c9b12972
+		summarizeBy: none
+		sourceColumn: Contract #
+
+		annotation SummarizationSetBy = Automatic
+
+	column Initiator
+		dataType: string
+		lineageTag: 941a3e0c-70ab-4382-b2c5-005ddacc7fc3
+		summarizeBy: none
+		sourceColumn: Initiator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Track_Contract Duration'
+		dataType: string
+		lineageTag: e0638a46-7b57-441e-a2ed-b1bb3bb434e1
+		summarizeBy: none
+		sourceColumn: Track_Contract Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Progress'
+		dataType: string
+		lineageTag: 1c7d7294-7033-4c13-b497-a23d6cfe7d5d
+		summarizeBy: none
+		sourceColumn: Training Progress
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Disbursement Progress'
+		dataType: string
+		lineageTag: 2c48b3d5-df58-4bc3-acdc-a833a2135bdd
+		summarizeBy: none
+		sourceColumn: Disbursement Progress
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f0e2ddb-feb3-485c-b046-cfeb0297adea
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: ab6d4be4-6ee4-4057-977b-f192ef1dac73
+		summarizeBy: sum
+		sourceColumn: Female_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column2
+		dataType: int64
+		formatString: 0
+		lineageTag: f708b009-b523-47d0-b8f1-f08550d89728
+		summarizeBy: sum
+		sourceColumn: Column2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column1
+		dataType: string
+		lineageTag: 31271c83-fb8c-43c7-ac7d-da588fb2f6a2
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trainee Actual'
+		dataType: int64
+		formatString: 0
+		lineageTag: 043bec55-ffac-496c-a066-8899ca8e011d
+		summarizeBy: sum
+		sourceColumn: Trainee Actual
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Female Actual'
+		dataType: int64
+		formatString: 0
+		lineageTag: f8737c26-0807-4199-8db0-f67a2a4989fe
+		summarizeBy: sum
+		sourceColumn: Female Actual
+
+		annotation SummarizationSetBy = Automatic
+
+	column Terminate
+		dataType: int64
+		formatString: 0
+		lineageTag: c06a67ee-a79f-4364-81be-64637fe0e64a
+		summarizeBy: sum
+		sourceColumn: Terminate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dead
+		dataType: int64
+		formatString: 0
+		lineageTag: a7f95337-68f6-4f53-b791-34ebb87a6f43
+		summarizeBy: sum
+		sourceColumn: Dead
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resigned
+		dataType: int64
+		formatString: 0
+		lineageTag: 76446cd2-7ed8-4ff9-89ab-b1e3d54eadc6
+		summarizeBy: sum
+		sourceColumn: Resigned
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Attendance Rate Commit'
+		dataType: double
+		lineageTag: 38085c52-09fd-45c7-b7a1-db9cd3712d78
+		summarizeBy: sum
+		sourceColumn: Attendance Rate Commit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Drop-out (%) Commit'
+		dataType: double
+		lineageTag: 3f3d05d2-2690-4648-8a85-5b110a243343
+		summarizeBy: sum
+		sourceColumn: Drop-out (%) Commit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Graduation Rate Commit'
+		dataType: double
+		lineageTag: 8f2b3793-3244-4fe0-b14f-38663470a63f
+		summarizeBy: sum
+		sourceColumn: Graduation Rate Commit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Employment (%) Commit'
+		dataType: double
+		lineageTag: 57f88e3e-b006-4146-9ffa-9fa0c5198c52
+		summarizeBy: sum
+		sourceColumn: Employment (%) Commit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Satisfaction Commit'
+		dataType: double
+		lineageTag: 32039b47-69a1-4263-b74c-35d45affe388
+		summarizeBy: sum
+		sourceColumn: Satisfaction Commit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Salary Commit $'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: fb09e231-de6b-462c-8ca5-49e057f767c7
+		summarizeBy: sum
+		sourceColumn: Salary Commit $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column '%Salary Increase Commit'
+		dataType: double
+		lineageTag: adf87e48-1529-4025-b108-054a5551dfdb
+		summarizeBy: sum
+		sourceColumn: %Salary Increase Commit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Track_KPI Commit'
+		dataType: string
+		lineageTag: d17d3242-c1bb-470b-a9ec-ca01f7471f75
+		summarizeBy: none
+		sourceColumn: Track_KPI Commit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Attendance Report'
+		dataType: int64
+		formatString: 0
+		lineageTag: b616fb73-465c-4a79-b623-8546da605fd4
+		summarizeBy: sum
+		sourceColumn: Attendance Report
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Attendance Report F'
+		dataType: double
+		lineageTag: 709b75e1-c205-4d2d-8ff6-4304b6f4aa6b
+		summarizeBy: sum
+		sourceColumn: Attendance Report F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Attendance Report Rate'
+		dataType: double
+		lineageTag: 90124f9f-1e1d-4f28-a2c9-e03c4657c0da
+		summarizeBy: sum
+		sourceColumn: Attendance Report Rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Drop-out Report'
+		dataType: double
+		lineageTag: ca2f88fa-7476-466a-83d7-74a69c9c9063
+		summarizeBy: sum
+		sourceColumn: Drop-out Report
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Drop-out Report F'
+		dataType: double
+		lineageTag: 85337992-d7b5-4872-9128-5a5a2a2a2763
+		summarizeBy: sum
+		sourceColumn: Drop-out Report F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Drop-out Report Rate'
+		dataType: string
+		lineageTag: d47f29b3-c686-4e68-b467-248413738c27
+		summarizeBy: none
+		sourceColumn: Drop-out Report Rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Graduation Report'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e75106d-11f4-4f19-b7e7-68e39b5db6f3
+		summarizeBy: sum
+		sourceColumn: Graduation Report
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Graduation Report F'
+		dataType: double
+		lineageTag: 277abb70-ee23-493c-8aaa-e0b197fb108c
+		summarizeBy: sum
+		sourceColumn: Graduation Report F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Graduation Report Rate'
+		dataType: string
+		lineageTag: d1b4bda3-2e3b-448b-97d4-e8f9c397ae8f
+		summarizeBy: none
+		sourceColumn: Graduation Report Rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment Report'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d99ce41-9665-46d2-b7ad-4eceebcd5016
+		summarizeBy: sum
+		sourceColumn: Employment Report
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment Report F'
+		dataType: int64
+		formatString: 0
+		lineageTag: 666a79fe-616d-4176-9917-112861828cc5
+		summarizeBy: sum
+		sourceColumn: Employment Report F
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment Report Rate'
+		dataType: string
+		lineageTag: 8f6090d1-6615-49c6-95e7-b807ea635f7b
+		summarizeBy: none
+		sourceColumn: Employment Report Rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Track_KPI Report'
+		dataType: string
+		lineageTag: b9a2ba0d-e79f-41e9-bcb3-745d68e8637f
+		summarizeBy: none
+		sourceColumn: Track_KPI Report
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Satisfaction Report'
+		dataType: double
+		lineageTag: 00d3f67c-8852-4c43-9aa8-9f0adcaa9c91
+		summarizeBy: sum
+		sourceColumn: Satisfaction Report
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Satisfaction Report Rate'
+		dataType: string
+		lineageTag: 0ed582f8-a7a6-4fe3-80d8-bd5c4a7f1cee
+		summarizeBy: none
+		sourceColumn: Satisfaction Report Rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Attendance Rate Actual'
+		dataType: double
+		lineageTag: 254e5d47-0181-420e-ba70-65ba63d459f5
+		summarizeBy: sum
+		sourceColumn: Attendance Rate Actual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Attendance Rate Actual Result'
+		dataType: double
+		lineageTag: 5a8a3efb-203c-4e98-b533-284e3e9999e2
+		summarizeBy: sum
+		sourceColumn: Attendance Rate Actual Result
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Drop-out (%) Actual'
+		dataType: double
+		lineageTag: 6ab459bd-9eb7-4ccf-bb21-45ad05da5f60
+		summarizeBy: sum
+		sourceColumn: Drop-out (%) Actual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Drop-out Actual Result'
+		dataType: string
+		lineageTag: 894ae4a7-f7d6-4c66-91cb-b03eaa84f705
+		summarizeBy: none
+		sourceColumn: Drop-out Actual Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Graduation % Actual'
+		dataType: double
+		lineageTag: 16e14fc3-a538-46d9-baff-60f646aeee7b
+		summarizeBy: sum
+		sourceColumn: Graduation % Actual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Graduation (%) Actual Result'
+		dataType: string
+		lineageTag: 02a906f8-abfd-407a-9db2-332be28af5a0
+		summarizeBy: none
+		sourceColumn: Graduation (%) Actual Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment (%) Actual'
+		dataType: double
+		lineageTag: 1f509590-6a63-4f1e-9583-6660d562f68b
+		summarizeBy: sum
+		sourceColumn: Employment (%) Actual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Emaployment (%) Actual Result'
+		dataType: string
+		lineageTag: fa7c2d45-c401-49b8-a6af-75d08395c405
+		summarizeBy: none
+		sourceColumn: Emaployment (%) Actual Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Salary Actual'
+		dataType: double
+		lineageTag: 59228860-097e-4f19-be17-20cc8752b515
+		summarizeBy: sum
+		sourceColumn: Salary Actual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Salary Actual Result'
+		dataType: string
+		lineageTag: 6f8de126-1c08-4b2c-a365-1b1abea26c26
+		summarizeBy: none
+		sourceColumn: Salary Actual Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column '% Salary Increase Actual'
+		dataType: double
+		lineageTag: 342aa4cf-9d08-48c6-8efd-153a60aaf06e
+		summarizeBy: sum
+		sourceColumn: % Salary Increase Actual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% Salary Increase Actual Result'
+		dataType: string
+		lineageTag: 88cb9dc1-3bde-4898-91d5-785b970747ab
+		summarizeBy: none
+		sourceColumn: % Salary Increase Actual Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Track_KPI Actual'
+		dataType: string
+		lineageTag: 2eb5bb5d-287d-41de-b419-be9e022df659
+		summarizeBy: none
+		sourceColumn: Track_KPI Actual
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tracer Study'
+		dataType: string
+		lineageTag: aeefaaa0-6336-42c5-bd61-6e31167fe4e2
+		summarizeBy: none
+		sourceColumn: Tracer Study
+
+		annotation SummarizationSetBy = Automatic
+
+	column Track_Feeback
+		dataType: string
+		lineageTag: 25e82074-dbc7-406a-86c3-7452b1071138
+		summarizeBy: none
+		sourceColumn: Track_Feeback
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 670ae592-05b8-41d1-8db5-031992126abe
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Focal M&E'
+		dataType: string
+		lineageTag: 7d822a81-b0aa-49ea-a02a-05fdc5f3fb9a
+		summarizeBy: none
+		sourceColumn: Focal M&E
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_KPI_ Skill' = m
+		mode: import
+		queryGroup: 'KPI Monitoring'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"3-KPI Monitoring_Sheet" = Source{[Item="3-KPI Monitoring",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"3-KPI Monitoring_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Contract #", type any}, {"Initiator", type any}, {"Skill Sector SOP", type any}, {"Proposal Type PS", type any}, {"Skill", type any}, {"Scheme", type any}, {"Training Type", type any}, {"Track_Contract Duration", type text}, {"Training Progress", type text}, {"Disbursement Progress", type text}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", type number}, {"Column2", Int64.Type}, {"Column1", type text}, {"Trainee Actual", Int64.Type}, {"Female Actual", Int64.Type}, {"Terminate", Int64.Type}, {"Dead", Int64.Type}, {"Resigned", Int64.Type}, {"Attendance Rate Commit", type number}, {"Drop-out (%) Commit", type number}, {"Graduation Rate Commit", type number}, {"Employment (%) Commit", type number}, {"Satisfaction Commit", type number}, {"Salary Commit $", Int64.Type}, {"%Salary Increase Commit", type number}, {"Track_KPI Commit", type text}, {"Attendance Report", Int64.Type}, {"Attendance Report F", Int64.Type}, {"Attendance Report Rate", type text}, {"Drop-out Report", Int64.Type}, {"Drop-out Report F", Int64.Type}, {"Drop-out Report Rate", type text}, {"Graduation Report", Int64.Type}, {"Graduation Report F", Int64.Type}, {"Graduation Report Rate", type text}, {"Employment Report", Int64.Type}, {"Employment Report F", Int64.Type}, {"Employment Report Rate", type text}, {"Track_KPI Report", type text}, {"Satisfaction Report", type number}, {"Satisfaction Report Rate", type text}, {"Attendance Rate Actual", type any}, {"Attendance Rate Actual Result", type text}, {"Drop-out (%) Actual", type number}, {"Drop-out Actual Result", type text}, {"Graduation % Actual", type number}, {"Graduation (%) Actual Result", type text}, {"Employment (%) Actual", type number}, {"Emaployment (%) Actual Result", type text}, {"Salary Actual", Int64.Type}, {"Salary Actual Result", type text}, {"% Salary Increase Actual", type number}, {"% Salary Increase Actual Result", type text}, {"Track_KPI Actual", type text}, {"Tracer Study", type text}, {"Track_Feeback", type text}, {"Budget Source", type any}, {"Focal M&E", type any}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"ID", type text}, {"Contract #", type text}, {"Initiator", type text}, {"Skill Sector SOP", type text}, {"Proposal Type PS", type text}, {"Skill", type text}, {"Scheme", type text}, {"Training Type", type text}, {"Track_Contract Duration", type text}, {"Female_Proposal", Int64.Type}, {"Salary Commit $", Currency.Type}, {"Attendance Report Rate", type number}, {"Attendance Report F", type number}, {"Drop-out Report", type number}, {"Drop-out Report F", type number}, {"Graduation Report F", type number}, {"Attendance Rate Actual", type number}, {"Attendance Rate Actual Result", type number}, {"Drop-out (%) Actual", type number}, {"Drop-out Actual Result", type text}, {"Graduation (%) Actual Result", type text}, {"Salary Actual", type number}, {"Budget Source", type text}, {"Focal M&E", type text}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type1", {"ID", "Year", "Contract #", "Initiator", "Skill Sector SOP", "Proposal Type PS", "Skill", "Scheme", "Training Type", "Track_Contract Duration", "Training Progress", "Disbursement Progress", "Trainees_Proposal", "Female_Proposal", "Column2", "Column1", "Trainee Actual", "Female Actual", "Terminate", "Dead", "Resigned", "Attendance Rate Commit", "Drop-out (%) Commit", "Graduation Rate Commit", "Employment (%) Commit", "Satisfaction Commit", "Salary Commit $", "%Salary Increase Commit", "Track_KPI Commit", "Attendance Report", "Attendance Report F", "Attendance Report Rate", "Drop-out Report", "Drop-out Report F", "Drop-out Report Rate", "Graduation Report", "Graduation Report F", "Graduation Report Rate", "Employment Report", "Employment Report F", "Employment Report Rate", "Track_KPI Report", "Satisfaction Report", "Satisfaction Report Rate", "Attendance Rate Actual", "Attendance Rate Actual Result", "Drop-out (%) Actual", "Drop-out Actual Result", "Graduation % Actual", "Graduation (%) Actual Result", "Employment (%) Actual", "Emaployment (%) Actual Result", "Salary Actual", "Salary Actual Result", "% Salary Increase Actual", "% Salary Increase Actual Result", "Track_KPI Actual", "Tracer Study", "Track_Feeback", "Budget Source", "Focal M&E"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Errors", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Blank Rows"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Duplicates",{"ID", "Year", "Contract #", "Initiator", "Skill Sector SOP", "Proposal Type PS", "Skill", "Scheme", "Training Type", "Track_Contract Duration", "Training Progress", "Disbursement Progress", "Trainees_Proposal", "Female_Proposal", "Column2", "Column1", "Trainee Actual", "Female Actual", "Terminate", "Dead", "Resigned", "Attendance Rate Commit", "Drop-out (%) Commit", "Graduation Rate Commit", "Employment (%) Commit", "Satisfaction Commit", "Salary Commit $", "%Salary Increase Commit", "Track_KPI Commit", "Attendance Report", "Attendance Report F", "Attendance Report Rate", "Drop-out Report", "Drop-out Report F", "Drop-out Report Rate", "Graduation Report", "Graduation Report F", "Graduation Report Rate", "Employment Report", "Employment Report F", "Employment Report Rate", "Track_KPI Report", "Satisfaction Report", "Satisfaction Report Rate", "Attendance Rate Actual", "Attendance Rate Actual Result", "Drop-out (%) Actual", "Drop-out Actual Result", "Graduation % Actual", "Graduation (%) Actual Result", "Employment (%) Actual", "Emaployment (%) Actual Result", "Salary Actual", "Salary Actual Result", "% Salary Increase Actual", "% Salary Increase Actual Result", "Track_KPI Actual", "Tracer Study", "Track_Feeback", "Budget Source", "Focal M&E"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

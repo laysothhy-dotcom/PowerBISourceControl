@@ -1,0 +1,67 @@
+table IconBinary_final
+	lineageTag: e7843ec1-3a12-47fb-b885-46d84588212a
+
+	column Name
+		dataType: string
+		lineageTag: 0d721cee-3933-419f-8d24-b52bd28e5f43
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Extension
+		dataType: string
+		lineageTag: 76edd9bd-920d-4685-8c4e-c3aee2c930f3
+		summarizeBy: none
+		sourceColumn: Extension
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date accessed'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5ad4e3bc-ba28-4e81-8fec-b5ab57bb1a35
+		summarizeBy: none
+		sourceColumn: Date accessed
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date modified'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7a0f1a51-1599-4d77-8177-1815e7484009
+		summarizeBy: none
+		sourceColumn: Date modified
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date created'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0f1e969d-cf51-418e-8dcb-7fd1509cd7b6
+		summarizeBy: none
+		sourceColumn: Date created
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder Path'
+		dataType: string
+		lineageTag: 3feb32f0-6f58-4cfd-8207-9169dbf5005a
+		summarizeBy: none
+		sourceColumn: Folder Path
+
+		annotation SummarizationSetBy = Automatic
+
+	partition IconBinary_final = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Folder.Files("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\IconBinary_final")
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,44 @@
+table multi_tone_yellow_final
+	lineageTag: c020697e-7034-4e53-ad11-52fc31086017
+
+	column 'Model Names'
+		dataType: string
+		lineageTag: c567272c-be05-45d8-87f0-4b3b4331d38e
+		summarizeBy: none
+		sourceColumn: Model Names
+
+		annotation SummarizationSetBy = Automatic
+
+	column Extension
+		dataType: string
+		lineageTag: 6dad6ee4-f0ef-46f1-a6ab-19e6f031014b
+		summarizeBy: none
+		sourceColumn: Extension
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinaryImagesYellow
+		dataType: string
+		lineageTag: 3e31c0ea-bd08-4b79-a7dd-88f5092df6c8
+		summarizeBy: none
+		sourceColumn: BinaryImagesYellow
+
+		annotation SummarizationSetBy = Automatic
+
+	partition multi_tone_yellow_final = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\multi_tone_yellow_final"),
+				    #"Invoked Custom Function" = Table.AddColumn(Source, "BinaryImagesYellow", each ImageToBinary2([Content])),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Invoked Custom Function", "Name", Splitter.SplitTextByDelimiter(".", QuoteStyle.Csv), {"Name.1", "Name.2"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Split Column by Delimiter",{{"Name.1", "Model Names"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Name.2"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"Content", "Model Names", "Extension", "BinaryImagesYellow"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

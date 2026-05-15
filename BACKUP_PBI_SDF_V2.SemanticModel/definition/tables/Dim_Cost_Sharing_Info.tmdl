@@ -1,0 +1,107 @@
+table Dim_Cost_Sharing_Info
+	lineageTag: a1a42cf5-f318-43ee-b971-53df34ad0fec
+
+	column ID
+		dataType: string
+		lineageTag: efeb7030-55eb-4ed0-8c04-6c09181ca685
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contract #'
+		dataType: string
+		lineageTag: 7a38e0ec-6d2e-4daa-a0d6-88b76727a224
+		summarizeBy: none
+		sourceColumn: Contract #
+
+		annotation SummarizationSetBy = Automatic
+
+	column initiator
+		dataType: string
+		lineageTag: 62b276c7-a17f-4199-a3d8-ee41d670d235
+		summarizeBy: none
+		sourceColumn: initiator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Certificate Level'
+		dataType: string
+		lineageTag: c85af524-039e-45ce-8993-5b237008f61a
+		summarizeBy: none
+		sourceColumn: Certificate Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Type'
+		dataType: string
+		lineageTag: c63161c7-553c-41a2-b7f2-c5590fb505da
+		summarizeBy: none
+		sourceColumn: Training Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Count # Projects'
+		dataType: int64
+		formatString: 0
+		lineageTag: 80e80018-722a-4230-bf39-4a8d271b0b24
+		summarizeBy: sum
+		sourceColumn: Count # Projects
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 61c4d439-ea61-47bb-a3f0-07705f379d09
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 7cdc87cc-c0c0-4031-bf64-2aca05a5922f
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Track_Cost Share'
+		dataType: double
+		lineageTag: 45e105bd-3399-4777-a884-87e80e9034be
+		summarizeBy: sum
+		sourceColumn: Track_Cost Share
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Focal M&E'
+		dataType: string
+		lineageTag: c9aa0cd5-1fca-4a67-9325-ef8253e2f29c
+		summarizeBy: none
+		sourceColumn: Focal M&E
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Cost_Sharing_Info = m
+		mode: import
+		queryGroup: 'Budget Cost Share'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"8-Cost Sharing_Sheet" = Source{[Item="8-Cost Sharing",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"8-Cost Sharing_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Contract #", type text}, {"initiator", type text}, {"Certificate Level", type any}, {"Training Type", type text}, {"Count # Projects", Int64.Type}, {"Trainees_Proposal", Int64.Type}, {"Budget Source", type text}, {"Total Cost (Riels)", Int64.Type}, {"Cost-shared by SDF (Riels)", Int64.Type}, {"Cost-shared Companies&Schools", Int64.Type}, {"Trainer Fee", type number}, {"Trainee Allowance", type number}, {"Materials", type number}, {"Utilities", type number}, {"Others", type number}, {"Trainer Fee SDF", type number}, {"Trainee Allowance SDF", type number}, {"Materials SDF", type number}, {"Utilities SDF", type number}, {"Others SDF", type number}, {"Trainer Fee School In Kind", Int64.Type}, {"Trainee Allowance School In Kind", Int64.Type}, {"Materials School In Kind", Int64.Type}, {"Utilities School In Kind", Int64.Type}, {"Others School In Kind", Int64.Type}, {"Trainer Fee School In Cash", Int64.Type}, {"Trainee Allowance School In Cash", Int64.Type}, {"Materials School In Cash", Int64.Type}, {"Utilities School In Cash", Int64.Type}, {"Others School In Cash", Int64.Type}, {"Trainer Fee Company In Kind", Int64.Type}, {"Trainee Allowance Company In Kind", Int64.Type}, {"Materials Company In Kind", Int64.Type}, {"Utilities Company In Kind", Int64.Type}, {"Others Company In Kind", Int64.Type}, {"Trainer Fee Company In Cash", Int64.Type}, {"Trainee Allowance Company In Cash", Int64.Type}, {"Materials Company In Cash", Int64.Type}, {"Utilities Company In Cash", Int64.Type}, {"Others Company In Cash", Int64.Type}, {"Total Companies&Schools Cash", Int64.Type}, {"Trainer Fee Companies&Schools Cash", Int64.Type}, {"Trainee Allowance Companies&Schools Cash", Int64.Type}, {"Materials Companies&Schools Cash", Int64.Type}, {"Utilities Companies&Schools Cash", Int64.Type}, {"Others Companies&Schools Cash", Int64.Type}, {"Total Companies&Schools Kind", Int64.Type}, {"Trainer Fee Companies&Schools Kind", Int64.Type}, {"Trainee Allowance Companies&Schools Kind", Int64.Type}, {"Materials Companies&Schools Kind", Int64.Type}, {"Utilities Companies&Schools Kind", Int64.Type}, {"Others Companies&Schools Kind", Int64.Type}, {"Track_Cost Share", type text}, {"Focal M&E", type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"ID", type text}, {"Certificate Level", type text}, {"Total Cost (Riels)", type number}, {"Cost-shared by SDF (Riels)", type number}, {"Cost-shared Companies&Schools", type number}, {"Trainee Allowance School In Kind", type number}, {"Materials School In Kind", type number}, {"Utilities School In Kind", type number}, {"Others School In Kind", type number}, {"Trainer Fee School In Cash", type number}, {"Trainee Allowance School In Cash", type number}, {"Materials School In Cash", type number}, {"Utilities School In Cash", type number}, {"Others School In Cash", type number}, {"Trainer Fee Company In Kind", type number}, {"Trainee Allowance Company In Kind", type number}, {"Materials Company In Kind", type number}, {"Utilities Company In Kind", type number}, {"Others Company In Kind", type number}, {"Trainer Fee Company In Cash", type number}, {"Trainee Allowance Company In Cash", type number}, {"Materials Company In Cash", type number}, {"Utilities Company In Cash", type number}, {"Others Company In Cash", type number}, {"Total Companies&Schools Cash", type number}, {"Trainer Fee Companies&Schools Cash", type number}, {"Trainee Allowance Companies&Schools Cash", type number}, {"Materials Companies&Schools Cash", type number}, {"Utilities Companies&Schools Cash", type number}, {"Others Companies&Schools Cash", type number}, {"Total Companies&Schools Kind", type number}, {"Trainer Fee Companies&Schools Kind", type number}, {"Trainee Allowance Companies&Schools Kind", type number}, {"Materials Companies&Schools Kind", type number}, {"Utilities Companies&Schools Kind", type number}, {"Others Companies&Schools Kind", type number}, {"Track_Cost Share", type number}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type1", {{"Track_Cost Share", null}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Replaced Errors"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Duplicates",{"ID", "Contract #", "initiator", "Certificate Level", "Training Type", "Count # Projects", "Trainees_Proposal", "Budget Source", "Track_Cost Share", "Focal M&E"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

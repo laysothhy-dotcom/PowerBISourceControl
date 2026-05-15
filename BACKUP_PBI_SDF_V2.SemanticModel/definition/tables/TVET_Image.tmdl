@@ -1,0 +1,80 @@
+table TVET_Image
+	lineageTag: 1f96ec04-326f-484b-9f13-408edba1e9e3
+
+	measure 'Display Image' = ```
+			
+			IF( HASONEVALUE('TVET_Image'[Name]), 
+			"data:image/jpeg;base64, " & 
+			CONCATENATEX( 'TVET_Image', 'TVET_Image'[Pic], , 'TVET_Image'[Index], ASC) )
+			```
+		lineageTag: 09594940-70e0-49fb-8115-b9a81b8a1c29
+		dataCategory: ImageUrl
+
+	column Name
+		dataType: string
+		lineageTag: da00e375-ad44-4f1d-84bb-db952e9080e2
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pic
+		dataType: string
+		lineageTag: a623da2b-d713-4603-b489-561d16b2be7e
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: Pic
+
+		annotation SummarizationSetBy = Automatic
+
+	column Index
+		dataType: double
+		lineageTag: 08885507-59de-4105-8c19-74f3e32373f1
+		summarizeBy: sum
+		sourceColumn: Index
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition TVET_Image = m
+		mode: import
+		queryGroup: ImageBinary
+		source = ```
+				let
+				  //Get list of files in folder 
+				  Source = Folder.Files("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\TVET_Image"),
+				  //Remove unnecessary columns 
+				  RemoveOtherColumns = Table.SelectColumns(Source, {"Content", "Name"}),
+				  //Creates Splitter function 
+				  SplitTextFunction = Splitter.SplitTextByRepeatedLengths(30000),
+				  //Converts table of files to list 
+				  ListInput = Table.ToRows(RemoveOtherColumns),
+				  //Function to convert binary of photo to multiple 
+				  //text values 
+				  ConvertOneFile = (InputRow as list) =>
+				    let
+				      BinaryIn    = InputRow{0},
+				      FileName    = InputRow{1},
+				      BinaryText  = Binary.ToText(BinaryIn, BinaryEncoding.Base64),
+				      SplitUpText = SplitTextFunction(BinaryText),
+				      AddFileName = List.Transform(SplitUpText, each {FileName, _})
+				    in
+				      AddFileName,
+				  //Loops over all photos and calls the above function 
+				  ConvertAllFiles = List.Transform(ListInput, each ConvertOneFile(_)),
+				  //Combines lists together 
+				  CombineLists = List.Combine(ConvertAllFiles),
+				  //Converts results to table 
+				  ToTable = #table(type table [Name = text, Pic = text], CombineLists),
+				  //Adds index column to output table 
+				  AddIndexColumn = Table.AddIndexColumn(ToTable, "Index", 0, 1)
+				in
+				  AddIndexColumn
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

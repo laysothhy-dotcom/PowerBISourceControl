@@ -1,0 +1,81 @@
+table 'Dim Date'
+	lineageTag: 70d620d6-968d-42d1-8b4d-418a141a6c1a
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 26fe0a51-1041-4c15-aba1-2b7f15b4c182
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 904750a1-2242-487e-8914-84cb43d7698a
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: b662b07f-3a16-467e-9d25-40361d845330
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 43581f9b-5220-41a4-a551-432335447898
+		summarizeBy: sum
+		sourceColumn: Week Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0246003d-f41c-4bd9-a757-1b01e2ae5da9
+		summarizeBy: sum
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: df9f8735-3ef4-4c29-b1e7-6a86858c7e4e
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: string
+		lineageTag: 9900425b-1103-4fbf-b73f-85ca7bf8834a
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim Date' = m
+		mode: import
+		source =
+				let
+				    Source = Date_Query(#date(2015, 1, 1), #date(2030, 1, 1)),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Date", type date}, {"Year", type text}, {"Quarter", type text}, {"Week Number", Int64.Type}, {"Month Number", Int64.Type}, {"Month", type text}, {"Day of Week", type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"Year", Int64.Type}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

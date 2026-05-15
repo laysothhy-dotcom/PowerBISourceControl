@@ -1,0 +1,64 @@
+table Dim_Proposal_Trainees_Appen_kobo
+	lineageTag: 3a2cd620-f5bc-42a2-8ae6-374be76f1cce
+
+	column ID
+		dataType: string
+		lineageTag: d5f1c5b8-4620-4bda-9123-754ad5eb12f2
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trainees_Proposal
+		dataType: string
+		lineageTag: ff8bfb29-6a69-4716-aa59-db5036d292a8
+		summarizeBy: none
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female_Proposal
+		dataType: string
+		lineageTag: 46c8405a-de40-423c-8571-062507b03f2c
+		summarizeBy: none
+		sourceColumn: Female_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Trainees_Appen_kobo = m
+		mode: import
+		queryGroup: Proposal\KOBO_Proposal
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aQgjZ2GU8uPeDSfKo7sJx6/export-settings/esuYsgPwD6KxFbH6ZqugGf3/data.csv"),[Delimiter=";", Columns=501, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Promoted Headers",{{"tpshar_percent", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type2", {{"tpshar_percent", null}}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Replaced Errors",{"id", "prop_id", "tp_id", "skill_sec", "skill", "skill_rev", "cert_type", "cqf", "total_trainees_001", "total_female_001", "skill_proposed_002", "total_trainees_002", "total_female_002", "skill_proposed_003", "total_trainees_003", "total_female_003", "skill_proposed_004", "total_trainees_004", "total_female_004", "skill_proposed_005", "total_trainees_005", "total_female_005", "calc_total_trainees_1_031", "calc_total_female_1_032", "total_trainees_006", "total_female_006", "skill_proposed_007", "total_trainees_007", "total_female_007", "skill_proposed_008", "total_trainees_008", "total_female_008", "skill_proposed_009", "total_trainees_009", "total_female_009", "skill_proposed_010", "total_trainees_010", "total_female_010", "calc_total_trainees_2_065", "calc_total_female_2_066", "skill_proposed_011", "total_trainees_011", "total_female_011", "skill_proposed_012", "total_trainees_012", "total_female_012", "skill_proposed_013", "total_trainees_013", "total_female_013", "skill_proposed_014", "total_trainees_014", "total_female_014", "skill_proposed_015", "total_trainees_015", "total_female_015", "calc_total_trainees_3_099", "calc_total_female_3_100", "skill_proposed_016", "total_trainees_016", "total_female_016", "skill_proposed_017", "total_trainees_017", "total_female_017", "skill_proposed_018", "total_trainees_018", "total_female_018", "skill_proposed_019", "total_trainees_019", "total_female_019", "skill_proposed_020", "total_trainees_020", "total_female_020", "calc_total_trainees_4_133", "calc_total_female_4_134"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns1"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates1", {"id"}),
+				    #"Removed Other Columns2" = Table.SelectColumns(#"Removed Errors",{"id", "prop_id", "calc_total_trainees_1_031", "calc_total_female_1_032", "calc_total_trainees_2_065", "calc_total_female_2_066", "calc_total_trainees_3_099", "calc_total_female_3_100", "calc_total_trainees_4_133", "calc_total_female_4_134"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns2",{{"id", "ID"}}),
+				    #"Unpivoted Only Selected Columns" = Table.Unpivot(#"Renamed Columns", {"calc_total_trainees_1_031", "calc_total_female_1_032", "calc_total_trainees_2_065", "calc_total_female_2_066", "calc_total_trainees_3_099", "calc_total_female_3_100", "calc_total_trainees_4_133", "calc_total_female_4_134"}, "Attribute", "Value"),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Unpivoted Only Selected Columns", "Attribute", "Attribute - Copy"),
+				    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "Value", "Value - Copy"),
+				    #"Filtered Rows" = Table.SelectRows(#"Duplicated Column1", each true),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"Attribute - Copy", "Value - Copy"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Columns", "Female Proposal ", each Text.ToList([calc_total_female_])),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Custom",{"Female Proposal "}),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Columns1", "Index", 0, 1, Int64.Type),
+				    #"Integer-Divided Column" = Table.TransformColumns(#"Added Index", {{"Index", each Number.IntegerDivide(_, 2), Int64.Type}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Integer-Divided Column","calc_total_trainees_1_031","Total Trainees",Replacer.ReplaceText,{"Attribute"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","calc_total_female_1_032","Total Female",Replacer.ReplaceText,{"Attribute"}),
+				    #"Pivoted Column" = Table.Pivot(#"Replaced Value1", List.Distinct(#"Replaced Value1"[Attribute]), "Attribute", "Value"),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Pivoted Column",{"Index"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns2",{{"Total Trainees", "Trainees_Proposal"}, {"Total Female", "Female_Proposal"}}),
+				    #"Removed Other Columns3" = Table.SelectColumns(#"Renamed Columns1",{"ID", "Trainees_Proposal", "Female_Proposal"})
+				in
+				    #"Removed Other Columns3"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

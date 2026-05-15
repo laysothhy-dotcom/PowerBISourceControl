@@ -1,0 +1,214 @@
+table Dim_SBJ_Rating
+	lineageTag: ee6e1a77-d6d4-41a0-83b3-116d02b6ff62
+
+	column Sub-activity
+		dataType: string
+		lineageTag: 33c45468-3678-45d5-b683-3c96241c95d0
+		summarizeBy: none
+		sourceColumn: Sub-activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Key Performance Indicator (KPI)'
+		dataType: string
+		lineageTag: 5c1a9371-f3fc-403e-97bc-934f2b2d1c09
+		summarizeBy: none
+		sourceColumn: Key Performance Indicator (KPI)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Target(5-year)'
+		dataType: double
+		lineageTag: 953f2103-525b-4e4c-8f60-bce89f647d2b
+		summarizeBy: sum
+		sourceColumn: Total Target(5-year)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 2024Target
+		dataType: double
+		lineageTag: 20b6cfba-96a3-4c61-82b9-67aca618f4b9
+		summarizeBy: sum
+		sourceColumn: 2024Target
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 2025Target
+		dataType: double
+		lineageTag: ea7ad68a-89c3-486b-b06b-b9517771520c
+		summarizeBy: sum
+		sourceColumn: 2025Target
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 2026Target
+		dataType: double
+		lineageTag: bbbee45c-3271-404e-ac71-0448a1e46415
+		summarizeBy: sum
+		sourceColumn: 2026Target
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 2027Target
+		dataType: double
+		lineageTag: 4dbff9f3-de25-43fe-99eb-390c2cbbd4b1
+		summarizeBy: sum
+		sourceColumn: 2027Target
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 2028Target
+		dataType: double
+		lineageTag: 2c2fa60a-67c3-4aff-865c-5306412ce985
+		summarizeBy: sum
+		sourceColumn: 2028Target
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 2029Target
+		dataType: double
+		lineageTag: a50ededd-0f26-4cee-94df-22ee78fdbfb0
+		summarizeBy: sum
+		sourceColumn: 2029Target
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ActualCumulative
+		dataType: double
+		lineageTag: 18dfec88-f0a6-4f64-8ec4-e7e26b52e11e
+		summarizeBy: sum
+		sourceColumn: ActualCumulative
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% Complete'
+		dataType: double
+		lineageTag: 8035361c-4bd3-4733-95ea-056330d8a11f
+		summarizeBy: sum
+		sourceColumn: % Complete
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ActivityRating
+		dataType: double
+		lineageTag: 7564e721-12c2-4136-bf7b-69a21838db00
+		summarizeBy: sum
+		sourceColumn: ActivityRating
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BudgetAllocation(USD)
+		dataType: double
+		lineageTag: e12add00-c931-4bdb-ad60-c9bd14559e06
+		summarizeBy: sum
+		sourceColumn: BudgetAllocation(USD)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CulmulativeExpense(USD)
+		dataType: double
+		lineageTag: bc7c88cc-274a-44aa-85a8-f67cbd3799e2
+		summarizeBy: sum
+		sourceColumn: CulmulativeExpense(USD)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% BudgetUtilization'
+		dataType: double
+		lineageTag: 47b63769-79fa-46b1-9e75-0880960108a0
+		summarizeBy: sum
+		sourceColumn: % BudgetUtilization
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OverallRating
+		dataType: double
+		lineageTag: e759503f-4c20-4708-9951-1b9346df8b7c
+		summarizeBy: sum
+		sourceColumn: OverallRating
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Status
+		dataType: string
+		lineageTag: d3f8c838-de59-461d-acd9-1962dda778ea
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 536d0343-1f5e-45f1-afb8-f7ac457f9b7d
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Quarter
+		dataType: string
+		lineageTag: d7811211-983a-47cd-9684-627d9dc37dd4
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Remarks
+		dataType: string
+		lineageTag: 4ab20a5b-a3f8-4c8d-a95a-caa10cfc843d
+		summarizeBy: none
+		sourceColumn: Remarks
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_SBJ_Rating = m
+		mode: import
+		queryGroup: 'SBJ Project'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SBJ_SDF_Enhanced_Rating_System_V2.xlsx"), null, false),
+				    #"1_SBJ_SDF_Rating_sheet" = Source{[Item="1_SBJ_SDF_Rating",Kind="Sheet"]}[Data],
+				    #"Removed Top Rows" = Table.Skip(#"1_SBJ_SDF_Rating_sheet", 1),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"Removed Top Rows", 63),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Bottom Rows", {"Column1", "Column2", "Column4", "Column5", "Column6", "Column7", "Column8", "Column9", "Column10", "Column11", "Column12", "Column13", "Column14", "Column15", "Column16", "Column17", "Column18", "Column19", "Column20", "Column21"}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Other Columns", [PromoteAllScalars=true]),
+				    #"Promoted Headers1" = Table.PromoteHeaders(#"Promoted Headers", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers1",{{"Sub-activity", type text}, {"Total Target#(lf)(5-year)", type number}, {"2024#(lf)Target", type number}, {"2025#(lf)Target", type number}, {"2026#(lf)Target", type number}, {"2027#(lf)Target", type number}, {"2028#(lf)Target", type number}, {"2029#(lf)Target", type number}, {"Actual#(lf)Cumulative", type number}, {"% Complete", type number}, {"Activity#(lf)Rating", type number}, {"Budget#(lf)Allocation#(lf)(USD)", type number}, {"Culmulative#(lf)Expense#(lf)(USD)", type number}, {"% Budget#(lf)Utilization", type number}, {"Overall#(lf)Rating", type number}, {"Date", type date}, {"Quarter", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

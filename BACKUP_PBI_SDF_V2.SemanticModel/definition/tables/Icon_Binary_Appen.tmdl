@@ -1,0 +1,37 @@
+table Icon_Binary_Appen
+	lineageTag: 40b6523c-9518-4718-bf70-a2f44302c0bd
+
+	column IconsName
+		dataType: string
+		lineageTag: 2709a99a-e101-4b66-9d63-41e6a5c5c4ce
+		summarizeBy: none
+		sourceColumn: IconsName
+
+		annotation SummarizationSetBy = Automatic
+
+	column BinaryIcons
+		dataType: string
+		lineageTag: c4d715ec-f0e7-403e-8b52-28f55b862b20
+		summarizeBy: none
+		sourceColumn: BinaryIcons
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Icon_Binary_Appen = m
+		mode: import
+		queryGroup: ImageBinary
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\Icon_Binary.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers",{{"IconData", "BinaryIcons"}, {"Icon Name", "IconName"}}),
+				    #"Added Index" = Table.AddIndexColumn(#"Renamed Columns", "Index", 1, 1, Int64.Type),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Index",{"Index"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns",{{"IconName", "IconsName"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

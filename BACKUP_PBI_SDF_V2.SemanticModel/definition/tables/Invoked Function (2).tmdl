@@ -1,0 +1,71 @@
+table 'Invoked Function (2)'
+	lineageTag: 804a3bb8-a950-4c51-9c2d-5379f1b70435
+
+	column Date
+		dataType: string
+		lineageTag: 2540f503-0a89-4813-8a08-2cb899f88c01
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: string
+		lineageTag: ca2cc2e8-5267-4e21-92ec-4f7767255980
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: e73e3e2b-6119-4989-bf84-ad3f9372d992
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Number'
+		dataType: string
+		lineageTag: 1d099136-4722-4cb9-aef7-f4e98556f2cb
+		summarizeBy: none
+		sourceColumn: Week Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: string
+		lineageTag: 0b31a651-386a-4ed3-a4a7-6ca628b99681
+		summarizeBy: none
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 1b5eb582-dbae-4ade-8a2f-476b709ccd96
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: string
+		lineageTag: 60fbeb92-38d2-447b-854e-810db168d9cf
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Invoked Function (2)' = m
+		mode: import
+		source =
+				let
+				    Source = Date_Query(#date(2018, 1, 1), #date(2028, 1, 2))
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

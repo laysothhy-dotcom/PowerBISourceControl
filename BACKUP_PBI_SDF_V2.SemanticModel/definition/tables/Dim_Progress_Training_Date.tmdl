@@ -1,0 +1,188 @@
+table Dim_Progress_Training_Date
+	lineageTag: a84778ec-a901-41f6-a8d5-6a1d2e1fa0e6
+
+	column ID
+		dataType: string
+		lineageTag: 7b3f0a46-af72-4e79-8d0f-3d0663f6d411
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b19308d-7aca-4033-b508-d1f65820c2be
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Stage'
+		dataType: string
+		lineageTag: 8cbf040a-c4fa-4733-acf5-e5805215f9f5
+		summarizeBy: none
+		sourceColumn: Year Stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Approved'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a030854e-6d82-49c4-aed3-7b5471de68cc
+		summarizeBy: none
+		sourceColumn: Date Approved
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Draft Contract'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 56129924-6458-4ba4-bbc7-39c17ca4be22
+		summarizeBy: none
+		sourceColumn: Date_Draft Contract
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Applicant Completed'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a2415214-8658-4448-825d-98c2a7ff1539
+		summarizeBy: none
+		sourceColumn: Date_Applicant Completed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Finance Completed'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8fd5218c-9114-473c-89e4-d76998ac9fa5
+		summarizeBy: none
+		sourceColumn: Date_Finance Completed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_M&E Completed'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e72dde08-2d64-47f4-ab9e-8c850ad83257
+		summarizeBy: none
+		sourceColumn: Date_M&E Completed
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date_Assistant Completed'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 375a6b7d-3738-4535-8763-ac7b609f19ee
+		summarizeBy: none
+		sourceColumn: Date_Assistant Completed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_To Amin'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 44934cf1-e53c-44b0-a3b2-aa79b09a5d4c
+		summarizeBy: none
+		sourceColumn: Date_To Amin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Admin Out'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 12e2ddf6-ddd8-4d9b-bcf4-a5f565f50aff
+		summarizeBy: none
+		sourceColumn: Date_Admin Out
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Start Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 551dfd10-8593-4247-a5e7-0b974ffb8fbf
+		summarizeBy: none
+		sourceColumn: Start Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 36b10428-fbd3-4e11-b743-d95a2f21fa2b
+		summarizeBy: none
+		sourceColumn: End Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End Date in Contract'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ff80cac3-f5c9-44b3-97fb-b1650dc260aa
+		summarizeBy: none
+		sourceColumn: End Date in Contract
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Terminated Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 19d90b25-dffb-4ed2-9bcf-ad328361a2a0
+		summarizeBy: none
+		sourceColumn: Terminated Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Track_Contract Duration'
+		dataType: string
+		lineageTag: 8583c776-1bb3-47d2-8aef-68bd2197ba10
+		summarizeBy: none
+		sourceColumn: Track_Contract Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Progress_Training_Date = m
+		mode: import
+		queryGroup: 'Progress Monitoring'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"2-Progress Monitoring_Sheet" = Source{[Item="2-Progress Monitoring",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"2-Progress Monitoring_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", type any}, {"Proposal Type", type any}, {"Proposal Type PS", type any}, {"Initiator", type any}, {"Skill", type any}, {"Training Type", type any}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", type number}, {"SDF Contribution Riels", type number}, {"SDF Contribution $", type number}, {"Date Approved", Int64.Type}, {"Text Date Approved", type date}, {"Contract #", type text}, {"Date_Draft Contract", type any}, {"Date_Applicant Completed", type any}, {"Date_Finance Completed", type any}, {"Date_M&E Completed", type any}, {"Date_Assistant Completed", type any}, {"Date_To Amin", type any}, {"Date_Admin Out", type any}, {"Track_Review Process", type text}, {"Contract Date", Int64.Type}, {"ContractValid Date", Int64.Type}, {"Contract Duration", Int64.Type}, {"Start Date", Int64.Type}, {"End Date", Int64.Type}, {"End Date in Contract", Int64.Type}, {"Terminated Date", Int64.Type}, {"Track_Contract Duration", type text}, {"Track_Progress Sheet", type text}, {"Training Progress", type text}, {"Disbursement Progress", type text}, {"#Trainee Training", Int64.Type}, {"#Trainee Training Female", Int64.Type}, {"#Trainee Completed", Int64.Type}, {"#Trainee Completed Female", Int64.Type}, {"Orientation Date", type any}, {"1st Visit", Int64.Type}, {"2nd Visit", type any}, {"Budget Source", type any}, {"Focal M&E", type text}, {"Tracer study", type text}, {"Track_Trainee", type any}, {"Track_Feeback", type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"ID", type text}, {"Year Stage", type text}, {"Proposal Type", type text}, {"Proposal Type PS", type text}, {"Initiator", type text}, {"Skill", type text}, {"Training Type", type text}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", Int64.Type}, {"SDF Contribution $", Currency.Type}, {"Date Approved", type date}, {"Date_Draft Contract", type date}, {"Date_Applicant Completed", type date}, {"Date_Finance Completed", type date}, {"Date_M&E Completed", type datetime}, {"Date_Assistant Completed", type date}, {"Date_To Amin", type datetime}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Changed Type1",{{"Date_To Amin", type date}, {"Date_Admin Out", type date}, {"Contract Date", type date}, {"ContractValid Date", type date}, {"Start Date", type date}, {"End Date", type date}, {"End Date in Contract", type date}, {"Terminated Date", type date}, {"Orientation Date", type date}, {"1st Visit", type text}, {"2nd Visit", type text}, {"Budget Source", type text}, {"Track_Trainee", type text}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type2", {"ID", "Year", "Year Stage", "Proposal Type", "Proposal Type PS", "Initiator", "Skill", "Training Type", "Trainees_Proposal", "Female_Proposal", "SDF Contribution Riels", "SDF Contribution $", "Date Approved", "Text Date Approved", "Contract #", "Date_Draft Contract", "Date_Applicant Completed", "Date_Finance Completed", "Date_M&E Completed", "Date_Assistant Completed", "Date_To Amin", "Date_Admin Out", "Track_Review Process", "Contract Date", "ContractValid Date", "Contract Duration", "Start Date", "End Date", "End Date in Contract", "Terminated Date", "Track_Contract Duration", "Track_Progress Sheet", "Training Progress", "Disbursement Progress", "#Trainee Training", "#Trainee Training Female", "#Trainee Completed", "#Trainee Completed Female", "Orientation Date", "1st Visit", "2nd Visit", "Budget Source", "Focal M&E", "Tracer study", "Track_Trainee", "Track_Feeback"}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Errors", {"ID", "Year", "Year Stage", "Proposal Type", "Proposal Type PS", "Initiator", "Skill", "Training Type", "Trainees_Proposal", "Female_Proposal", "SDF Contribution Riels", "SDF Contribution $", "Date Approved", "Text Date Approved", "Contract #", "Date_Draft Contract", "Date_Applicant Completed", "Date_Finance Completed", "Date_M&E Completed", "Date_Assistant Completed", "Date_To Amin", "Date_Admin Out", "Track_Review Process", "Contract Date", "ContractValid Date", "Contract Duration", "Start Date", "End Date", "End Date in Contract", "Terminated Date", "Track_Contract Duration", "Track_Progress Sheet", "Training Progress", "Disbursement Progress", "#Trainee Training", "#Trainee Training Female", "#Trainee Completed", "#Trainee Completed Female", "Orientation Date", "1st Visit", "2nd Visit", "Budget Source", "Focal M&E", "Tracer study", "Track_Trainee", "Track_Feeback"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Errors1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Blank Rows",{"ID", "Year", "Year Stage", "Date Approved", "Date_Draft Contract", "Date_Applicant Completed", "Date_Finance Completed", "Date_M&E Completed", "Date_Assistant Completed", "Date_To Amin", "Date_Admin Out", "Start Date", "End Date", "End Date in Contract", "Terminated Date", "Track_Contract Duration"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,55 @@
+table 'Top 10 Skills'
+	lineageTag: f6d5fb90-bb41-4f80-af51-9b1d8ad0ee0b
+
+	column Skills_Revised
+		dataType: string
+		lineageTag: a82fa280-90b1-4c93-a4c5-18aeab7aa0b1
+		summarizeBy: none
+		sourceColumn: Skills_Revised
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill
+		dataType: string
+		lineageTag: 641a2eb0-3df6-4f3d-bf25-3c6f61cd7e5d
+		summarizeBy: none
+		sourceColumn: Skill
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: cc0aa0a5-c198-4b83-b1d1-e8cd475ce147
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column SDF_Contribution
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: d9e4d461-f1f7-4272-91e2-48c2cd2ef1a9
+		summarizeBy: sum
+		sourceColumn: SDF_Contribution
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition 'Top 10 Skills' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\SDF_Programe\DataBase_Development\PBI_Doc\SDF_Databas_PBI_V1\Database_Cleaned_Data_PBI\SDF_Database_01 Aug 2025_PowerBI_LSH_Backup.xlsx"), null, true),
+				    #"Top 10 Skills_Sheet" = Source{[Item="Top 10 Skills",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Top 10 Skills_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Skills_Revised", type text}, {"Skill", type text}, {"Trainees_Proposal", Int64.Type}, {"SDF_Contribution", type number}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"SDF_Contribution", Currency.Type}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

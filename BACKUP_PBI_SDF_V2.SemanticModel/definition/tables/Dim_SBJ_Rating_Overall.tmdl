@@ -1,0 +1,41 @@
+table Dim_SBJ_Rating_Overall
+	lineageTag: 0356a8e8-d74c-4bfd-8ef5-c2488b09df0f
+
+	column OverallRating
+		dataType: double
+		lineageTag: 8faf0ae9-a544-4a36-a5a0-3544cfb50bee
+		summarizeBy: none
+		sourceColumn: OverallRating
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column No
+		dataType: int64
+		formatString: 0
+		lineageTag: 45bcd3c3-a7ee-48e8-a513-ccdbb31581af
+		summarizeBy: none
+		sourceColumn: No
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_SBJ_Rating_Overall = m
+		mode: import
+		queryGroup: 'SBJ Project'
+		source =
+				let
+				    Source = Dim_SBJ_Rating,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Overall#(lf)Rating", "Status"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Removed Other Columns",{"Status"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each ([#"Overall#(lf)Rating"] = 20.687733669319037)),
+				    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows"),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "No"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

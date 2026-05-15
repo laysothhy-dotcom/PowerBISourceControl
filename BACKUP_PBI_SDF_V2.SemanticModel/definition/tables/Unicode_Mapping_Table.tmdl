@@ -1,0 +1,36 @@
+table Unicode_Mapping_Table
+	lineageTag: 9f6d4bff-7d67-4dc5-97b8-2d94a401014c
+
+	column Problematic_Character
+		dataType: string
+		lineageTag: 0c861dce-1831-43fc-9a80-88be40271761
+		summarizeBy: none
+		sourceColumn: Problematic_Character
+
+		annotation SummarizationSetBy = Automatic
+
+	column Replacement_Text
+		dataType: string
+		lineageTag: 9b954825-cfec-4cfc-a555-bbdaf3559f0c
+		summarizeBy: none
+		sourceColumn: Replacement_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Unicode_Mapping_Table = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\Final_Comprehensive_Unicode_Mapping_Table.xlsx"), null, true),
+				    Unicode_Mapping_Sheet = Source{[Item="Unicode_Mapping",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Unicode_Mapping_Sheet,{{"Column1", type text}, {"Column2", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Problematic_Character", type text}, {"Replacement_Text", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

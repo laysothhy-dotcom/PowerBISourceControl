@@ -1,0 +1,78 @@
+table Dim_Trainees​​_Proposal_PMS_Append
+	lineageTag: 8f2e4466-408c-4a19-a599-424cbf1f96fb
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 955a1ac7-c309-42f4-84ee-dca9343b92ce
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Initiator
+		dataType: string
+		lineageTag: 6227feab-e816-4aba-9dd9-9ff2a46e780b
+		summarizeBy: none
+		sourceColumn: Initiator
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: a5ef5712-432e-4b41-b164-0dd8795d6dff
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: e6dc0be0-a34d-450c-ae32-98f114e88676
+		summarizeBy: sum
+		sourceColumn: Female_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sector
+		dataType: string
+		lineageTag: 7ac8271e-1597-4683-85f9-dc3ed1cce551
+		summarizeBy: none
+		sourceColumn: Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 7e6d6f8f-c839-48bf-95b5-8a1a72cd570a
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 72e9472c-b7f3-4f85-b822-1311d32221ec
+		summarizeBy: count
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Trainees​​_Proposal_PMS_Append = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Trainees​​_Proposal_PMS,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"ID", "Institute Name", "Target Trainee", "Trainee Female", "Sector", "Unified_ID", "New_ID"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Institute Name", "Initiator"}, {"Target Trainee", "Trainees_Proposal"}, {"Trainee Female", "Female_Proposal"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

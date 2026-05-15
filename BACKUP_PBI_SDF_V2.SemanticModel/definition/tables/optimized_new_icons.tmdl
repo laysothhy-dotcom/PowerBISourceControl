@@ -1,0 +1,34 @@
+table optimized_new_icons
+	lineageTag: 4f983a9f-6a1b-4ec8-840b-058f56edeba4
+
+	column Name
+		dataType: string
+		lineageTag: fdffbeff-9949-4701-a447-5f2315408688
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Icon_Name
+		dataType: string
+		lineageTag: 6a4c3338-79e9-43db-bfe6-99ff77ae69eb
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: Icon_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition optimized_new_icons = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\optimized_new_icons"),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Content", "Name"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Other Columns", "Icon_Name", each "data:image;base64, " & Binary.ToText([Content], BinaryEncoding.Base64))
+				in
+				    #"Added Custom"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

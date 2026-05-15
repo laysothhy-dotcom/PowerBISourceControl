@@ -1,0 +1,37 @@
+table Dim_Proposal_Budget_appen_kobo
+	lineageTag: 9ee5749e-e72c-4c51-b501-539fe10dff37
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 413257e3-e856-47f6-87e5-64ca195216e4
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: string
+		lineageTag: 259bb2a0-5c33-429c-bddf-f640e87b8526
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Budget_appen_kobo = m
+		mode: import
+		queryGroup: Proposal
+		source =
+				let
+				    Source = Dim_Proposal_Budget_Sources_kobo,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Soureces of fund", "id"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Soureces of fund", "Budget Source"}, {"id", "ID"}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates1", {"Budget Source", "ID"})
+				in
+				    #"Removed Errors"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,171 @@
+table 'Dim_ proposal_ Type'
+	lineageTag: 318d5cf7-0fe9-468d-b2d6-2408532361c0
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 190b10d5-57d8-4049-893d-e87a846552e0
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Proposal_Code
+		dataType: string
+		lineageTag: 5da7c919-2815-455c-beb4-e4616fc64123
+		summarizeBy: none
+		sourceColumn: Proposal_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Proposal_Type_Code
+		dataType: string
+		lineageTag: c0b17efa-e6d2-4df2-b4d1-7eafd4060bf1
+		summarizeBy: none
+		sourceColumn: Proposal_Type_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill_Sector_ADB
+		dataType: string
+		lineageTag: 8a88d84b-70a8-4395-aae8-ab71b785590b
+		summarizeBy: none
+		sourceColumn: Skill_Sector_ADB
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill_Sector_ADB_PS
+		dataType: string
+		lineageTag: 66ad4a8b-98e7-4ad8-8cb4-5d06dfca5a7d
+		summarizeBy: none
+		sourceColumn: Skill_Sector_ADB_PS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill_Sector_SOP
+		dataType: string
+		lineageTag: d339288f-b272-4b2c-9d27-a3e72926a3f6
+		summarizeBy: none
+		sourceColumn: Skill_Sector_SOP
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill_Sector_SOP_PS
+		dataType: string
+		lineageTag: 6b282598-1f9e-4bb4-99a7-c3d27d9d03eb
+		summarizeBy: none
+		sourceColumn: Skill_Sector_SOP_PS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Training_Provider
+		dataType: string
+		lineageTag: 7ef910e9-0e0f-433d-aef3-cfa35e25db1d
+		summarizeBy: none
+		sourceColumn: Training_Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Training_Provider_Type
+		dataType: string
+		lineageTag: 9484bd37-6720-4988-a57c-3957e97c6a6a
+		summarizeBy: none
+		sourceColumn: Training_Provider_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Partnered_Commpany
+		dataType: string
+		lineageTag: 01e44976-8342-44a0-bbc8-8e7c25f8d363
+		summarizeBy: none
+		sourceColumn: Partnered_Commpany
+
+		annotation SummarizationSetBy = Automatic
+
+	column Enterprise_Sector
+		dataType: string
+		lineageTag: e05f3053-b79c-4c4c-98d8-6cf9c0175792
+		summarizeBy: none
+		sourceColumn: Enterprise_Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: a18e98db-d808-41d1-b5cf-3cf644d97d70
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 61806bdc-3b0b-488a-b317-a656197d2b01
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_ proposal_ Type' = m
+		mode: import
+		queryGroup: Proposal
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\SDF_Programe\DataBase_Development\PBI_Doc\SDF_Databas_PBI_V1\Database_Cleaned_Data_PBI\SDF_Database_01 Aug 2025_PowerBI_LSH_Backup.xlsx"), null, true),
+				    Proposals_Sheet = Source{[Item="Proposals",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Proposals_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Year_Stage", type text}}),
+				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Changed Type", {{"Submission_Date", type datetime}}, "id-ID"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type with Locale",{{"Submission_Date", type date}}),
+				    #"Changed Type with Locale1" = Table.TransformColumnTypes(#"Changed Type1", {{"Last_Submission_Date", type datetime}}, "id-ID"),
+				    #"Changed Type with Locale2" = Table.TransformColumnTypes(#"Changed Type with Locale1", {{"Last_Submission_Date", type datetime}}, "id-ID"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Changed Type with Locale2",{{"Range_Hours", type text}, {"TotalTraining_Hours", Int64.Type}, {"School_Hours", Int64.Type}, {"School_Practice", Int64.Type}, {"Company_Practice", Int64.Type}, {"Industry", Percentage.Type}, {"Industry_60", type text}, {"Industry_60_PS", type text}, {"Training_Type", type text}, {"Training_Type_PS", type text}, {"Scheme", type text}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", Int64.Type}}),
+				    #"Changed Type with Locale3" = Table.TransformColumnTypes(#"Changed Type2", {{"Date_Proposal_Review", type datetime}}, "id-ID"),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Changed Type with Locale3",{{"Date_Proposal_Review", type date}}),
+				    #"Changed Type with Locale4" = Table.TransformColumnTypes(#"Changed Type3", {{"Date_LPS_Review", type datetime}}, "id-ID"),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Changed Type with Locale4",{{"Date_LPS_Review", type date}}),
+				    #"Changed Type with Locale5" = Table.TransformColumnTypes(#"Changed Type4", {{"Date_Appraisal", type datetime}}, "id-ID"),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Changed Type with Locale5",{{"Date_Appraisal", type date}}),
+				    #"Changed Type with Locale6" = Table.TransformColumnTypes(#"Changed Type5", {{"Date_KYC", type datetime}}, "id-ID"),
+				    #"Changed Type6" = Table.TransformColumnTypes(#"Changed Type with Locale6",{{"Date_KYC", type date}}),
+				    #"Changed Type with Locale7" = Table.TransformColumnTypes(#"Changed Type6", {{"Date_Pitching", type datetime}}, "id-ID"),
+				    #"Changed Type7" = Table.TransformColumnTypes(#"Changed Type with Locale7",{{"Date_Pitching", type date}, {"Pitching_Method", type text}}),
+				    #"Changed Type with Locale8" = Table.TransformColumnTypes(#"Changed Type7", {{"Date_Revision_after_Pitching", type datetime}}, "id-ID"),
+				    #"Changed Type8" = Table.TransformColumnTypes(#"Changed Type with Locale8",{{"Date_Revision_after_Pitching", type date}}),
+				    #"Changed Type with Locale9" = Table.TransformColumnTypes(#"Changed Type8", {{"Date_Report_after_Pitching", type datetime}}, "id-ID"),
+				    #"Changed Type9" = Table.TransformColumnTypes(#"Changed Type with Locale9",{{"Training_Provider", type text}, {"Training_Provider_Type", type text}, {"Partnered_Commpany", type text}, {"Enterprise_Sector", type text}, {"Location", type text}, {"Joint_Proposal", type text}, {"Joint_Proposal_PS", type text}, {"Cost_of_Proposal_Riels", type number}, {"Unit_Cost_Riels", type number}, {"Cost_of_Proposal", Currency.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type9",{{"Cost_of_Proposal", "Cost_of_Proposal $"}, {"Total_Unit_Cost", "Total_Unit_Cost $"}}),
+				    #"Changed Type10" = Table.TransformColumnTypes(#"Renamed Columns",{{"Total_Unit_Cost $", Currency.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type10",{{"Total_Unit_Cost_Excl_All", "Total_Unit_Cost_Excl_All $"}}),
+				    #"Changed Type11" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Total_Unit_Cost_Excl_All $", Currency.Type}}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Changed Type11",{{"Company", "Company %"}}),
+				    #"Changed Type12" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Company %", Percentage.Type}, {"Company_Contribution_Riels", type number}, {"Company_Contribution", Currency.Type}}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Changed Type12",{{"School", "School %"}}),
+				    #"Changed Type13" = Table.TransformColumnTypes(#"Renamed Columns3",{{"School %", Percentage.Type}, {"School_Contribution_Riels", type number}}),
+				    #"Renamed Columns4" = Table.RenameColumns(#"Changed Type13",{{"School_Contribution", "School_Contribution $"}}),
+				    #"Changed Type14" = Table.TransformColumnTypes(#"Renamed Columns4",{{"SDF", Percentage.Type}, {"SDF_Contribution_Riels", type number}, {"SDF_Unit_Cost_Riels", type number}}),
+				    #"Renamed Columns5" = Table.RenameColumns(#"Changed Type14",{{"SDF_Contribution", "SDF_Contribution $"}}),
+				    #"Changed Type15" = Table.TransformColumnTypes(#"Renamed Columns5",{{"SDF_Contribution $", Currency.Type}, {"SDF_Unit_Cost", Currency.Type}, {"SDF_Unit_Cost_Excl_All", Currency.Type}, {"Unit_2000", type text}, {"Total_Allowance", type number}, {"Unit_Allowance", Currency.Type}, {"Total_Allowance_SDF", type number}, {"Unit_Allowance_SDF", Currency.Type}, {"Awarded", type text}}),
+				    #"Changed Type with Locale10" = Table.TransformColumnTypes(#"Changed Type15", {{"Date_Approved", type datetime}}, "id-ID"),
+				    #"Changed Type16" = Table.TransformColumnTypes(#"Changed Type with Locale10",{{"Date_Approved", type date}, {"Date_Approved_Month", type text}}),
+				    #"Changed Type with Locale11" = Table.TransformColumnTypes(#"Changed Type16", {{"Date_Announce", type datetime}}, "id-ID"),
+				    #"Changed Type17" = Table.TransformColumnTypes(#"Changed Type with Locale11",{{"Budget_Source", type text}, {"Trainer_Fee", type number}, {"Trainee_Allowance", type number}, {"Materials", type number}, {"Utilities", type number}, {"Others", type number}, {"Trainer_Fee_School", type number}, {"Trainee_Allowance_School", type number}, {"Materials_School", type number}, {"Utilities_School", type number}, {"Others_School", type number}, {"Trainer_Fee_Company", type number}, {"Trainee_Allowance_Company", type number}, {"Materials_Company", type number}, {"Utilities_Company", type number}, {"Others_Company", type number}, {"Trainer_Fee_SDF", type number}, {"Trainee_Allowance_SDF", type number}, {"Materials_SDF", type number}, {"Utilities_SDF", type number}, {"Others_SDF", type number}, {"Appraisal_PIC", type text}, {"Approval_Duration", Int64.Type}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type17",{"Column_113"}),
+				    #"Changed Type18" = Table.TransformColumnTypes(#"Removed Columns",{{"Banteay_Meanchey", type text}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type18", {"ID", "Year", "Year_Stage", "Submission_Date", "Last_Submission_Date", "Submission_Date_Month", "Proposal_Code", "Proposal_Type", "Proposal_Type_PS", "Proposal_Type_Code", "Initiator", "Initiator_Type", "Skill_Sector_ADB", "Skill_Sector_ADB_PS", "Skill_Sector_SOP", "Skill_Sector_SOP_PS", "Skill", "Skills_Revised", "Certificate_Type_Proposal", "CQF_Proposal", "Classify_CQF_Short_Course", "CQF_PS", "Exact_Training_Days", "Exact_Training_Month", "Range_Hours", "TotalTraining_Hours", "School_Hours", "School_Practice", "Company_Practice", "Industry", "Industry_60", "Industry_60_PS", "Training_Type", "Training_Type_PS", "Scheme", "Trainees_Proposal", "Female_Proposal", "Date_Proposal_Review", "Date_LPS_Review", "Date_Appraisal", "Date_KYC", "Date_Pitching", "Pitching_Method", "Date_Revision_after_Pitching", "Date_Report_after_Pitching", "Training_Provider", "Training_Provider_Type", "Partnered_Commpany", "Enterprise_Sector", "Location", "Joint_Proposal", "Joint_Proposal_PS", "Cost_of_Proposal_Riels", "Unit_Cost_Riels", "Cost_of_Proposal $", "Total_Unit_Cost $", "Total_Unit_Cost_Excl_All $", "Company %", "Company_Contribution_Riels", "Company_Contribution", "School %", "School_Contribution_Riels", "School_Contribution $", "Com_School", "Com_School_30", "Com_School_30_PS", "SDF", "SDF_Contribution_Riels", "SDF_Unit_Cost_Riels", "SDF_Contribution $", "SDF_Unit_Cost", "SDF_Unit_Cost_Excl_All", "Unit_2000", "Total_Allowance", "Unit_Allowance", "Total_Allowance_SDF", "Unit_Allowance_SDF", "Awarded", "Date_Approved", "Date_Approved_Month", "Date_Announce", "Budget_Source", "Trainer_Fee", "Trainee_Allowance", "Materials", "Utilities", "Others", "Trainer_Fee_School", "Trainee_Allowance_School", "Materials_School", "Utilities_School", "Others_School", "Trainer_Fee_Company", "Trainee_Allowance_Company", "Materials_Company", "Utilities_Company", "Others_Company", "Trainer_Fee_SDF", "Trainee_Allowance_SDF", "Materials_SDF", "Utilities_SDF", "Others_SDF", "Appraisal_PIC", "Approval_Duration", "Banteay_Meanchey"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Errors"),
+				    #"Changed Type19" = Table.TransformColumnTypes(#"Removed Duplicates",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Last_Submission_Date", type date}, {"Submission_Date_Month", type text}, {"Proposal_Code", type text}, {"Proposal_Type", type text}, {"Proposal_Type_PS", type text}, {"Proposal_Type_Code", type text}, {"Initiator", type text}, {"Initiator_Type", type text}, {"Skill_Sector_ADB", type text}, {"Skill_Sector_ADB_PS", type text}, {"Skill_Sector_SOP", type text}, {"Skill_Sector_SOP_PS", type text}, {"Skill", type text}, {"Skills_Revised", type text}, {"Certificate_Type_Proposal", type text}, {"CQF_Proposal", type text}, {"Classify_CQF_Short_Course", type text}, {"CQF_PS", type text}, {"Exact_Training_Days", Int64.Type}, {"Exact_Training_Month", Int64.Type}, {"Date_Report_after_Pitching", type date}, {"School_Contribution $", Currency.Type}, {"Com_School", Percentage.Type}, {"Com_School_30", type text}, {"Com_School_30_PS", type text}, {"Date_Announce", type date}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type19",{"ID", "Proposal_Code", "Proposal_Type_Code", "Skill_Sector_ADB", "Skill_Sector_ADB_PS", "Skill_Sector_SOP", "Skill_Sector_SOP_PS", "Training_Provider", "Training_Provider_Type", "Partnered_Commpany", "Enterprise_Sector", "Location"}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Other Columns", {"ID", "Proposal_Code", "Proposal_Type_Code", "Skill_Sector_ADB", "Skill_Sector_ADB_PS", "Skill_Sector_SOP", "Skill_Sector_SOP_PS", "Training_Provider", "Training_Provider_Type", "Partnered_Commpany", "Enterprise_Sector", "Location"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Removed Errors1",{"ID", "Proposal_Code", "Proposal_Type_Code", "Skill_Sector_ADB", "Skill_Sector_ADB_PS", "Skill_Sector_SOP", "Skill_Sector_SOP_PS", "Training_Provider", "Training_Provider_Type", "Partnered_Commpany", "Enterprise_Sector", "Location"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Other Columns1", "Unified", each "EX-" & Text.From([ID])),
+				    #"Changed Type20" = Table.TransformColumnTypes(#"Added Custom",{{"Unified", type text}}),
+				    #"Renamed Columns6" = Table.RenameColumns(#"Changed Type20",{{"Unified", "Unified_ID"}}),
+				    #"Changed Type21" = Table.TransformColumnTypes(#"Renamed Columns6",{{"Unified_ID", type text}})
+				in
+				    #"Changed Type21"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

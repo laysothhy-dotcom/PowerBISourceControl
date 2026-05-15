@@ -1,0 +1,49 @@
+table Dim_SBJ_TraineeCompleted
+	lineageTag: 4e3b1322-4506-4b09-9d0c-405f96f351bc
+
+	column 'No.'
+		dataType: string
+		lineageTag: a92dc7ed-cf41-475a-8e85-c4609398b1bd
+		summarizeBy: none
+		sourceColumn: No.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: aaf88d75-b9b2-45a4-8cbc-c86402d2bbb1
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Items'
+		dataType: string
+		lineageTag: e3f4f078-cb78-4ed1-8fc4-b6847f7bb968
+		summarizeBy: none
+		sourceColumn: Budget Items
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Metric Value'
+		dataType: string
+		lineageTag: 3ec49ea8-066f-4221-a697-1a2d086c7a5a
+		summarizeBy: none
+		sourceColumn: Metric Value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_SBJ_TraineeCompleted = m
+		mode: import
+		queryGroup: 'SBJ Project'
+		source =
+				let
+				    Source = Fact_SBJ_Progress,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"No.", "Training Provider", "Budget Items", "Metric Value"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

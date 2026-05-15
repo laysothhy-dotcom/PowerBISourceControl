@@ -1,0 +1,36 @@
+table Dim_TP_Appen_kobo
+	lineageTag: 1023a030-2408-4da0-aa45-67e3ca4b993b
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 89ebfcd2-2bb1-4e0b-b0f6-c29d8fa9437a
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: 71baad18-0e77-4bec-b312-577ef09d82d8
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_TP_Appen_kobo = m
+		mode: import
+		queryGroup: Proposal\KOBO_Proposal
+		source =
+				let
+				    Source = Dim_Proposal_Info_kobo,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"id", "tp_name"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"id", "ID"}, {"tp_name", "Training Provider"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"ID", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

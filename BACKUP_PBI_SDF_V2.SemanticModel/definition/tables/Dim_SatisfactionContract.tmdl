@@ -1,0 +1,59 @@
+table Dim_SatisfactionContract
+	lineageTag: fab73946-0d0b-40d1-abc1-c09a5e475708
+
+	column 'Contract #'
+		dataType: string
+		lineageTag: 765b5d2f-542d-4848-89c1-88e2e873907d
+		summarizeBy: none
+		sourceColumn: Contract #
+
+		annotation SummarizationSetBy = Automatic
+
+	column Initiator
+		dataType: string
+		lineageTag: b7849d42-247f-44c8-b762-9236983637aa
+		summarizeBy: none
+		sourceColumn: Initiator
+
+		annotation SummarizationSetBy = Automatic
+
+	column SatisfactionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 61f14f25-a8ce-46bc-8660-c4a36f2f1062
+		summarizeBy: none
+		sourceColumn: SatisfactionKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_SatisfactionContract = m
+		mode: import
+		queryGroup: 'Progress Monitoring'
+		source =
+				let
+				    Source = #"Progress Monitoring_Updated",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"ID", "Initiator", "Training Type", "Trainees_Proposal", "Female_Proposal", "Contract #"}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Removed Other Columns", "ID", "ID - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"ID - Copy", "New_ID"}}),
+				    #"Appended Query" = Table.Combine({#"Renamed Columns", Dim_Trainees​​_Proposal_PMS_Append}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Appended Query",{"Initiator", "Trainees_Proposal", "Female_Proposal", "Contract #", "New_ID"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns1"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates", {"Initiator", "Trainees_Proposal", "Female_Proposal", "Contract #"}),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Duplicates1", {"Contract #"}),
+				    #"Removed Other Columns2" = Table.SelectColumns(#"Removed Duplicates2",{"Contract #", "Trainees_Proposal", "Initiator"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Removed Other Columns2",{"Trainees_Proposal"}),
+				    #"Removed Duplicates3" = Table.Distinct(#"Removed Columns"),
+				    #"Removed Duplicates4" = Table.Distinct(#"Removed Duplicates3", {"Initiator"}),
+				    #"Removed Duplicates5" = Table.Distinct(#"Removed Duplicates4", {"Contract #"}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates5", {"Contract #", "Initiator"}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Errors", {"Contract #", "Initiator"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Errors1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Blank Rows", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Index",{{"Index", "SatisfactionKey"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

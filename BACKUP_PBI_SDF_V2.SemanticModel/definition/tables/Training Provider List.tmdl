@@ -1,0 +1,53 @@
+table 'Training Provider List'
+	lineageTag: c5b64a4f-e473-498b-a5c8-2efa3338efae
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: 5c6e1799-7938-4527-94d8-88a2ea23b8b8
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Index
+		dataType: string
+		lineageTag: daa18fa0-7eef-4c57-a90c-6584a0415e65
+		summarizeBy: none
+		sourceColumn: Index
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Grouped Training Provider'
+		dataType: string
+		lineageTag: 426192b6-eff1-418c-b2f4-0d7a4ec8d33a
+		summarizeBy: none
+		sourceColumn: Grouped Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Acronym
+		dataType: string
+		lineageTag: bcfe287a-5935-4f88-8a30-d0f3d8589390
+		summarizeBy: none
+		sourceColumn: Acronym
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Training Provider List' = m
+		mode: import
+		queryGroup: 'Progress Monitoring'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\TPGroupCleaned_Final.xlsx"), null, true),
+				    Data = Source[Data],
+				    Data1 = Data{0},
+				    #"Promoted Headers" = Table.PromoteHeaders(Data1, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Acronym", type text}, {"Grouped Training Provider", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type",null,"Other ",Replacer.ReplaceValue,{"Acronym"})
+				in
+				    #"Replaced Value"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,150 @@
+table 'USD (3_Disburshment)'
+	lineageTag: 815b04b8-87d2-43c8-ac17-d64ac959148a
+
+	column Column5
+		dataType: string
+		lineageTag: 70ae3825-72af-42dc-aa58-b91d2ea77927
+		summarizeBy: none
+		sourceColumn: Column5
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column6
+		dataType: string
+		lineageTag: 4f7dadcf-1723-43c8-9993-75d034082a33
+		summarizeBy: none
+		sourceColumn: Column6
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column7
+		dataType: string
+		lineageTag: d811af03-4bbf-4cea-8bcc-290ca1ffeba7
+		summarizeBy: none
+		sourceColumn: Column7
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column8
+		dataType: string
+		lineageTag: 55fbdd79-7d7f-4990-9fc6-19a5285763c2
+		summarizeBy: none
+		sourceColumn: Column8
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column9
+		dataType: string
+		lineageTag: 0f3a7177-56be-439a-b744-a35eb6bda8b0
+		summarizeBy: none
+		sourceColumn: Column9
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column11
+		dataType: string
+		lineageTag: c01b719f-ddf7-42ab-b9d3-917413939f8e
+		summarizeBy: none
+		sourceColumn: Column11
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column12
+		dataType: string
+		lineageTag: 94dc83d7-7e4e-49af-9e11-414a47086b35
+		summarizeBy: none
+		sourceColumn: Column12
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column13
+		dataType: string
+		lineageTag: cb273ff2-2bac-4f91-8618-730ab84bec89
+		summarizeBy: none
+		sourceColumn: Column13
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column14
+		dataType: string
+		lineageTag: 42eed75f-5fdd-494d-887f-4e27b25b3ff3
+		summarizeBy: none
+		sourceColumn: Column14
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column15
+		dataType: string
+		lineageTag: a201d329-dc5d-4a07-ad54-564cbd10067f
+		summarizeBy: none
+		sourceColumn: Column15
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'No.'
+		dataType: string
+		lineageTag: 7ab65d7f-9773-4b35-ba55-9a34a1833942
+		summarizeBy: none
+		sourceColumn: No.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Projected expenditures'
+		dataType: string
+		lineageTag: 9f4c2fa0-b001-4820-854f-36c519a22253
+		summarizeBy: none
+		sourceColumn: Projected expenditures
+
+		annotation SummarizationSetBy = Automatic
+
+	column Formula
+		dataType: string
+		lineageTag: acfd1c12-3a06-4ed5-93a3-ee5467e44196
+		summarizeBy: none
+		sourceColumn: Formula
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Disbursement Projection- 2025'
+		dataType: string
+		lineageTag: b67aafcd-ba7f-4f46-848f-3a6bec0405ae
+		summarizeBy: none
+		sourceColumn: Disbursement Projection- 2025
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Disbursement Projection- 2026'
+		dataType: string
+		lineageTag: e39fb071-ac81-4d1d-b66d-faa0947ddcc0
+		summarizeBy: none
+		sourceColumn: Disbursement Projection- 2026
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total
+		dataType: string
+		lineageTag: f775f7b1-9838-45b1-84fd-eb35377ab4d9
+		summarizeBy: none
+		sourceColumn: Total
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'USD (3_Disburshment)' = m
+		mode: import
+		queryGroup: 'SBJ Project'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SBJ_SDF_Enhanced_Rating_System_V2.xlsx"), null, false),
+				    #"3_Disburshment_sheet" = Source{[Item="3_Disburshment",Kind="Sheet"]}[Data],
+				    FilterNullAndWhitespace = each List.Select(_, each _ <> null and (not (_ is text) or Text.Trim(_) <> "")),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"3_Disburshment_sheet", each try List.IsEmpty(List.Skip(FilterNullAndWhitespace(Record.FieldValues(_)), 1)) otherwise false),
+				    #"Removed Top Rows" = Table.Skip(#"Removed Bottom Rows", each try List.IsEmpty(List.Skip(FilterNullAndWhitespace(Record.FieldValues(_)), 1)) otherwise false),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Top Rows", List.Select(Table.ColumnNames(#"Removed Top Rows"), each try not List.IsEmpty(FilterNullAndWhitespace(Table.Column(#"Removed Top Rows", _))) otherwise true)),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Other Columns", [PromoteAllScalars=true])
+				in
+				    #"Promoted Headers"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,457 @@
+table 'Progress Monitoring_Updated'
+	lineageTag: 866fa8c6-1feb-4feb-ab84-6ae212a9046f
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: cb41bf02-242c-480f-9413-192d5d9937ff
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 964631fb-f1f0-4ae6-9c50-a1349ffc364c
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Stage'
+		dataType: string
+		lineageTag: f5dbdead-5768-4f4f-92e6-d63df1708f84
+		summarizeBy: none
+		sourceColumn: Year Stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Type'
+		dataType: string
+		lineageTag: 8aa4eef1-dc57-4184-a00a-dcfd1a60a390
+		summarizeBy: none
+		sourceColumn: Proposal Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Type PS'
+		dataType: string
+		lineageTag: 0d59bcf2-0846-4a6e-97fb-d835ff49c610
+		summarizeBy: none
+		sourceColumn: Proposal Type PS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Initiator
+		dataType: string
+		lineageTag: f0e07dfd-ff72-4d10-a204-97063e8b0b35
+		summarizeBy: none
+		sourceColumn: Initiator
+
+		annotation SummarizationSetBy = Automatic
+
+	column Skill
+		dataType: string
+		lineageTag: c383322f-8213-46bb-aca4-cef5c9823b56
+		summarizeBy: none
+		sourceColumn: Skill
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Type'
+		dataType: string
+		lineageTag: 0428b59c-50b3-46a2-9dc3-00e7a6d1d2d2
+		summarizeBy: none
+		sourceColumn: Training Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trainees_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 9aab9b1b-2b6f-4247-b447-8af7e75446b0
+		summarizeBy: sum
+		sourceColumn: Trainees_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Female_Proposal
+		dataType: int64
+		formatString: 0
+		lineageTag: 0ca091c6-c4d7-4f7a-909e-af70abc27116
+		summarizeBy: sum
+		sourceColumn: Female_Proposal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SDF Contribution Riels'
+		dataType: double
+		lineageTag: 6a79be70-6efa-443d-b535-bc655208d6e9
+		summarizeBy: sum
+		sourceColumn: SDF Contribution Riels
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'SDF Contribution $'
+		dataType: double
+		lineageTag: a33afa5b-8142-4974-b2ff-2d736ffb1ce5
+		summarizeBy: sum
+		sourceColumn: SDF Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Date Approved'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 878f5503-a921-4a42-8fb7-effc156feae5
+		summarizeBy: none
+		sourceColumn: Date Approved
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Text Date Approved'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2862ba86-0a85-4706-a9d7-48161d2d8408
+		summarizeBy: none
+		sourceColumn: Text Date Approved
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Contract #'
+		dataType: string
+		lineageTag: e3a0b4a6-c6cc-4d3e-8fa3-f59cd898feaf
+		summarizeBy: none
+		sourceColumn: Contract #
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date_Draft Contract'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 96009437-46b3-40bb-b5c3-7baa37673066
+		summarizeBy: none
+		sourceColumn: Date_Draft Contract
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Applicant Completed'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 553432aa-5624-4363-bba2-82bc6e2d2f72
+		summarizeBy: none
+		sourceColumn: Date_Applicant Completed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Finance Completed'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5a3affdf-e947-44cf-a70d-f4c7fa23e4f3
+		summarizeBy: none
+		sourceColumn: Date_Finance Completed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_M&E Completed'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0a62e09a-87e8-4fcb-9902-cf161bdd3a39
+		summarizeBy: none
+		sourceColumn: Date_M&E Completed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Assistant Completed'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ec39b2af-1f32-4a4e-873e-c174beeab43f
+		summarizeBy: none
+		sourceColumn: Date_Assistant Completed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_To Amin'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 49286a53-0f23-4617-b00b-46b77649d707
+		summarizeBy: none
+		sourceColumn: Date_To Amin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Admin Out'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 817b94ba-276c-495c-9717-4e7af0729b94
+		summarizeBy: none
+		sourceColumn: Date_Admin Out
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Track_Review Process'
+		dataType: string
+		lineageTag: 02089f4b-86f0-4a64-8ab1-25ce3cd9bc46
+		summarizeBy: none
+		sourceColumn: Track_Review Process
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contract Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 232e5dcd-2be0-4acb-88ca-b73758740cf4
+		summarizeBy: none
+		sourceColumn: Contract Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'ContractValid Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1bd6a461-0ce0-4b4d-8b4f-6bfd57bc3fbd
+		summarizeBy: none
+		sourceColumn: ContractValid Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Contract Duration'
+		dataType: double
+		lineageTag: aaff96a5-a9b7-421b-abcd-c1e02cc202b7
+		summarizeBy: sum
+		sourceColumn: Contract Duration
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Start Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7b7accae-b5b1-44d5-a619-c9a36d8d1517
+		summarizeBy: none
+		sourceColumn: Start Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e52ceeab-958c-4149-a860-8a8e230b9c5e
+		summarizeBy: none
+		sourceColumn: End Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End Date in Contract'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 12e752a6-a6db-4c68-9259-b7243ddeb5a7
+		summarizeBy: none
+		sourceColumn: End Date in Contract
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Terminated Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7cdfafcc-1abe-472c-93ec-800394cc6356
+		summarizeBy: none
+		sourceColumn: Terminated Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Track_Contract Duration'
+		dataType: string
+		lineageTag: 6ddb2eec-727d-40db-bead-87f2847620df
+		summarizeBy: none
+		sourceColumn: Track_Contract Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Track_Progress Sheet'
+		dataType: string
+		lineageTag: bb1b7b2b-683b-47a0-ac33-8449de0ba264
+		summarizeBy: none
+		sourceColumn: Track_Progress Sheet
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Progress'
+		dataType: string
+		lineageTag: 95364697-b7c4-4610-912a-acb861cbed91
+		summarizeBy: none
+		sourceColumn: Training Progress
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Disbursement Progress'
+		dataType: string
+		lineageTag: 921c222f-b03e-426a-a7d8-4ac7636becca
+		summarizeBy: none
+		sourceColumn: Disbursement Progress
+
+		annotation SummarizationSetBy = Automatic
+
+	column '#Trainee Training'
+		dataType: string
+		lineageTag: cbd4af4b-a34f-48ab-81ca-2f5372b3e906
+		summarizeBy: none
+		sourceColumn: #Trainee Training
+
+		annotation SummarizationSetBy = Automatic
+
+	column '#Trainee Training Female'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e0eae5b-b35b-481f-9294-0b730e919553
+		summarizeBy: sum
+		sourceColumn: #Trainee Training Female
+
+		annotation SummarizationSetBy = Automatic
+
+	column '#Trainee Completed'
+		dataType: int64
+		formatString: 0
+		lineageTag: b870b258-3eec-4c32-a969-4e188f99889a
+		summarizeBy: sum
+		sourceColumn: #Trainee Completed
+
+		annotation SummarizationSetBy = Automatic
+
+	column '#Trainee Completed Female'
+		dataType: int64
+		formatString: 0
+		lineageTag: d1fca7dc-c5f2-4da5-bb53-ae382d1baeb5
+		summarizeBy: sum
+		sourceColumn: #Trainee Completed Female
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Orientation Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1b65ffc2-eedb-4716-92ec-95d8be602d94
+		summarizeBy: none
+		sourceColumn: Orientation Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column '1st Visit'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bdb4be8f-d9a7-4a9c-91bd-88dea3d15a3f
+		summarizeBy: none
+		sourceColumn: 1st Visit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column '2nd Visit'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f04c26dd-a738-4808-85d1-3d295ad81658
+		summarizeBy: none
+		sourceColumn: 2nd Visit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 643e152e-e543-45a4-9adb-a06f5935b135
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Focal M&E'
+		dataType: string
+		lineageTag: ebd5177c-2bae-4f01-8bc7-1a6992a9716d
+		summarizeBy: none
+		sourceColumn: Focal M&E
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tracer study'
+		dataType: string
+		lineageTag: 976d3686-0708-4e0d-adf5-f7c927cb7dc9
+		summarizeBy: none
+		sourceColumn: Tracer study
+
+		annotation SummarizationSetBy = Automatic
+
+	column Track_Trainee
+		dataType: string
+		lineageTag: a13787e3-385c-4b6c-b92c-56b2f9d58414
+		summarizeBy: none
+		sourceColumn: Track_Trainee
+
+		annotation SummarizationSetBy = Automatic
+
+	column Track_Feeback
+		dataType: string
+		lineageTag: f2ad6598-879e-48a1-9fd8-e8d86d318069
+		summarizeBy: none
+		sourceColumn: Track_Feeback
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Progress Monitoring_Updated' = m
+		mode: import
+		queryGroup: 'Progress Monitoring'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"2-Progress Monitoring_Sheet" = Source{[Item="2-Progress Monitoring",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"2-Progress Monitoring_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", Int64.Type}, {"Proposal Type", type text}, {"Proposal Type PS", type text}, {"Initiator", type text}, {"Skill", type text}, {"Training Type", type text}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", Int64.Type}, {"SDF Contribution Riels", type number}, {"SDF Contribution $", type number}, {"Date Approved", type date}, {"Text Date Approved", type date}, {"Contract #", type text}, {"Date_Draft Contract", type date}, {"Date_Applicant Completed", type date}, {"Date_Finance Completed", type date}, {"Date_M&E Completed", type date}, {"Date_Assistant Completed", type date}, {"Date_To Amin", type date}, {"Date_Admin Out", type date}, {"Track_Review Process", type text}, {"Contract Date", type date}, {"ContractValid Date", type date}, {"Contract Duration", type number}, {"Start Date", type date}, {"End Date", type date}, {"End Date in Contract", type date}, {"Terminated Date", type date}, {"Track_Contract Duration", type text}, {"Track_Progress Sheet", type text}, {"Training Progress", type text}, {"Disbursement Progress", type text}, {"#Trainee Training", type text}, {"#Trainee Training Female", Int64.Type}, {"#Trainee Completed", Int64.Type}, {"#Trainee Completed Female", Int64.Type}, {"Orientation Date", type date}, {"1st Visit", type date}, {"2nd Visit", type date}, {"Budget Source", type text}, {"Focal M&E", type text}, {"Tracer study", type text}, {"Track_Trainee", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"Track_Trainee", null}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Errors",{{"Track_Feeback", type text}, {"Year Stage", type text}}),
+				    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Changed Type1", {{"Year Stage", null}})
+				in
+				    #"Replaced Errors1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

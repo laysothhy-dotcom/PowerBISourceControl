@@ -1,0 +1,101 @@
+table 6-Location
+	lineageTag: db39dbe6-da31-4015-8f89-5b40b365a31c
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: fe1ad9cf-2a22-4b80-a06b-5b83a26a8154
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 9df763b8-de71-49f7-b910-5fe687b691b3
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location_SKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 3bfa2a96-1ee2-4f0f-a90a-4d3848c8ea46
+		summarizeBy: none
+		sourceColumn: Location_SKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Index
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a368aaf-e77b-42e9-852c-15281e2c1532
+		summarizeBy: none
+		sourceColumn: Index
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 255b9923-4d06-4dd5-8009-468c29e938e3
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 9e8d1599-8004-49c5-b72b-211217e2a5d7
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 6-Location = m
+		mode: import
+		queryGroup: Laction_info
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"6-Location_Sheet" = Source{[Item="6-Location",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"6-Location_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", type any}, {"Contract #", type text}, {"Skill Sector SOP", type text}, {"Proposal Type PS", type any}, {"Initiator", type text}, {"Skill", type text}, {"SDF Contribution $", type number}, {"Trainee Proposal", Int64.Type}, {"Female Proposal", Int64.Type}, {"Trainee Actual", Int64.Type}, {"Female Actual", Int64.Type}, {"Location", type text}, {"Track_Location", type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"ID", type text}, {"Year Stage", type text}, {"Proposal Type PS", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type1", {{"SDF Contribution $", null}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Replaced Errors", {"ID", "Year", "Year Stage", "Contract #", "Skill Sector SOP", "Proposal Type PS", "Initiator", "Skill", "SDF Contribution $", "Trainee Proposal", "Female Proposal", "Trainee Actual", "Female Actual", "Location", "Track_Location"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Errors", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Blank Rows",{{"Year", Int64.Type}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type2", {"ID", "Contract #"}, Dim_Location_SKey, {"ID", "Contract #"}, "Dim_Location_SKey", JoinKind.LeftOuter),
+				    #"Expanded Dim_Location_SKey" = Table.ExpandTableColumn(#"Merged Queries", "Dim_Location_SKey", {"Location_SKey"}, {"Location_SKey"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Expanded Dim_Location_SKey",{"ID", "Location", "Track_Location", "Location_SKey"}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Removed Other Columns",{{"Location", Text.Lower, type text}}),
+				    #"Appended Query" = Table.Combine({#"Lowercased Text", Dim_Location_Appen_kobo}),
+				    #"Removed Duplicates" = Table.Distinct(#"Appended Query"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Blank Rows1" = Table.SelectRows(#"Removed Duplicates1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Blank Rows1", {"ID", "Location", "Track_Location", "Location_SKey"}),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Errors1", {"ID"}),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates2", "Index", 1, 1, Int64.Type),
+				    #"Filled Down" = Table.FillDown(#"Added Index",{"Location_SKey"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filled Down",{"Track_Location"}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Removed Columns",{{"ID", Int64.Type}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type3", "Unified_ID", each if [ID] <= 616 then "EX-" & Text.From([ID])
+				else if [ID] <= 1000 then "KB-" & Text.From([ID])
+				else "PMS-" & Text.From([ID])),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Changed Type4", "ID", "ID - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"ID - Copy", "New_ID"}}),
+				    #"Appended Query1" = Table.Combine({#"Renamed Columns", #"Dim_Proposal Location_PMS"}),
+				    #"Removed Duplicates3" = Table.Distinct(#"Appended Query1"),
+				    #"Removed Blank Rows2" = Table.SelectRows(#"Removed Duplicates3", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates4" = Table.Distinct(#"Removed Blank Rows2", {"ID"}),
+				    #"Sorted Rows" = Table.Sort(#"Removed Duplicates4",{{"ID", Order.Ascending}})
+				in
+				    #"Sorted Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

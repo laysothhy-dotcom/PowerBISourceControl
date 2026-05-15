@@ -1,0 +1,43 @@
+table Dim_Proposal_BudSources_Combined
+	lineageTag: fec2421d-49b5-4791-a5ca-918c73372c32
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: c19eb948-6a9d-4665-890e-39034be7534b
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 458dbcd2-a042-428c-ba1b-49bba47f071d
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_BudSources_Combined = m
+		mode: import
+		queryGroup: Proposal
+		source =
+				let
+				    Source = Dim_Proposal_Infor,
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Soureces of fund"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"Budget Source", "ID"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Appended Query" = Table.Combine({#"Removed Blank Rows", Dim_Proposal_Budget_appen_kobo}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Appended Query"),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Duplicates1"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates2", {"Budget Source", "ID"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Errors",{{"ID", Int64.Type}}),
+				    #"Removed Duplicates3" = Table.Distinct(#"Changed Type")
+				in
+				    #"Removed Duplicates3"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

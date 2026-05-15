@@ -1,0 +1,50 @@
+table 'PMS CostCategory$'
+	lineageTag: 739cb35d-19a9-42d4-b2ae-58b7ea9377e1
+
+	column 'PMS CostCategory$'
+		lineageTag: 668f99d9-4705-43c4-8d52-7bcadfe855fe
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'PMS CostCategory$ Order'
+
+		relatedColumnDetails
+			groupByColumn: 'PMS CostCategory$ Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PMS CostCategory$ Fields'
+		isHidden
+		lineageTag: a593105b-d646-487e-94b2-c0f59db65dff
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'PMS CostCategory$ Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PMS CostCategory$ Order'
+		isHidden
+		formatString: 0
+		lineageTag: 5d64e2bb-0bc1-43a0-8830-59547074d7ea
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PMS CostCategory$' = calculated
+		mode: import
+		source =
+				{
+				    ("Training Provider Amount", NAMEOF('Fact_Trainee_ Allowances_PMS'[Training Provider Amount]), 0),
+				    ("Training Provider Cost", NAMEOF('Fact_Trainee_ Allowances_PMS'[Training Provider Cost]), 1),
+				    ("SDF Cost", NAMEOF('Fact_Trainee_ Allowances_PMS'[SDF Cost]), 2),
+				    ("Enterprise Amount", NAMEOF('Fact_Trainee_ Allowances_PMS'[Enterprise Amount]), 3)
+				}
+
+	annotation PBI_Id = a4d88b7ce59840c89ccc4bfb33fe50b9
+

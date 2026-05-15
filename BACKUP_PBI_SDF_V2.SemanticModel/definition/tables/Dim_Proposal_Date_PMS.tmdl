@@ -1,0 +1,83 @@
+table Dim_Proposal_Date_PMS
+	lineageTag: eb410450-f075-4534-92e0-d5249dba6fda
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 20e8a8c0-3ef9-4c79-8e29-d3477263c59c
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6661bba4-5b17-4868-98ff-a06f64c25c09
+		summarizeBy: none
+		sourceColumn: Proposal Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 8fd94e8b-d7c0-48fd-af35-e10dfb407e9a
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: b390eaea-b594-4bd4-a94c-c90e4cbe98b9
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created At'
+		dataType: string
+		lineageTag: 5c0c2941-a8da-44d0-a2ed-33517e5adcad
+		summarizeBy: none
+		sourceColumn: Created At
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Date_PMS = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = #"Proposal Partner Infos",
+				    Data = Source[Data],
+				    Data1 = Data{0},
+				    #"Promoted Headers" = Table.PromoteHeaders(Data1, [PromoteAllScalars=true]),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Promoted Headers",{{"Proposal Number", "ID"}}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Proposal ID", Int64.Type}, {"ID", Int64.Type}, {"Proposal Code", type text}, {"Institute Name", type text}}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Changed Type4",{{"Institute Name (KH)", "Institute Name (Khmer)"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns2",{{"ID", type text}, {"Institute Name", type text}, {"Institute Name (Khmer)", type text}, {"Status", type text}, {"Registration No", type text}, {"Establishment Year", type text}, {"Staff", Int64.Type}, {"Sector", type text}, {"Expertise", type text}, {"Under Ministry", type text}, {"Website URL", type text}, {"Facebook URL", type text}, {"Contact Person", type text}, {"Job Title", type text}, {"Office", type text}, {"Gender", type text}, {"Telegram No", type text}, {"Email", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"Email", null}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Errors",{{"Initiated By", type text}, {"Training Scheme", type text}, {"Training License", type text}, {"Province Name", type text}, {"District Name", type text}, {"Training Start Date", type date}, {"Training End Date", type date}, {"Created At", type date}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type1",{"ID", "Province Name", "District Name", "Training Start Date", "Training End Date"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Training Start Date", type date}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Changed Type2",{{"Province Name", Text.Lower, type text}}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Lowercased Text",{"ID", "Training Start Date", "Training End Date"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Other Columns1", "Unified_ID", each "PMS-" & Text.From([ID])),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type3", "New_ID", each [ID] + 1000),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom1",{{"Training Start Date", "Proposal Date"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Training End Date"}),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Removed Columns",{{"New_ID", Int64.Type}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type5", {"ID"}, Dim_Proposals_PMS, {"ID"}, "Dim_Proposals_PMS", JoinKind.LeftOuter),
+				    #"Expanded Dim_Proposals_PMS" = Table.ExpandTableColumn(#"Merged Queries", "Dim_Proposals_PMS", {"Created At"}, {"Dim_Proposals_PMS.Created At"}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Expanded Dim_Proposals_PMS",{{"Dim_Proposals_PMS.Created At", "Created At"}})
+				in
+				    #"Renamed Columns3"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

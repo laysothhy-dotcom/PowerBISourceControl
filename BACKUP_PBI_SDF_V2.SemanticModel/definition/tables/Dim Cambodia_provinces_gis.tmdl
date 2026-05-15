@@ -1,0 +1,91 @@
+table 'Dim Cambodia_provinces_gis'
+	lineageTag: 6dfab22b-87af-4e83-a71c-1554efb5c15d
+
+	column Province
+		dataType: string
+		lineageTag: 5b3d97bc-9b29-440d-99a8-b802a6b5b476
+		summarizeBy: none
+		sourceColumn: Province
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capital
+		dataType: string
+		lineageTag: 0045ae8b-2a83-4668-86c0-0970b0b6ce5d
+		summarizeBy: none
+		sourceColumn: Capital
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		lineageTag: 8bae2887-33a8-4177-9cae-7d5f1929074c
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		lineageTag: e69993c7-1834-41e7-a776-4139bb027e05
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Magnitude
+		dataType: int64
+		formatString: 0
+		lineageTag: 0fc60183-acaf-4be9-8bac-665fac614b66
+		summarizeBy: none
+		sourceColumn: Magnitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total trainees' =
+			
+			'Dim Cambodia_provinces_gis'[Province] & ": " &
+			FORMAT(
+			    CALCULATE(
+			    sum('Fact_Proposals_Cost'[Trainees_Proposal]),
+			    ALLEXCEPT('Dim Cambodia_provinces_gis', 'Dim Cambodia_provinces_gis'[Province])),
+			    "0,000")
+		lineageTag: 0e309f4c-e1a5-4d82-b612-3ed767f2b70b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total SDF Cost' =
+			
+			'Dim Cambodia_provinces_gis'[Province] & ": " &
+			FORMAT(
+			    CALCULATE(
+			    sum('Fact_Proposals_Cost'[SDF Contribution $]),
+			    ALLEXCEPT('Dim Cambodia_provinces_gis', 'Dim Cambodia_provinces_gis'[Province])),
+			    "$0,000")
+		lineageTag: 24ee0649-449b-4346-9bdf-0cb48017cc07
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim Cambodia_provinces_gis' = m
+		mode: import
+		queryGroup: Laction_info
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\SDF_Programe\DataBase_Development\PBI_Doc\SDF_Databas_PBI_V1\Database_Cleaned_Data_PBI\cambodia_provinces_gis.csv"),[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Province", type text}, {"Capital", type text}, {"Latitude", type number}, {"Longitude", type number}, {"Magnitude", Int64.Type}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Changed Type",{{"Capital", Text.Lower, type text}, {"Province", Text.Lower, type text}}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Lowercased Text", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+				in
+				    #"Removed Blank Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

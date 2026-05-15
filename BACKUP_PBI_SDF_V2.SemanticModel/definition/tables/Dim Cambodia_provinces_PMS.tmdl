@@ -1,0 +1,64 @@
+table 'Dim Cambodia_provinces_PMS'
+	lineageTag: 4184e3ca-daee-4792-97f9-cb9d6b4969b1
+
+	column Province
+		dataType: string
+		lineageTag: 24da23fd-0666-4601-b50e-038a48bd23be
+		summarizeBy: none
+		sourceColumn: Province
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capital
+		dataType: string
+		lineageTag: ed831d36-bc20-4718-be96-be4a09f711b6
+		summarizeBy: none
+		sourceColumn: Capital
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		lineageTag: 341859e1-7c13-4cb0-9ac8-a57cc74f11f1
+		summarizeBy: sum
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		lineageTag: 0f249880-f1fd-4689-af96-0d8f4039c2a6
+		summarizeBy: sum
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Magnitude
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a25438e-a568-4cc8-80d2-fe7b12ac4fe7
+		summarizeBy: sum
+		sourceColumn: Magnitude
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim Cambodia_provinces_PMS' = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\SDF_Programe\DataBase_Development\PBI_Doc\SDF_Databas_PBI_V1\Database_Cleaned_Data_PBI\cambodia_provinces_gis.csv"),[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Province", type text}, {"Capital", type text}, {"Latitude", type number}, {"Longitude", type number}, {"Magnitude", Int64.Type}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Changed Type",{{"Capital", Text.Lower, type text}, {"Province", Text.Lower, type text}})
+				in
+				    #"Lowercased Text"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

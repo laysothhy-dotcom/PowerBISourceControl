@@ -1,0 +1,41 @@
+table Dim_Proposal_Kobo_Date
+	lineageTag: 04154060-5508-40d5-ac26-0a7ead786b72
+
+	column ID
+		dataType: string
+		lineageTag: aa8a868c-3a45-474c-8eab-d36cf3f6371c
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Date'
+		dataType: string
+		lineageTag: 66b1e312-d30c-47c8-804e-ea94453c29a7
+		summarizeBy: none
+		sourceColumn: Proposal Date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Kobo_Date = m
+		mode: import
+		queryGroup: Proposal
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aQgjZ2GU8uPeDSfKo7sJx6/export-settings/esuYsgPwD6KxFbH6ZqugGf3/data.csv"),[Delimiter=";", Columns=501, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Promoted Headers",{{"tpshar_percent", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type2", {{"tpshar_percent", null}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Replaced Errors",{""}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Columns"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Blank Rows",{{"id", "ID"}, {"date", "Proposal Date"}}),
+				    #"Removed Other Columns2" = Table.SelectColumns(#"Renamed Columns",{"ID", "Proposal Date"})
+				in
+				    #"Removed Other Columns2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

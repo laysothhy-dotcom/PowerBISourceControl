@@ -1,0 +1,165 @@
+table 'Dim_Proposal Partner_PMS'
+	lineageTag: 4603ce51-dd5b-4ab9-9303-4eb5224c325c
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: a19d6c41-f8a5-4301-baac-cde67f874581
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Institute Name'
+		dataType: string
+		lineageTag: f98aaead-a47a-4298-af9d-822bd438ab69
+		summarizeBy: none
+		sourceColumn: Institute Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 74234fdd-ef71-4c02-b545-dc59b2ae6066
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Staff
+		dataType: int64
+		formatString: 0
+		lineageTag: 79c3fc7e-3969-4fe0-ad55-d10bf0811c15
+		summarizeBy: sum
+		sourceColumn: Staff
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sector
+		dataType: string
+		lineageTag: ce3f5415-58e3-49fa-a531-2d9a0d34c9bb
+		summarizeBy: none
+		sourceColumn: Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column Expertise
+		dataType: string
+		lineageTag: 00817fe9-1d66-4d20-9fd7-1da77bb14dd4
+		summarizeBy: none
+		sourceColumn: Expertise
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Under Ministry'
+		dataType: string
+		lineageTag: 95a57ab4-1199-4539-8119-d3bb52c1840d
+		summarizeBy: none
+		sourceColumn: Under Ministry
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contact Person'
+		dataType: string
+		lineageTag: f9203da8-c660-4e2e-b8e4-9aac4101573d
+		summarizeBy: none
+		sourceColumn: Contact Person
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Title'
+		dataType: string
+		lineageTag: 5454761a-7953-4c6d-abf1-6c65d59e2877
+		summarizeBy: none
+		sourceColumn: Job Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 119a339f-6665-4049-a16d-320a8ed89729
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Telegram No'
+		dataType: string
+		lineageTag: d19ecc4f-592a-4d03-9cf1-2a37e5c6bc54
+		summarizeBy: none
+		sourceColumn: Telegram No
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: 28969848-6a95-498d-9b2d-23467d51a488
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Scheme'
+		dataType: string
+		lineageTag: e73bd99e-d279-4b15-80ee-be059006a348
+		summarizeBy: none
+		sourceColumn: Training Scheme
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 50f5302e-ffc6-4f4c-9f31-8bf50d30983e
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: string
+		lineageTag: ba22c29e-d839-4cf1-9523-4ecfa97af5a7
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Unique_Partners =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Dim_Proposal Partner_PMS'[Institute Name]),
+			    ALLSELECTED('Dim_Proposal Partner_PMS')
+			)
+		formatString: 0
+		lineageTag: 5ec92853-bed5-4632-90a9-6c0e43f94fa6
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_Proposal Partner_PMS' = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = #"Proposal Partner Infos",
+				    Data = Source[Data],
+				    Data1 = Data{0},
+				    #"Promoted Headers" = Table.PromoteHeaders(Data1, [PromoteAllScalars=true]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers",{{"Proposal Number", "ID"}, {"Institute Name (KH)", "Institute Name (Khmer)"}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Renamed Columns",{{"Proposal ID", Int64.Type}, {"ID", Int64.Type}, {"Proposal Code", type text}, {"Institute Name", type text}, {"Institute Name (Khmer)", type text}, {"Status", type text}, {"Registration No", type text}, {"Establishment Year", type date}, {"Staff", Int64.Type}, {"Sector", type text}, {"Expertise", type text}, {"Under Ministry", type text}, {"Website URL", type text}, {"Facebook URL", type text}, {"Contact Person", type text}, {"Job Title", type text}, {"Office", type text}, {"Gender", type text}, {"Telegram No", type text}, {"Email", type text}, {"Initiated By", type text}, {"Training Scheme", type text}, {"Training License", type text}, {"Province Name", type text}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Changed Type3",{{"Province Name", Text.Lower, type text}}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Lowercased Text",{{"District Name", type text}}),
+				    #"Lowercased Text1" = Table.TransformColumns(#"Changed Type4",{{"District Name", Text.Lower, type text}}),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Lowercased Text1",{{"Training Start Date", type date}, {"Training End Date", type date}, {"Created At", type date}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Changed Type5",{{"ID", type text}, {"Institute Name", type text}, {"Institute Name (Khmer)", type text}, {"Status", type text}, {"Registration No", type text}, {"Establishment Year", type text}, {"Staff", Int64.Type}, {"Sector", type text}, {"Expertise", type text}, {"Under Ministry", type text}, {"Website URL", type text}, {"Facebook URL", type text}, {"Contact Person", type text}, {"Job Title", type text}, {"Office", type text}, {"Gender", type text}, {"Telegram No", type text}, {"Email", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"Email", null}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Replaced Errors",{"ID", "Institute Name", "Status", "Staff", "Sector", "Expertise", "Under Ministry", "Contact Person", "Job Title", "Gender", "Telegram No", "Email", "Training Scheme"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Other Columns", "Unified_ID", each "PMS-" & Text.From([ID])),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type2", "New_ID", each [ID] + 1000)
+				in
+				    #"Added Custom1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

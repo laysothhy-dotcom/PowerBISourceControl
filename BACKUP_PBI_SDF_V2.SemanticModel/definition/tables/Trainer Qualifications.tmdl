@@ -1,0 +1,49 @@
+table 'Trainer Qualifications'
+	lineageTag: 2b63edd3-28c8-4992-9138-04b549e324c2
+
+	column Name
+		dataType: string
+		lineageTag: 7f5fa1c4-a85d-4460-9a5c-513fbe02dd9e
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item
+		dataType: string
+		lineageTag: c2d8ede7-4916-4e64-908c-122578411cf6
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Kind
+		dataType: string
+		lineageTag: 0ccffc29-ed51-4198-8e82-4366d1487e4b
+		summarizeBy: none
+		sourceColumn: Kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hidden
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 99b2e98b-af13-4a4f-914f-ac09a809c4e5
+		summarizeBy: none
+		sourceColumn: Hidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Trainer Qualifications' = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("https://api-gateway.sdfcambodia.org/api/ADMIN_PMS/pms/v2/proposals/excel?type=file"), null, true)
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

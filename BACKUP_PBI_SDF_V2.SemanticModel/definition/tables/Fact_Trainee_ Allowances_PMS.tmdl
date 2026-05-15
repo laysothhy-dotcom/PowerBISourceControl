@@ -1,0 +1,342 @@
+table 'Fact_Trainee_ Allowances_PMS'
+	lineageTag: 78a350ba-c746-4ec0-9a03-85ff1b4bcd3b
+
+	column 'Proposal ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: d2ebdfc6-0eb2-4469-8112-c910fefed113
+		summarizeBy: count
+		sourceColumn: Proposal ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d3eaa60-128f-4297-b6b2-b5f548a238cb
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Proposal Code'
+		dataType: string
+		lineageTag: 80053a5a-2bd3-4b8b-98b2-cea824af32b2
+		summarizeBy: none
+		sourceColumn: Proposal Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Institute Name'
+		dataType: string
+		lineageTag: 75186228-feb4-4ee4-a912-89b9e50e0656
+		summarizeBy: none
+		sourceColumn: Institute Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Institute Name (Khmer)'
+		dataType: string
+		lineageTag: f942a56d-0152-45f9-9761-474ab5933678
+		summarizeBy: none
+		sourceColumn: Institute Name (Khmer)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Skill ID'
+		dataType: string
+		lineageTag: 623d2689-3fa8-4cc3-8dd7-a367f299b883
+		summarizeBy: none
+		sourceColumn: Skill ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Skill Title'
+		dataType: string
+		lineageTag: 5d9c78d8-196d-4161-9ff5-9803bbb1da5c
+		summarizeBy: none
+		sourceColumn: Skill Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Program'
+		dataType: string
+		lineageTag: 3400a386-077d-482c-8072-b2f66b890859
+		summarizeBy: none
+		sourceColumn: Training Program
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Trainee'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d067cae-6881-4e41-954e-0e908ed79bd4
+		summarizeBy: sum
+		sourceColumn: Total Trainee
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Day'
+		dataType: double
+		lineageTag: 47a6419c-7644-4f65-97f3-f554b08f8539
+		summarizeBy: sum
+		sourceColumn: Training Day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Trainee Allowance'
+		dataType: double
+		lineageTag: 36025919-a64c-4364-8e49-11fcb18338fa
+		summarizeBy: sum
+		sourceColumn: Total Trainee Allowance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Trainining Cost'
+		dataType: double
+		lineageTag: 3085fda5-7a97-488c-9de0-d28615e77f70
+		summarizeBy: sum
+		sourceColumn: Total Trainining Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Cost'
+		dataType: double
+		lineageTag: 751ac745-e9f4-4fa4-83e8-d6b4bdda4b03
+		summarizeBy: sum
+		sourceColumn: Total Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'SDF Cost'
+		dataType: double
+		lineageTag: e238ac01-000e-46da-ac91-68cd6e0f43a1
+		summarizeBy: sum
+		sourceColumn: SDF Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'SDF Cost (%)'
+		dataType: double
+		lineageTag: b09ae9dc-5d4a-4f6c-9ed6-ac97fc0d1419
+		summarizeBy: sum
+		sourceColumn: SDF Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Training Provider Cost'
+		dataType: double
+		lineageTag: 6e9c559f-7673-4f95-9194-982c93f6edfb
+		summarizeBy: sum
+		sourceColumn: Training Provider Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Training Provider Cost (%)'
+		dataType: double
+		lineageTag: c9a83349-c9b8-4c0e-99e3-4276a4df99a9
+		summarizeBy: sum
+		sourceColumn: Training Provider Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Enterprise Cost'
+		dataType: double
+		lineageTag: 568b7ee5-80be-48a6-ae51-5de28fdc7270
+		summarizeBy: sum
+		sourceColumn: Enterprise Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Enterprise Cost (%)'
+		dataType: double
+		lineageTag: 4873aab6-d4e1-4873-bf03-f60642e527cf
+		summarizeBy: sum
+		sourceColumn: Enterprise Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Created At'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b87f5d4f-e346-43d2-8431-d0063f412977
+		summarizeBy: none
+		sourceColumn: Created At
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Unified_ID
+		dataType: string
+		lineageTag: a0d75dea-bdaf-4cd0-9592-39a3ff8f4cd3
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: string
+		lineageTag: b56db10c-b691-4203-9ef9-2cc241980dc7
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fact_PMS_TrainingCost.Proposal ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 43d189aa-114a-4c0c-938a-beabc0bebe6c
+		summarizeBy: count
+		sourceColumn: Fact_PMS_TrainingCost.Proposal ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fact_PMS_TrainingCost.Total Trainee Allowance'
+		dataType: double
+		lineageTag: 31c4d3db-1649-4d36-99c9-d505e974dc03
+		summarizeBy: sum
+		sourceColumn: Fact_PMS_TrainingCost.Total Trainee Allowance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fact_PMS_TrainingCost.Total Trainining Cost'
+		dataType: double
+		lineageTag: 7257eb44-6bee-4867-aad8-0acaabe9f69a
+		summarizeBy: sum
+		sourceColumn: Fact_PMS_TrainingCost.Total Trainining Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fact_PMS_TrainingCost.Cost of Proposal $'
+		dataType: double
+		lineageTag: 67639e10-ac2c-458f-b3f1-8a46399a05d9
+		summarizeBy: sum
+		sourceColumn: Fact_PMS_TrainingCost.Cost of Proposal $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fact_PMS_TrainingCost.SDF Contribution $'
+		dataType: double
+		lineageTag: 283de5fb-48ed-41f2-9473-ce7ebec1468b
+		summarizeBy: sum
+		sourceColumn: Fact_PMS_TrainingCost.SDF Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fact_PMS_TrainingCost.% SDF'
+		dataType: double
+		lineageTag: 444fbf81-5895-4178-80a4-bef4ebb27fb8
+		summarizeBy: sum
+		sourceColumn: Fact_PMS_TrainingCost.% SDF
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fact_PMS_TrainingCost.School Contribution $'
+		dataType: double
+		lineageTag: d294d99a-4211-45d4-8fb4-e528f55733d9
+		summarizeBy: sum
+		sourceColumn: Fact_PMS_TrainingCost.School Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fact_PMS_TrainingCost.% School'
+		dataType: double
+		lineageTag: 9301002e-874b-438f-9b69-90a252879bf0
+		summarizeBy: sum
+		sourceColumn: Fact_PMS_TrainingCost.% School
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fact_PMS_TrainingCost.Company Contribution $'
+		dataType: double
+		lineageTag: e448ddeb-1dc6-4318-bb0c-e7ac4c95c865
+		summarizeBy: sum
+		sourceColumn: Fact_PMS_TrainingCost.Company Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fact_PMS_TrainingCost.% Company'
+		dataType: double
+		lineageTag: b7e18000-5466-4ae9-8c56-1865c4acc729
+		summarizeBy: sum
+		sourceColumn: Fact_PMS_TrainingCost.% Company
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fact_PMS_TrainingCost.Unified_ID '
+		dataType: string
+		lineageTag: c2e72dfe-9eb3-4807-9434-9db1f940eb17
+		summarizeBy: none
+		sourceColumn: "Fact_PMS_TrainingCost.Unified_ID "
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fact_PMS_TrainingCost.New_ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: a01bbbbe-caed-4561-835e-7dd48d8e2d7a
+		summarizeBy: count
+		sourceColumn: Fact_PMS_TrainingCost.New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Fact_Trainee_ Allowances_PMS' = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = #"Trainee Allowances",
+				    #"Merged Queries" = Table.NestedJoin(Source, {"Proposal ID"}, Fact_PMS_TrainingCost_Excel, {"Proposal ID"}, "Fact_PMS_TrainingCost", JoinKind.LeftOuter),
+				    #"Renamed Columns" = Table.RenameColumns(#"Merged Queries",{{"Institute Name (KH)", "Institute Name (Khmer)"}, {"Total Trainee Allowance", "Total Trainee Allowance"}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Added Custom" = Table.AddColumn(#"Removed Blank Rows", "Unified_ID", each "PMS-" & Text.From([ID])),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type1", "New_ID", each [ID] + 1000),
+				    #"Expanded Fact_PMS_TrainingCost" = Table.ExpandTableColumn(#"Added Custom1", "Fact_PMS_TrainingCost", {"Proposal ID", "Total Trainee Allowance", "Total Trainining Cost", "Cost of Proposal $", "SDF Contribution $", "% SDF", "School Contribution $", "% School", "Company Contribution $", "% Company", "Unified_ID ", "New_ID"}, {"Fact_PMS_TrainingCost.Proposal ID", "Fact_PMS_TrainingCost.Total Trainee Allowance", "Fact_PMS_TrainingCost.Total Trainining Cost", "Fact_PMS_TrainingCost.Cost of Proposal $", "Fact_PMS_TrainingCost.SDF Contribution $", "Fact_PMS_TrainingCost.% SDF", "Fact_PMS_TrainingCost.School Contribution $", "Fact_PMS_TrainingCost.% School", "Fact_PMS_TrainingCost.Company Contribution $", "Fact_PMS_TrainingCost.% Company", "Fact_PMS_TrainingCost.Unified_ID ", "Fact_PMS_TrainingCost.New_ID"})
+				in
+				    #"Expanded Fact_PMS_TrainingCost"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

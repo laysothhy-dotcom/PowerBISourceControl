@@ -1,0 +1,62 @@
+table Fact_SBJ_Budget
+	lineageTag: 74128455-342e-4ec8-abe5-2348f7d8aef3
+
+	column BudgetAllocation(USD)
+		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: fb9b4a5f-5b7d-4a7d-8cc6-51744532a0b4
+		summarizeBy: none
+		sourceColumn: BudgetAllocation(USD)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column CulmulativeExpense(USD)
+		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: c2240fc2-7655-418d-8430-61c38aeeb807
+		summarizeBy: none
+		sourceColumn: CulmulativeExpense(USD)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column '% BudgetUtilization'
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 4e429867-ccd6-42a5-80ca-1a4d7578372f
+		summarizeBy: none
+		sourceColumn: % BudgetUtilization
+
+		annotation SummarizationSetBy = Automatic
+
+	column No
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e7c3ed5-0ceb-4720-966d-2d66e3b9ba86
+		summarizeBy: none
+		sourceColumn: No
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_SBJ_Budget = m
+		mode: import
+		queryGroup: 'SBJ Project'
+		source =
+				let
+				    Source = Dim_SBJ_Rating,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Budget#(lf)Allocation#(lf)(USD)", "Culmulative#(lf)Expense#(lf)(USD)", "% Budget#(lf)Utilization"}),
+				    #"Unpivoted Only Selected Columns" = Table.Unpivot(#"Removed Other Columns", {"Budget#(lf)Allocation#(lf)(USD)", "Culmulative#(lf)Expense#(lf)(USD)", "% Budget#(lf)Utilization"}, "Attribute", "Value"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Unpivoted Only Selected Columns",{{"Value", "Total Budget sbj"}, {"Attribute", "Budget Item"}}),
+				    #"Pivoted Column" = Table.Pivot(#"Renamed Columns", List.Distinct(#"Renamed Columns"[#"Budget Item"]), "Budget Item", "Total Budget sbj", List.Sum),
+				    #"Added Index" = Table.AddIndexColumn(#"Pivoted Column", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Index",{{"Index", "No"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

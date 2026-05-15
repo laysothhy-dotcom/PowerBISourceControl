@@ -1,0 +1,49 @@
+table CostShareSlection
+	lineageTag: 2da0f537-138a-4f5c-bbea-486fa19031b6
+
+	column CostShareSlection
+		lineageTag: 4131b4d0-96cf-4e2d-b8b9-3159bc7e170d
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'CostShareSlection Order'
+
+		relatedColumnDetails
+			groupByColumn: 'CostShareSlection Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CostShareSlection Fields'
+		isHidden
+		lineageTag: 29626861-7315-4aff-a46b-dc779c07186b
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'CostShareSlection Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CostShareSlection Order'
+		isHidden
+		formatString: 0
+		lineageTag: bb75fc76-5a72-415f-81dc-cc3719ca4e93
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CostShareSlection = calculated
+		mode: import
+		source =
+				{
+				    ("Skill Development Fund Amount", NAMEOF('Fact_Trainee_ Allowances_PMS'[Skill Development Fund Amount]), 0),
+				    ("Training Provider Amount", NAMEOF('Fact_Trainee_ Allowances_PMS'[Training Provider Amount]), 1),
+				    ("Enterprise Amount", NAMEOF('Fact_Trainee_ Allowances_PMS'[Enterprise Amount]), 2)
+				}
+
+	annotation PBI_Id = 18693bb099b84946b0cc8bf3316f3104
+

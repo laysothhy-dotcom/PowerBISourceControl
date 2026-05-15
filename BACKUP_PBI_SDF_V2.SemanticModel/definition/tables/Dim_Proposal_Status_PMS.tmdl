@@ -1,0 +1,58 @@
+table Dim_Proposal_Status_PMS
+	lineageTag: e91056d2-a13f-4940-a0ae-1aa1f30c05c3
+
+	measure Total_Approved_pms = ```
+			CALCULATE(
+			    COUNT('Dim_Proposal_Status_PMS'[Status]),'Dim_Proposal_Status_PMS'[Status] = "MANUALLY_APPROVED"
+			)  
+			```
+		formatString: 0
+		lineageTag: 803097a0-f687-4281-8497-e1468cfbf354
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c020f43-ee66-463e-8b4e-5998fdcd4a24
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 34f1b203-b74e-4d1c-bd79-0dbeeea2e249
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 22b15d9d-b907-4e4d-9225-f6ad25cb73b6
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: string
+		lineageTag: 0aa2a295-c27f-46a5-a06e-f9699f6b6995
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Status_PMS = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = Dim_Training_info_PMS,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"ID", "Status", "Unified_ID", "New_ID"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

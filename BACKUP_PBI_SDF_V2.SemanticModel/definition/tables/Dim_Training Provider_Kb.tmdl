@@ -1,0 +1,55 @@
+table 'Dim_Training Provider_Kb'
+	lineageTag: 0188a65f-b281-4de6-a94b-f2dc68b1d0d7
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: af587ea7-291d-45c2-96d7-ac7e8e902460
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: 474078f9-a407-4758-b8fe-e746a4872bd4
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: ea0f73d6-7536-47fd-86a2-7a3aed1686c6
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: string
+		lineageTag: 43379051-eb3a-4a82-a0d3-f9fa5bfa0bf2
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_Training Provider_Kb' = m
+		mode: import
+		queryGroup: Proposal\PMS_Proposals
+		source =
+				let
+				    Source = Dim_TP_Appen_kobo,
+				    #"Added Custom" = Table.AddColumn(Source, "Unified_ID", each if [ID] <= 616 then "EX-" & Text.From([ID])
+				else if [ID] <= 1000 then "KB-" & Text.From([ID])
+				else "PMS-" & Text.From([ID])),
+				    #"Added Custom1" = Table.AddColumn(#"Added Custom", "New_ID", each if [ID] <= 616 then [ID]
+				else if [ID] <= 1000 then [ID]
+				else [ID] + 1000)
+				in
+				    #"Added Custom1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,278 @@
+table Dim_Disburse_Date_Normal
+	lineageTag: e9d449cb-5506-4600-8968-bf8a49760be0
+
+	column ID
+		dataType: string
+		lineageTag: 893728ad-d0ad-49b1-a430-322a8eb7bd89
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 60219245-ddb4-4aac-81e5-129775e8ea36
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Doc Submit 1st'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 12da33ff-0d40-4b08-b2e1-78de6d8f492d
+		summarizeBy: none
+		sourceColumn: Date Doc Submit 1st
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Approved 1st Doc'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 61d272a2-2405-4f91-a946-1dd76e7dd296
+		summarizeBy: none
+		sourceColumn: Date Approved 1st Doc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Received Budget 1st'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d6f5c48e-69aa-4b65-a45a-8ab93f8b44d2
+		summarizeBy: none
+		sourceColumn: Date Received Budget 1st
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Text Date Received Budget 1st'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ed015b6c-3945-47e2-8c44-bc13927fa22b
+		summarizeBy: none
+		sourceColumn: Text Date Received Budget 1st
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Doc Submit 2nd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c03ad979-6cdf-4e98-a7bc-767c6c7cd0e9
+		summarizeBy: none
+		sourceColumn: Date Doc Submit 2nd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Approved 2nd Doc'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 786f4b27-de14-4d77-839b-4f5cd2f4260c
+		summarizeBy: none
+		sourceColumn: Date Approved 2nd Doc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Received Budget 2nd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: df4ae1d2-5fb6-47e6-a591-d48f09126eab
+		summarizeBy: none
+		sourceColumn: Date Received Budget 2nd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Text Date Received Budget 2nd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b8397295-87e8-4350-8c29-b959e5ec7021
+		summarizeBy: none
+		sourceColumn: Text Date Received Budget 2nd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Expected Date 3rd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 94c28999-807a-4af3-a62d-ca75072cb537
+		summarizeBy: none
+		sourceColumn: Expected Date 3rd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Text_Expected Date 3rd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1cc8afa4-33c8-4dbb-80e1-92bc318b5d3e
+		summarizeBy: none
+		sourceColumn: Text_Expected Date 3rd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Doc Submit 3rd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 98d3bd31-9abe-4887-8f56-ddbc9f46ff7c
+		summarizeBy: none
+		sourceColumn: Date Doc Submit 3rd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Approved 3rd Doc'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d51970a2-5de7-4518-a9a7-056a1c12f071
+		summarizeBy: none
+		sourceColumn: Date Approved 3rd Doc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Received Budget 3rd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 99300d80-c678-4b9d-bbc5-ad513e5a2dcb
+		summarizeBy: none
+		sourceColumn: Date Received Budget 3rd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Text Date Received Budget 3rd'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 551c20a0-29ed-4533-8631-c93b7068ab95
+		summarizeBy: none
+		sourceColumn: Text Date Received Budget 3rd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Expected Date 4th'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 486ac934-5ac4-475b-9ef3-21f6096a6df5
+		summarizeBy: none
+		sourceColumn: Expected Date 4th
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Text_Expected Date 4th'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cfda9fa4-887a-4a01-9fd8-ef9f965e48d3
+		summarizeBy: none
+		sourceColumn: Text_Expected Date 4th
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Doc Submit 4th'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a2d7ca2a-1948-472c-82e6-79a51ac0ff06
+		summarizeBy: none
+		sourceColumn: Date Doc Submit 4th
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Approved 4th Doc'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ff5f98b2-521f-49b6-a457-dcc3f543d0cd
+		summarizeBy: none
+		sourceColumn: Date Approved 4th Doc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Received Budget 4th'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4af5b040-0ed3-4af6-9468-728229ac4222
+		summarizeBy: none
+		sourceColumn: Date Received Budget 4th
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Dim_Disburse_Date_Normal = m
+		mode: import
+		queryGroup: 'Training Cost Disburshment\Deburshement Normal'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"4-Disburse_Normal_Sheet" = Source{[Item="4-Disburse_Normal",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"4-Disburse_Normal_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", type any}, {"Proposal Type", type any}, {"Contract #", type any}, {"Initiator", type any}, {"Skill", type any}, {"Trainees_Proposal", Int64.Type}, {"SDF Contribution Riels", type number}, {"Track_Contract Duration", type text}, {"# Disbursements", Int64.Type}, {"Planned Budget 1st#(lf)(10%)", type number}, {"Expected Date 1st", Int64.Type}, {"Text_Expected Date 1st", type text}, {"Track_NP_Estimate 1", type text}, {"Date Doc Submit 1st", Int64.Type}, {"Date Approved 1st Doc", Int64.Type}, {"Date Received Budget 1st", type any}, {"Text Date Received Budget 1st", type text}, {"Disbursed 1 Riels", type number}, {"Disbursed 1 $", type number}, {"Track_NP_Disburse 1", type text}, {"Planned Budget 2nd#(lf)(40%)", type number}, {"Expected Date 2nd", Int64.Type}, {"Text_Expected Date 2nd", type text}, {"Track_NP_Estimate 2", type text}, {"Date Doc Submit 2nd", Int64.Type}, {"Date Approved 2nd Doc", Int64.Type}, {"Date Received Budget 2nd", Int64.Type}, {"Text Date Received Budget 2nd", type text}, {"Disbursed 2 Riels", type number}, {"Disbursed 2 $", type number}, {"Track_NP_Disburse 2", type text}, {"Planned Budget 3rd#(lf)(30%)", type number}, {"Expected Date 3rd", type number}, {"Track_NP_Estimate 3", type text}, {"Text_Expected Date 3rd", type text}, {"Date Doc Submit 3rd", Int64.Type}, {"Date Approved 3rd Doc", Int64.Type}, {"Date Received Budget 3rd", type any}, {"Text Date Received Budget 3rd", type text}, {"Disbursed 3 Riels", type number}, {"Disbursed 3 $", type number}, {"Track_NP_Disburse 3", type text}, {"Planned Budget 4th#(lf)(20%)", type number}, {"Expected Date 4th", Int64.Type}, {"Text_Expected Date 4th", type text}, {"Track_NP_Estimate 4", type text}, {"Date Doc Submit 4th", Int64.Type}, {"Date Approved 4th Doc", Int64.Type}, {"Date Received Budget 4th", type any}, {"Text Date Received Budget 4th", type text}, {"Disbursed 4 Riels", Int64.Type}, {"Disbursed 4 $", type number}, {"Track_NP_Disburse 4", type text}, {"Training Progress", type text}, {"Disbursement Progress", type text}, {"Disbursed Budget Riels", type number}, {"Disbursed $ Exchange Rate", type number}, {"Column1", type text}, {"%Disbursed", type any}, {"Balance Normal Riels", type number}, {"Budget Source", type any}, {"Focal M&E", type any}, {"Recruited Trainee", Int64.Type}, {"Remained Trainee", Int64.Type}, {"Estimated Trainee", Int64.Type}, {"Balanced Remained & Estimated Trainee", Int64.Type}, {"Track_PWS Estimate 1", type text}, {"Track_PWS Estimate 2", type text}, {"Track_PWS Estimate 3", type text}, {"Track_PWS Estimate 4", type text}, {"Disbursed 1 Riels PS", type number}, {"Disbursed 1 $ PS", type number}, {"Disbursed 2 Riels PS", type number}, {"Disbursed 2 $ PS", type number}, {"Disbursed 3 Riels PS", type number}, {"Disbursed 3 $ PS", type number}, {"Disbursed 4 Riels PS", Int64.Type}, {"Disbursed 4 $ PS", Int64.Type}, {"Disbursed Budget Riels PS", type number}, {"Disbursed $ Exchange Rate PS", type number}, {"Track_PWS Disburse 1", type text}, {"Track_PWS Disburse 2", type text}, {"Track_PWS Disburse 3", type text}, {"Track_PWS Disburse 4", type text}, {"Remain Budget Riels PS", type number}, {"Estimated Budget Riels PS", type any}, {"Balance Remained & Estimated Budget PS", type any}, {"Column2", type any}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"ID", type text}, {"Year Stage", type text}, {"Proposal Type", type text}, {"Contract #", type text}, {"Initiator", type text}, {"Skill", type text}, {"Expected Date 1st", type date}, {"Text_Expected Date 1st", type date}, {"Date Doc Submit 1st", type date}, {"Date Approved 1st Doc", type date}, {"Date Received Budget 1st", type date}, {"Text Date Received Budget 1st", type date}, {"Disbursed 1 $", Currency.Type}, {"Expected Date 2nd", type date}, {"Text_Expected Date 2nd", type date}, {"Date Doc Submit 2nd", type date}, {"Date Approved 2nd Doc", type date}, {"Date Received Budget 2nd", type date}, {"Text Date Received Budget 2nd", type date}, {"Disbursed 2 $", Currency.Type}, {"Expected Date 3rd", type date}, {"Text_Expected Date 3rd", type date}, {"Date Doc Submit 3rd", type date}, {"Date Approved 3rd Doc", type date}, {"Date Received Budget 3rd", type date}, {"Text Date Received Budget 3rd", type date}, {"Disbursed 3 Riels", type number}, {"Disbursed 3 $", Currency.Type}, {"Planned Budget 4th#(lf)(20%)", type number}, {"Expected Date 4th", type date}, {"Text_Expected Date 4th", type date}, {"Date Doc Submit 4th", type date}, {"Date Approved 4th Doc", type date}, {"Date Received Budget 4th", type date}, {"Text Date Received Budget 4th", type date}, {"Disbursed 4 Riels", type number}, {"Disbursed 4 $", Currency.Type}, {"Disbursed $ Exchange Rate", Currency.Type}, {"%Disbursed", type number}, {"Budget Source", type text}, {"Focal M&E", type text}, {"Disbursed 4 Riels PS", type number}, {"Disbursed 4 $ PS", type number}, {"Estimated Budget Riels PS", type number}, {"Balance Remained & Estimated Budget PS", type number}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Column2"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Columns", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Removed Blank Rows", {{"Text_Expected Date 1st", type date}}, "id-ID"),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type with Locale", {{"Text_Expected Date 1st", null}}),
+				    #"Changed Type with Locale1" = Table.TransformColumnTypes(#"Replaced Errors", {{"Date Received Budget 1st", type date}}, "id-ID"),
+				    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Changed Type with Locale1", {{"Date Received Budget 1st", null}}),
+				    #"Changed Type with Locale2" = Table.TransformColumnTypes(#"Replaced Errors1", {{"Text Date Received Budget 1st", type date}}, "id-ID"),
+				    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Changed Type with Locale2", {{"Text Date Received Budget 1st", null}}),
+				    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Replaced Errors2", {{"Text_Expected Date 2nd", null}}),
+				    #"Replaced Errors4" = Table.ReplaceErrorValues(#"Replaced Errors3", {{"Text Date Received Budget 2nd", null}}),
+				    #"Replaced Errors5" = Table.ReplaceErrorValues(#"Replaced Errors4", {{"Text_Expected Date 3rd", null}}),
+				    #"Replaced Errors6" = Table.ReplaceErrorValues(#"Replaced Errors5", {{"Date Received Budget 3rd", null}}),
+				    #"Replaced Errors7" = Table.ReplaceErrorValues(#"Replaced Errors6", {{"Text Date Received Budget 3rd", null}}),
+				    #"Replaced Errors8" = Table.ReplaceErrorValues(#"Replaced Errors7", {{"Text_Expected Date 4th", null}}),
+				    #"Replaced Errors9" = Table.ReplaceErrorValues(#"Replaced Errors8", {{"Date Received Budget 4th", null}}),
+				    #"Replaced Errors10" = Table.ReplaceErrorValues(#"Replaced Errors9", {{"Text Date Received Budget 4th", null}}),
+				    #"Replaced Errors11" = Table.ReplaceErrorValues(#"Replaced Errors10", {{"%Disbursed", null}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Errors11",{{"Estimated Budget Riels PS", type number}}),
+				    #"Replaced Errors12" = Table.ReplaceErrorValues(#"Changed Type2", {{"Estimated Budget Riels PS", null}}),
+				    #"Replaced Errors13" = Table.ReplaceErrorValues(#"Replaced Errors12", {{"Balance Remained & Estimated Budget PS", null}}),
+				    #"Removed Blank Rows1" = Table.SelectRows(#"Replaced Errors13", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Blank Rows1",{"ID", "Year", "Date Doc Submit 1st", "Date Approved 1st Doc", "Date Received Budget 1st", "Text Date Received Budget 1st", "Date Doc Submit 2nd", "Date Approved 2nd Doc", "Date Received Budget 2nd", "Text Date Received Budget 2nd", "Expected Date 3rd", "Text_Expected Date 3rd", "Date Doc Submit 3rd", "Date Approved 3rd Doc", "Date Received Budget 3rd", "Text Date Received Budget 3rd", "Expected Date 4th", "Text_Expected Date 4th", "Date Doc Submit 4th", "Date Approved 4th Doc", "Date Received Budget 4th"}),
+				    #"Replaced Errors14" = Table.ReplaceErrorValues(#"Removed Other Columns", {{"Year", null}}),
+				    #"Replaced Errors15" = Table.ReplaceErrorValues(#"Replaced Errors14", {{"Date Doc Submit 1st", null}}),
+				    #"Replaced Errors16" = Table.ReplaceErrorValues(#"Replaced Errors15", {{"Date Approved 1st Doc", null}}),
+				    #"Replaced Errors17" = Table.ReplaceErrorValues(#"Replaced Errors16", {{"Date Received Budget 1st", null}}),
+				    #"Replaced Errors18" = Table.ReplaceErrorValues(#"Replaced Errors17", {{"Text Date Received Budget 1st", null}}),
+				    #"Replaced Errors19" = Table.ReplaceErrorValues(#"Replaced Errors18", {{"Date Doc Submit 2nd", null}}),
+				    #"Replaced Errors20" = Table.ReplaceErrorValues(#"Replaced Errors19", {{"Date Approved 2nd Doc", null}}),
+				    #"Replaced Errors21" = Table.ReplaceErrorValues(#"Replaced Errors20", {{"Date Received Budget 2nd", null}}),
+				    #"Replaced Errors22" = Table.ReplaceErrorValues(#"Replaced Errors21", {{"Text Date Received Budget 2nd", null}}),
+				    #"Replaced Errors23" = Table.ReplaceErrorValues(#"Replaced Errors22", {{"Expected Date 3rd", null}})
+				in
+				    #"Replaced Errors23"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

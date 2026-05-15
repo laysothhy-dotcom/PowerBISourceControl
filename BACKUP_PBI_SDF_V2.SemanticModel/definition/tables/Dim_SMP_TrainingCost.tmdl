@@ -1,0 +1,160 @@
+table Dim_SMP_TrainingCost
+	lineageTag: 9f0d91bf-9b5c-4223-a64d-2f58920d43dd
+
+	column ID
+		dataType: string
+		lineageTag: ccd3f9c1-987d-423c-a928-8f7552e365b8
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Code
+		dataType: string
+		lineageTag: 1e216fb0-01cb-4671-9de2-e0bf5e6fdd58
+		summarizeBy: none
+		sourceColumn: Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hours/Session
+		dataType: double
+		lineageTag: 0e92162a-f324-4cbe-8909-755ab6ee57e7
+		summarizeBy: sum
+		sourceColumn: Hours/Session
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Theory
+		dataType: double
+		lineageTag: 104f1efd-06e4-441d-9217-4f5fd84cd3c4
+		summarizeBy: sum
+		sourceColumn: Theory
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Practice
+		dataType: double
+		lineageTag: 43baa206-7405-4428-b1fa-ba8cb1281749
+		summarizeBy: sum
+		sourceColumn: Practice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Training Days/Session'
+		dataType: string
+		lineageTag: 260cb018-293b-4409-921c-59430d662b89
+		summarizeBy: none
+		sourceColumn: Training Days/Session
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Length M'
+		dataType: double
+		lineageTag: ccdd37ba-4704-4178-b94a-f8bca58a72aa
+		summarizeBy: sum
+		sourceColumn: Training Length M
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Hours/Day/Month
+		dataType: string
+		lineageTag: 5836ca48-5642-4703-bd6a-c3027774a888
+		summarizeBy: none
+		sourceColumn: Hours/Day/Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Cost'
+		dataType: double
+		lineageTag: 6c4f4b3d-5fc0-42ea-b54f-ddf70768b1bc
+		summarizeBy: sum
+		sourceColumn: Unit Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Min Trainee'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8125bbda-a2ef-4f2f-9b28-999de703cbf8
+		summarizeBy: sum
+		sourceColumn: Total Min Trainee
+
+		annotation SummarizationSetBy = Automatic
+
+	column '% SDF'
+		dataType: double
+		lineageTag: a5376cfc-cb4a-41db-aea6-c878ed0066f0
+		summarizeBy: sum
+		sourceColumn: % SDF
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% Employer'
+		dataType: double
+		lineageTag: fe3b4deb-9de3-481c-9f5e-c9c9d5da4b80
+		summarizeBy: sum
+		sourceColumn: % Employer
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Result
+		dataType: string
+		lineageTag: 093e411f-4bef-4bb6-a9a9-81e73415603a
+		summarizeBy: none
+		sourceColumn: Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 8bd029e5-621f-4f61-9bbc-8db3b49cf7a8
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_SMP_TrainingCost = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"1-SMP_Application_Sheet" = Source{[Item="1-SMP_Application",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"1-SMP_Application_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Hours/Day/Month", type text}, {"Unit Cost", type number}, {"Total Min Trainee", Int64.Type}, {"% SDF", type number}, {"% Employer", type number}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"% Employer", null}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Errors",{{"Certificate Type", type text}}),
+				    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Changed Type1", {{"Unit Cost", null}}),
+				    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Replaced Errors1", {{"% SDF", null}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Errors2",{{"Result", type text}, {"Approved Date", type date}, {"Approval Time", type text}, {"Budget Source", type text}, {"ID", type text}, {"Year", type text}, {"Year Stage", type text}, {"Code", type text}, {"Application Date", type date}, {"Training Provider", type text}, {"Training Provider Type", type text}, {"Sector", type text}, {"Contact Person", type text}, {"Email", type text}, {"Phone", type text}, {"Course Title", type text}, {"Hours/Session", type number}, {"Theory", type number}, {"Practice", type number}, {"Training Days/Session", type text}, {"Training Length M", type number}, {"Hours/Day/Month", type text}}),
+				    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Changed Type2", {{"Hours/Session", null}}),
+				    #"Replaced Errors4" = Table.ReplaceErrorValues(#"Replaced Errors3", {{"Theory", null}}),
+				    #"Replaced Errors5" = Table.ReplaceErrorValues(#"Replaced Errors4", {{"Training Length M", null}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Replaced Errors5",{"ID", "Code", "Hours/Session", "Theory", "Practice", "Training Days/Session", "Training Length M", "Hours/Day/Month", "Unit Cost", "Total Min Trainee", "% SDF", "% Employer", "Result", "Budget Source"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"ID"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates1", {"ID", "Code", "Hours/Session", "Theory", "Practice", "Training Days/Session", "Training Length M", "Hours/Day/Month", "Unit Cost", "Total Min Trainee", "% SDF", "% Employer", "Result", "Budget Source"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Errors", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Blank Rows")
+				in
+				    #"Removed Duplicates2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

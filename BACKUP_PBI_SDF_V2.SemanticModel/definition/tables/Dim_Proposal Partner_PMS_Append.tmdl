@@ -1,0 +1,43 @@
+table 'Dim_Proposal Partner_PMS_Append'
+	lineageTag: 13f34a13-20e9-468f-b77b-a35090a62c34
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: d71fad68-3588-4045-ac1d-34a7add2c80f
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Provider'
+		dataType: string
+		lineageTag: d39887bb-6fe3-4db9-a6d0-3aba625b3990
+		summarizeBy: none
+		sourceColumn: Training Provider
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: e68fc495-04f5-442d-beec-1037f7983bec
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim_Proposal Partner_PMS_Append' = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = #"Dim_Proposal Partner_PMS",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"ID", "Institute Name", "Unified_ID"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Institute Name", "Training Provider"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

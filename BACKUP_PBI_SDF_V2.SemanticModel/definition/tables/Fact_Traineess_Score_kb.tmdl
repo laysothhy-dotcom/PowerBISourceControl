@@ -1,0 +1,84 @@
+table Fact_Traineess_Score_kb
+	lineageTag: af75320f-e497-41bf-b21d-f97f88647718
+
+	column contract_No
+		dataType: string
+		lineageTag: 0da1f0ca-19d6-4655-b0fe-aaa8b120cad1
+		summarizeBy: none
+		sourceColumn: contract_No
+
+		annotation SummarizationSetBy = Automatic
+
+	column overall_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 62d36b6b-1f59-463f-82b5-d9fe058da9c8
+		summarizeBy: sum
+		sourceColumn: overall_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column overall_score_decimal
+		dataType: double
+		lineageTag: 87e6b1cf-3b58-4a59-92bb-5dd9e6c71089
+		summarizeBy: sum
+		sourceColumn: overall_score_decimal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column _id
+		dataType: string
+		lineageTag: c20f6980-8dd1-41d0-aed0-abbd6411e37c
+		summarizeBy: none
+		sourceColumn: _id
+
+		annotation SummarizationSetBy = Automatic
+
+	column _index
+		dataType: string
+		lineageTag: 483cf9f4-8b74-4810-b89e-dffafddba8a0
+		summarizeBy: none
+		sourceColumn: _index
+
+		annotation SummarizationSetBy = Automatic
+
+	column score_category
+		dataType: string
+		lineageTag: 958bd9ca-66bd-47a6-8ab8-c9763eb6fab9
+		summarizeBy: none
+		sourceColumn: score_category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Traineess_Score_kb = m
+		mode: import
+		queryGroup: 'Trainees'' Satisfaction_KOBO'
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/azRmjXmFEJ2QoFnFcEHMML/export-settings/esWg6hvft4DeMa2vHDvZxqG/data.csv"),[Delimiter=";", Columns=56, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"q1_1", type number}, {"q1_2", type number}, {"q1_3", type number}, {"q1_4", type number}, {"q1_5", type number}, {"q1_6", type number}, {"q1_7", type number}, {"q1_8", type number}, {"q1_9", type number}, {"overall_score", type number}, {"overall_score_decimal", type number}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"contract_No", "overall_score", "overall_score_decimal", "_id", "_index"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Other Columns", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Blank Rows"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates1", {"overall_score"}),
+				    #"Removed Blank Rows1" = Table.SelectRows(#"Removed Errors", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Blank Rows1", {"overall_score_decimal"}),
+				    #"Removed Blank Rows2" = Table.SelectRows(#"Removed Errors1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Blank Rows2",{{"overall_score", Int64.Type}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type1", {{"overall_score", null}}),
+				    #"Added Custom" = Table.AddColumn(#"Replaced Errors", "score_category", each if [overall_score] = null then "No Score"
+				else if [overall_score] >= 1 and [overall_score] <= 2 then "Unsatisfactory"
+				else if [overall_score] >= 3 and [overall_score] <= 5 then "Satisfactory"
+				else "Out of Range"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"score_category", type text}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

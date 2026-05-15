@@ -1,0 +1,77 @@
+table Dim_Proposal_Budget_Sources_kobo
+	lineageTag: 67f258ca-1e14-4197-8cf8-fa0882b6f285
+
+	column id
+		dataType: string
+		lineageTag: 6267e740-4ee3-4737-be72-cec4a27cefd1
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column prop_id
+		dataType: string
+		lineageTag: d91a9b1b-4324-4484-b648-f3304634b974
+		summarizeBy: none
+		sourceColumn: prop_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 40df75b7-c11e-4af3-b179-76ccded87e08
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Awarded
+		dataType: string
+		lineageTag: f23879b8-bf7c-4f06-a0ed-874c50a5cfc5
+		summarizeBy: none
+		sourceColumn: Awarded
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fund Budget kobo'
+		dataType: string
+		lineageTag: d7963e58-7e70-417e-b6c8-67dd1214cbb8
+		summarizeBy: none
+		sourceColumn: Fund Budget kobo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Soureces of fund'
+		dataType: string
+		lineageTag: 21a5dbe4-6806-4d80-ab08-162040b16a33
+		summarizeBy: none
+		sourceColumn: Soureces of fund
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposal_Budget_Sources_kobo = m
+		mode: import
+		queryGroup: Proposal\KOBO_Proposal
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/aQgjZ2GU8uPeDSfKo7sJx6/export-settings/esuYsgPwD6KxFbH6ZqugGf3/data.csv"),[Delimiter=";", Columns=501, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Promoted Headers",{{"tpshar_percent", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type2", {{"tpshar_percent", null}}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Replaced Errors",{"id", "prop_id", "awarded", "sourcefunded"}),
+				    #"Unpivoted Columns" = Table.UnpivotOtherColumns(#"Removed Other Columns1", {"id", "prop_id", "sourcefunded"}, "Attribute", "Value"),
+				    #"Unpivoted Columns1" = Table.UnpivotOtherColumns(#"Unpivoted Columns", {"id", "prop_id", "Attribute", "Value"}, "Attribute.1", "Value.1"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Unpivoted Columns1",{{"Attribute", "Status"}, {"Value", "Awarded"}, {"Attribute.1", "Fund Budget kobo"}, {"Value.1", "Soureces of fund"}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Renamed Columns",{{"Soureces of fund", Text.Upper, type text}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Uppercased Text",{{"Soureces of fund", Text.Lower, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Lowercased Text"),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates1", {"id", "prop_id", "Status", "Awarded", "Fund Budget kobo", "Soureces of fund"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Errors",{"id", "prop_id", "Status", "Awarded", "Fund Budget kobo", "Soureces of fund"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,692 @@
+table Fact_Shared_Cost_Table_kobo
+	lineageTag: 4f6a4f66-8259-4c07-ab18-42844c96f2fa
+
+	column id
+		dataType: string
+		lineageTag: c29bd543-ec9e-47d9-b2c7-cc408bff3a77
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column prop_id
+		dataType: string
+		lineageTag: 640d749d-300f-4b54-889a-79d725ab523e
+		summarizeBy: none
+		sourceColumn: prop_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Group ID '
+		dataType: string
+		lineageTag: 27af2fc5-68a3-4a29-8f71-992d6885b757
+		summarizeBy: none
+		sourceColumn: "Group ID "
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_riel_1
+		dataType: string
+		lineageTag: 262933f5-05ce-49f0-b639-75e35c96a576
+		summarizeBy: none
+		sourceColumn: cost_riel_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdf_cost_1
+		dataType: string
+		lineageTag: eaf2bf40-b4b7-4800-a86a-8aec5053c6d2
+		summarizeBy: none
+		sourceColumn: sdf_cost_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column tp_cost_1
+		dataType: string
+		lineageTag: 4e9b5e5c-77df-489e-bc03-17c5e37ba377
+		summarizeBy: none
+		sourceColumn: tp_cost_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_cost_1
+		dataType: string
+		lineageTag: 07d7c094-1433-4b1d-bb5f-c2e19514167a
+		summarizeBy: none
+		sourceColumn: company_cost_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column tpshar_1
+		dataType: string
+		lineageTag: f296957a-9d19-4a10-b5ec-938d30844a18
+		summarizeBy: none
+		sourceColumn: tpshar_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column comshar_1
+		dataType: string
+		lineageTag: 5027135d-58fa-429c-b057-0a37fbc5e4b3
+		summarizeBy: none
+		sourceColumn: comshar_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdfshar_1
+		dataType: string
+		lineageTag: 559d6dbc-3b56-4d85-913e-f4d481644507
+		summarizeBy: none
+		sourceColumn: sdfshar_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column training_skill_2
+		dataType: string
+		lineageTag: 597257be-c3f3-4e72-b5f1-35e6cd4e63a4
+		summarizeBy: none
+		sourceColumn: training_skill_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_riel_2
+		dataType: string
+		lineageTag: 25eedd75-0abe-4afd-a7e5-3b4a07ffb742
+		summarizeBy: none
+		sourceColumn: cost_riel_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdf_cost_2
+		dataType: string
+		lineageTag: c97e09bd-6698-48a8-8d1b-bee8ac0b519c
+		summarizeBy: none
+		sourceColumn: sdf_cost_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column tp_cost_2
+		dataType: string
+		lineageTag: d9b11c7d-a3c4-496c-af7c-d22912cfd17d
+		summarizeBy: none
+		sourceColumn: tp_cost_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_cost_2
+		dataType: string
+		lineageTag: b3ec145e-8b96-4ad1-9571-13a1ca0c9908
+		summarizeBy: none
+		sourceColumn: company_cost_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column tpshar_2
+		dataType: string
+		lineageTag: b835f577-966c-4854-84f5-9291c5be411a
+		summarizeBy: none
+		sourceColumn: tpshar_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column comshar_2
+		dataType: string
+		lineageTag: 07597e08-0a34-4594-9902-8bcd92270466
+		summarizeBy: none
+		sourceColumn: comshar_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdfshar_2
+		dataType: string
+		lineageTag: 90edef66-c101-4849-b259-1aab4fb52e10
+		summarizeBy: none
+		sourceColumn: sdfshar_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column training_skill_3
+		dataType: string
+		lineageTag: 3264730e-ff4c-4f25-8182-497674ec88e1
+		summarizeBy: none
+		sourceColumn: training_skill_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_riel_3
+		dataType: string
+		lineageTag: a3cdba2a-b468-49c4-8abb-67e1c51f2921
+		summarizeBy: none
+		sourceColumn: cost_riel_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdf_cost_3
+		dataType: string
+		lineageTag: 23bdb199-ad69-448e-9011-41fd2ee2c1fc
+		summarizeBy: none
+		sourceColumn: sdf_cost_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column tp_cost_3
+		dataType: string
+		lineageTag: c3a0b18b-cf77-4117-bdf6-23ab76dcc97c
+		summarizeBy: none
+		sourceColumn: tp_cost_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_cost_3
+		dataType: string
+		lineageTag: 551b49ff-0057-495e-8641-1a173f0107b8
+		summarizeBy: none
+		sourceColumn: company_cost_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column tpshar_3
+		dataType: string
+		lineageTag: 16d8dbad-68f8-4f98-af69-8d027c59e370
+		summarizeBy: none
+		sourceColumn: tpshar_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column comshar_3
+		dataType: string
+		lineageTag: 5b57eff8-d8aa-4bde-a9f2-c0333527b7f7
+		summarizeBy: none
+		sourceColumn: comshar_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdfshar_3
+		dataType: string
+		lineageTag: 1e61d4b4-ac79-486f-b8d7-bd7f06cc1f0c
+		summarizeBy: none
+		sourceColumn: sdfshar_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column training_skill_4
+		dataType: string
+		lineageTag: 34fafdaa-f0d6-4d11-9d1f-7b67d5a153c9
+		summarizeBy: none
+		sourceColumn: training_skill_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_riel_4
+		dataType: string
+		lineageTag: 250919f5-b610-4041-922c-8343a9d1c6e8
+		summarizeBy: none
+		sourceColumn: cost_riel_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdf_cost_4
+		dataType: string
+		lineageTag: 01f6a5d3-4888-425a-97fc-a59842f8717a
+		summarizeBy: none
+		sourceColumn: sdf_cost_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column tp_cost_4
+		dataType: string
+		lineageTag: fa9c212e-67f0-40c5-b6d2-4139aa4c40e8
+		summarizeBy: none
+		sourceColumn: tp_cost_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_cost_4
+		dataType: string
+		lineageTag: 881a48f0-e4c6-48ec-9067-7e19f48ca534
+		summarizeBy: none
+		sourceColumn: company_cost_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column tpshar_4
+		dataType: string
+		lineageTag: 8e87945f-285d-474c-9486-1cf5e77480f1
+		summarizeBy: none
+		sourceColumn: tpshar_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column comshar_4
+		dataType: string
+		lineageTag: 033297e5-dc80-4976-aaab-5c799da84566
+		summarizeBy: none
+		sourceColumn: comshar_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdfshar_4
+		dataType: string
+		lineageTag: 1df10b85-d337-48dd-a649-187966ab925e
+		summarizeBy: none
+		sourceColumn: sdfshar_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column training_skill_5
+		dataType: string
+		lineageTag: bc208ee8-159b-4c56-a56c-6bdd73e27415
+		summarizeBy: none
+		sourceColumn: training_skill_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_riel_5
+		dataType: string
+		lineageTag: 85608903-7b7a-4141-bc9c-fc64b3294c37
+		summarizeBy: none
+		sourceColumn: cost_riel_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdf_cost_5
+		dataType: string
+		lineageTag: 4b94e213-e24d-4b4a-a3ab-732a88a1f8f2
+		summarizeBy: none
+		sourceColumn: sdf_cost_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column tp_cost_5
+		dataType: string
+		lineageTag: 3a1236b3-9222-4c3d-8cff-9ffdf2a82afe
+		summarizeBy: none
+		sourceColumn: tp_cost_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_cost_5
+		dataType: string
+		lineageTag: 35256a61-a987-4c3e-837d-b99137be548b
+		summarizeBy: none
+		sourceColumn: company_cost_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column tpshar_5
+		dataType: string
+		lineageTag: 5af21511-cd80-4414-b8e3-774aa8011994
+		summarizeBy: none
+		sourceColumn: tpshar_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column comshar_5
+		dataType: string
+		lineageTag: d4eb1b65-d426-4ce1-8e68-4173a2166ec7
+		summarizeBy: none
+		sourceColumn: comshar_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdfshar_5
+		dataType: string
+		lineageTag: 54ef7b59-e0bc-40a5-8cc7-3a3c7607192f
+		summarizeBy: none
+		sourceColumn: sdfshar_5
+
+		annotation SummarizationSetBy = Automatic
+
+	column training_cost_1
+		dataType: string
+		lineageTag: 5e1a0f74-7868-45ed-857b-af1b88834cd7
+		summarizeBy: none
+		sourceColumn: training_cost_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_material_1
+		dataType: string
+		lineageTag: e52380c4-14c6-410b-a792-b20698192556
+		summarizeBy: none
+		sourceColumn: sub_material_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_utility_1
+		dataType: string
+		lineageTag: 5390f50e-9349-4181-ab7f-137187fb5ac1
+		summarizeBy: none
+		sourceColumn: sub_utility_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_training_cost_1
+		dataType: string
+		lineageTag: daff2546-f0d9-4f03-9256-5e6c2a4ceb31
+		summarizeBy: none
+		sourceColumn: sub_training_cost_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_trainer_1
+		dataType: string
+		lineageTag: 94707596-d353-4e75-997f-c7de8d5c4cb9
+		summarizeBy: none
+		sourceColumn: sub_trainer_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_allowance_1
+		dataType: string
+		lineageTag: a9a9d2fc-f5f8-47ae-b853-2dfe90560b66
+		summarizeBy: none
+		sourceColumn: sub_allowance_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_others_1
+		dataType: string
+		lineageTag: 87a631c7-342a-4c35-858b-33f5a0c7ea14
+		summarizeBy: none
+		sourceColumn: sub_others_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column training_cost_2
+		dataType: string
+		lineageTag: 3a877387-7df9-46b7-b3e1-b43dd0636f97
+		summarizeBy: none
+		sourceColumn: training_cost_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_material_2
+		dataType: string
+		lineageTag: d63cbad5-f517-43a7-901a-a496119389ea
+		summarizeBy: none
+		sourceColumn: sub_material_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_utility_2
+		dataType: string
+		lineageTag: c2cb7d55-5319-4f7c-b47a-40b280a112cc
+		summarizeBy: none
+		sourceColumn: sub_utility_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_training_cost_2
+		dataType: string
+		lineageTag: 0fcde222-3fb5-4aa4-b5a1-ec8068304eb1
+		summarizeBy: none
+		sourceColumn: sub_training_cost_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_trainer_2
+		dataType: string
+		lineageTag: e62150b3-384d-4b3c-83eb-115d0ded60e3
+		summarizeBy: none
+		sourceColumn: sub_trainer_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_allowance_2
+		dataType: string
+		lineageTag: c946070f-413e-41b0-8e05-62a36f6e498e
+		summarizeBy: none
+		sourceColumn: sub_allowance_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_others_2
+		dataType: string
+		lineageTag: 33847e35-9392-4fa6-8062-560be124c269
+		summarizeBy: none
+		sourceColumn: sub_others_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_cost_skill_2
+		dataType: string
+		lineageTag: 1402f0b6-d7b6-4911-909a-476b2b6d7906
+		summarizeBy: none
+		sourceColumn: total_cost_skill_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_percent
+		dataType: string
+		lineageTag: 2e684cb5-efbe-4f04-b715-5e5c5bb7f969
+		summarizeBy: none
+		sourceColumn: total_percent
+
+		annotation SummarizationSetBy = Automatic
+
+	column training_skill_1
+		dataType: string
+		lineageTag: e4087ef1-4f6d-47d6-bde0-8848660afe33
+		summarizeBy: none
+		sourceColumn: training_skill_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column training_cost_3
+		dataType: string
+		lineageTag: e2b27315-8102-4cf4-8944-48128d1c54cd
+		summarizeBy: none
+		sourceColumn: training_cost_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_material_3
+		dataType: string
+		lineageTag: acf4523c-8a9a-4741-bc2d-d852735e1c17
+		summarizeBy: none
+		sourceColumn: sub_material_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_utility_3
+		dataType: string
+		lineageTag: 9ff3ee0c-9d21-4111-8ad9-36044ca95fea
+		summarizeBy: none
+		sourceColumn: sub_utility_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_training_cost_3
+		dataType: string
+		lineageTag: e735c76b-cb48-4d12-9bc6-3e25e98f03b6
+		summarizeBy: none
+		sourceColumn: sub_training_cost_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_trainer_3
+		dataType: string
+		lineageTag: 7808fc46-e36c-4a9b-83d3-f0a8011946ca
+		summarizeBy: none
+		sourceColumn: sub_trainer_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_allowance_3
+		dataType: string
+		lineageTag: 51d67397-d850-415b-8149-cfca931cbb7c
+		summarizeBy: none
+		sourceColumn: sub_allowance_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_others_3
+		dataType: string
+		lineageTag: aca73afe-9424-4e6b-87c5-ac6c688b6d75
+		summarizeBy: none
+		sourceColumn: sub_others_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_cost_skill_3
+		dataType: string
+		lineageTag: 9f6ce7fb-5665-491c-a3b4-993b39f72a08
+		summarizeBy: none
+		sourceColumn: total_cost_skill_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column training_cost
+		dataType: string
+		lineageTag: 537d128a-4243-4667-abbd-af9c5e53f887
+		summarizeBy: none
+		sourceColumn: training_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_material
+		dataType: string
+		lineageTag: a1217372-d7af-4de0-8044-a84115bd4243
+		summarizeBy: none
+		sourceColumn: sub_material
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_utility
+		dataType: string
+		lineageTag: 0c16d1f5-73c0-4dd6-be71-f57012f9f886
+		summarizeBy: none
+		sourceColumn: sub_utility
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_training_cost
+		dataType: string
+		lineageTag: 2bc43b4f-0b9b-429f-94f1-1a0c660db82a
+		summarizeBy: none
+		sourceColumn: sub_training_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_trainer
+		dataType: string
+		lineageTag: 32f61eae-9a57-49c1-a761-2e80d2cb71ed
+		summarizeBy: none
+		sourceColumn: sub_trainer
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_allowance
+		dataType: string
+		lineageTag: cf3ca4f2-27e9-4884-b4f7-770f78415496
+		summarizeBy: none
+		sourceColumn: sub_allowance
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub_others
+		dataType: string
+		lineageTag: 8e316a31-b08b-420c-b449-77d28137f1e8
+		summarizeBy: none
+		sourceColumn: sub_others
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_cost_skill
+		dataType: string
+		lineageTag: 77c6edc8-0852-4886-b1ce-f2bb71cf312a
+		summarizeBy: none
+		sourceColumn: total_cost_skill
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_cost
+		dataType: string
+		lineageTag: 18659e00-6434-4309-be2a-faa2e89986a1
+		summarizeBy: none
+		sourceColumn: skill_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_tpshar
+		dataType: string
+		lineageTag: 4d4f4254-14cf-4d4c-b0ec-e0aef5dda5c9
+		summarizeBy: none
+		sourceColumn: total_tpshar
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_comshar
+		dataType: string
+		lineageTag: 76a1b7ae-a980-48c6-9835-1d4ba028cc31
+		summarizeBy: none
+		sourceColumn: total_comshar
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_sdfshar
+		dataType: string
+		lineageTag: be3ada61-e365-464c-b028-7bbca1b6aecc
+		summarizeBy: none
+		sourceColumn: total_sdfshar
+
+		annotation SummarizationSetBy = Automatic
+
+	column tpshar_percent
+		dataType: string
+		lineageTag: 64a65881-f513-448f-aff0-94ea2abb6804
+		summarizeBy: none
+		sourceColumn: tpshar_percent
+
+		annotation SummarizationSetBy = Automatic
+
+	column comshar_percent
+		dataType: string
+		lineageTag: fe289ed0-3382-4b06-a2fc-71b376909de2
+		summarizeBy: none
+		sourceColumn: comshar_percent
+
+		annotation SummarizationSetBy = Automatic
+
+	column sdfshar_percent
+		dataType: string
+		lineageTag: 45101984-84b6-444f-bb1b-0db317c0939a
+		summarizeBy: none
+		sourceColumn: sdfshar_percent
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_cost
+		dataType: string
+		lineageTag: dc608919-28e0-402e-990c-84892d925756
+		summarizeBy: none
+		sourceColumn: total_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Shared_Cost_Table_kobo = m
+		mode: import
+		queryGroup: Proposal\KOBO_Proposal
+		source =
+				let
+				    Source = Fact_Proposal_Cost_kobo,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"id", "prop_id", "cost_riel_1_002", "sdf_cost_1_002", "tp_cost_1_002", "company_cost_1_002", "tpshar_1_002", "comshar_1_002", "sdfshar_1_002", "training_skill_2_002_002", "cost_riel_2_002", "sdf_cost_2_002", "tp_cost_2_002", "company_cost_2_002", "tpshar_2_002", "comshar_2_002", "sdfshar_2_002", "training_skill_3_002_002", "cost_riel_3_002", "sdf_cost_3_002", "tp_cost_3_002", "company_cost_3_002", "tpshar_3_002", "comshar_3_002", "sdfshar_3_002", "training_skill_4_002_002", "cost_riel_4_002", "sdf_cost_4_002", "tp_cost_4_002", "company_cost_4_002", "tpshar_4_002", "comshar_4_002", "sdfshar_4_002", "training_skill_5_002_002", "cost_riel_5_002", "sdf_cost_5_002", "tp_cost_5_002", "company_cost_5_002", "tpshar_5_002", "comshar_5_002", "sdfshar_5_002", "training_cost_1", "sub_material_1", "sub_utility_1", "sub_training_cost_1", "sub_trainer_1", "sub_allowance_1", "sub_others_1", "cost_riel_1_003", "sdf_cost_1_003", "tp_cost_1_003", "company_cost_1_003", "tpshar_1_003", "comshar_1_003", "sdfshar_1_003", "training_skill_2_003_003", "cost_riel_2_003", "sdf_cost_2_003", "tp_cost_2_003", "company_cost_2_003", "tpshar_2_003", "comshar_2_003", "sdfshar_2_003", "training_skill_3_003_003", "cost_riel_3_003", "sdf_cost_3_003", "tp_cost_3_003", "company_cost_3_003", "tpshar_3_003", "comshar_3_003", "sdfshar_3_003", "training_skill_4_003_003", "cost_riel_4_003", "sdf_cost_4_003", "tp_cost_4_003", "company_cost_4_003", "tpshar_4_003", "comshar_4_003", "sdfshar_4_003", "training_skill_5_003_003", "cost_riel_5_003", "sdf_cost_5_003", "tp_cost_5_003", "company_cost_5_003", "tpshar_5_003", "comshar_5_003", "sdfshar_5_003", "training_cost_2", "sub_material_2", "sub_utility_2", "sub_training_cost_2", "sub_trainer_2", "sub_allowance_2", "sub_others_2", "total_cost_skill_2", "total_percent_002", "training_skill_1_004_004", "cost_riel_1_004", "sdf_cost_1_004", "tp_cost_1_004", "company_cost_1_004", "tpshar_1_004", "comshar_1_004", "sdfshar_1_004", "training_skill_2_004_004", "cost_riel_2_004", "sdf_cost_2_004", "tp_cost_2_004", "company_cost_2_004", "tpshar_2_004", "comshar_2_004", "sdfshar_2_004", "training_skill_3_004_004", "cost_riel_3_004", "sdf_cost_3_004", "tp_cost_3_004", "company_cost_3_004", "tpshar_3_004", "comshar_3_004", "sdfshar_3_004", "training_skill_4_004_004", "cost_riel_4_004", "sdf_cost_4_004", "tp_cost_4_004", "company_cost_4_004", "tpshar_4_004", "comshar_4_004", "sdfshar_4_004", "training_skill_5_004_004", "cost_riel_5_004", "sdf_cost_5_004", "tp_cost_5_004", "company_cost_5_004", "tpshar_5_004", "comshar_5_004", "sdfshar_5_004", "training_cost_3", "sub_material_3", "sub_utility_3", "sub_training_cost_3", "sub_trainer_3", "sub_allowance_3", "sub_others_3", "total_cost_skill_3", "total_percent_003", "cost_riel_1_005", "sdf_cost_1_005", "tp_cost_1_005", "company_cost_1_005", "tpshar_1_005", "comshar_1_005", "sdfshar_1_005", "training_skill_2_005_005", "cost_riel_2_005", "sdf_cost_2_005", "tp_cost_2_005", "company_cost_2_005", "tpshar_2_005", "comshar_2_005", "sdfshar_2_005", "training_skill_3_005_005", "cost_riel_3_005", "sdf_cost_3_005", "tp_cost_3_005", "company_cost_3_005", "tpshar_3_005", "comshar_3_005", "sdfshar_3_005", "training_skill_4_005_005", "cost_riel_4_005", "sdf_cost_4_005", "tp_cost_4_005", "company_cost_4_005", "tpshar_4_005", "comshar_4_005", "sdfshar_4_005", "training_skill_5_005_005", "cost_riel_5_005", "sdf_cost_5_005", "tp_cost_5_005", "company_cost_5_005", "tpshar_5_005", "comshar_5_005", "sdfshar_5_005", "training_cost", "sub_material", "sub_utility", "sub_training_cost", "sub_trainer", "sub_allowance", "sub_others", "total_cost_skill", "total_percent_001", "cost_riel_1_001", "sdf_cost_1_001", "tp_cost_1_001", "company_cost_1_001", "tpshar_1_001", "comshar_1_001", "sdfshar_1_001", "training_skill_2_001_001", "cost_riel_2_001", "sdf_cost_2_001", "tp_cost_2_001", "company_cost_2_001", "tpshar_2_001", "comshar_2_001", "sdfshar_2_001", "training_skill_3_001_001", "cost_riel_3_001", "sdf_cost_3_001", "tp_cost_3_001", "company_cost_3_001", "tpshar_3_001", "comshar_3_001", "sdfshar_3_001", "training_skill_4_001_001", "cost_riel_4_001", "sdf_cost_4_001", "tp_cost_4_001", "company_cost_4_001", "tpshar_4_001", "comshar_4_001", "sdfshar_4_001", "training_skill_5_001_001", "cost_riel_5_001", "sdf_cost_5_001", "tp_cost_5_001", "company_cost_5_001", "tpshar_5_001", "comshar_5_001", "sdfshar_5_001", "skill_cost", "total_tpshar", "total_comshar", "total_sdfshar", "tpshar_percent", "comshar_percent", "sdfshar_percent", "total_cost", "total_percent"}),
+				    #"Unpivoted Only Selected Columns" = Table.Unpivot(#"Removed Other Columns", {"cost_riel_1_002", "sdf_cost_1_002", "tp_cost_1_002", "company_cost_1_002", "tpshar_1_002", "comshar_1_002", "sdfshar_1_002", "training_skill_2_002_002", "cost_riel_2_002", "sdf_cost_2_002", "tp_cost_2_002", "company_cost_2_002", "tpshar_2_002", "comshar_2_002", "sdfshar_2_002", "training_skill_3_002_002", "cost_riel_3_002", "sdf_cost_3_002", "tp_cost_3_002", "company_cost_3_002", "tpshar_3_002", "comshar_3_002", "sdfshar_3_002", "training_skill_4_002_002", "cost_riel_4_002", "sdf_cost_4_002", "tp_cost_4_002", "company_cost_4_002", "tpshar_4_002", "comshar_4_002", "sdfshar_4_002", "training_skill_5_002_002", "cost_riel_5_002", "sdf_cost_5_002", "tp_cost_5_002", "company_cost_5_002", "tpshar_5_002", "comshar_5_002", "sdfshar_5_002", "training_cost_1", "sub_material_1", "sub_utility_1", "sub_training_cost_1", "sub_trainer_1", "sub_allowance_1", "sub_others_1", "cost_riel_1_003", "sdf_cost_1_003", "tp_cost_1_003", "company_cost_1_003", "tpshar_1_003", "comshar_1_003", "sdfshar_1_003", "training_skill_2_003_003", "cost_riel_2_003", "sdf_cost_2_003", "tp_cost_2_003", "company_cost_2_003", "tpshar_2_003", "comshar_2_003", "sdfshar_2_003", "training_skill_3_003_003", "cost_riel_3_003", "sdf_cost_3_003", "tp_cost_3_003", "company_cost_3_003", "tpshar_3_003", "comshar_3_003", "sdfshar_3_003", "training_skill_4_003_003", "cost_riel_4_003", "sdf_cost_4_003", "tp_cost_4_003", "company_cost_4_003", "tpshar_4_003", "comshar_4_003", "sdfshar_4_003", "training_skill_5_003_003", "cost_riel_5_003", "sdf_cost_5_003", "tp_cost_5_003", "company_cost_5_003", "tpshar_5_003", "comshar_5_003", "sdfshar_5_003", "training_cost_2", "sub_material_2", "sub_utility_2", "sub_training_cost_2", "sub_trainer_2", "sub_allowance_2", "sub_others_2", "total_cost_skill_2", "total_percent_002", "training_skill_1_004_004", "cost_riel_1_004", "sdf_cost_1_004", "tp_cost_1_004", "company_cost_1_004", "tpshar_1_004", "comshar_1_004", "sdfshar_1_004", "training_skill_2_004_004", "cost_riel_2_004", "sdf_cost_2_004", "tp_cost_2_004", "company_cost_2_004", "tpshar_2_004", "comshar_2_004", "sdfshar_2_004", "training_skill_3_004_004", "cost_riel_3_004", "sdf_cost_3_004", "tp_cost_3_004", "company_cost_3_004", "tpshar_3_004", "comshar_3_004", "sdfshar_3_004", "training_skill_4_004_004", "cost_riel_4_004", "sdf_cost_4_004", "tp_cost_4_004", "company_cost_4_004", "tpshar_4_004", "comshar_4_004", "sdfshar_4_004", "training_skill_5_004_004", "cost_riel_5_004", "sdf_cost_5_004", "tp_cost_5_004", "company_cost_5_004", "tpshar_5_004", "comshar_5_004", "sdfshar_5_004", "training_cost_3", "sub_material_3", "sub_utility_3", "sub_training_cost_3", "sub_trainer_3", "sub_allowance_3", "sub_others_3", "total_cost_skill_3", "total_percent_003", "cost_riel_1_005", "sdf_cost_1_005", "tp_cost_1_005", "company_cost_1_005", "tpshar_1_005", "comshar_1_005", "sdfshar_1_005", "training_skill_2_005_005", "cost_riel_2_005", "sdf_cost_2_005", "tp_cost_2_005", "company_cost_2_005", "tpshar_2_005", "comshar_2_005", "sdfshar_2_005", "training_skill_3_005_005", "cost_riel_3_005", "sdf_cost_3_005", "tp_cost_3_005", "company_cost_3_005", "tpshar_3_005", "comshar_3_005", "sdfshar_3_005", "training_skill_4_005_005", "cost_riel_4_005", "sdf_cost_4_005", "tp_cost_4_005", "company_cost_4_005", "tpshar_4_005", "comshar_4_005", "sdfshar_4_005", "training_skill_5_005_005", "cost_riel_5_005", "sdf_cost_5_005", "tp_cost_5_005", "company_cost_5_005", "tpshar_5_005", "comshar_5_005", "sdfshar_5_005", "training_cost", "sub_material", "sub_utility", "sub_training_cost", "sub_trainer", "sub_allowance", "sub_others", "total_cost_skill", "total_percent_001", "cost_riel_1_001", "sdf_cost_1_001", "tp_cost_1_001", "company_cost_1_001", "tpshar_1_001", "comshar_1_001", "sdfshar_1_001", "training_skill_2_001_001", "cost_riel_2_001", "sdf_cost_2_001", "tp_cost_2_001", "company_cost_2_001", "tpshar_2_001", "comshar_2_001", "sdfshar_2_001", "training_skill_3_001_001", "cost_riel_3_001", "sdf_cost_3_001", "tp_cost_3_001", "company_cost_3_001", "tpshar_3_001", "comshar_3_001", "sdfshar_3_001", "training_skill_4_001_001", "cost_riel_4_001", "sdf_cost_4_001", "tp_cost_4_001", "company_cost_4_001", "tpshar_4_001", "comshar_4_001", "sdfshar_4_001", "training_skill_5_001_001", "cost_riel_5_001", "sdf_cost_5_001", "tp_cost_5_001", "company_cost_5_001", "tpshar_5_001", "comshar_5_001", "sdfshar_5_001", "skill_cost", "total_tpshar", "total_comshar", "total_sdfshar", "tpshar_percent", "comshar_percent", "sdfshar_percent", "total_cost", "total_percent"}, "Attribute", "Value"),
+				    #"Added Index" = Table.AddIndexColumn(#"Unpivoted Only Selected Columns", "Index", 0, 1, Int64.Type),
+				    #"Inserted Integer-Division" = Table.AddColumn(#"Added Index", "Integer-Division", each Number.IntegerDivide([Index], 2), Int64.Type),
+				    #"Removed Columns" = Table.RemoveColumns(#"Inserted Integer-Division",{"Integer-Division", "Index"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Columns", "Group ID ", each Text.End([Attribute], 1)),
+				    #"Replaced Value" = Table.ReplaceValue(#"Added Custom","_002","",Replacer.ReplaceText,{"Attribute"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","_003","",Replacer.ReplaceText,{"Attribute"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","_001","",Replacer.ReplaceText,{"Attribute"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","_004","",Replacer.ReplaceText,{"Attribute"}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3","_005","",Replacer.ReplaceText,{"Attribute"}),
+				    #"Pivoted Column" = Table.Pivot(#"Replaced Value4", List.Distinct(#"Replaced Value4"[Attribute]), "Attribute", "Value")
+				in
+				    #"Pivoted Column"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

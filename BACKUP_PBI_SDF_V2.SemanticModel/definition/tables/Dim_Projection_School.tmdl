@@ -1,0 +1,149 @@
+table Dim_Projection_School
+	lineageTag: 322a535f-3560-43b9-b3df-d5a9aa08cdd1
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c925610-11e0-4649-a1c2-f0504e76d81b
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget 1st'
+		dataType: double
+		lineageTag: 5e0be12b-3fa3-4cdc-ac8a-b02679a644fb
+		summarizeBy: sum
+		sourceColumn: Budget 1st
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Estimate Budget 1st'
+		dataType: double
+		lineageTag: 49a8fd5f-88a0-46a9-ac84-e14dec080578
+		summarizeBy: sum
+		sourceColumn: Estimate Budget 1st
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Budget 2nd'
+		dataType: double
+		lineageTag: c740e0d8-dfa6-4f3d-8484-dc992f80aa95
+		summarizeBy: sum
+		sourceColumn: Budget 2nd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Estimate Budget 2nd'
+		dataType: double
+		lineageTag: bec29dd8-225d-4c4a-a801-6437e3a421eb
+		summarizeBy: sum
+		sourceColumn: Estimate Budget 2nd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Budget 3rd'
+		dataType: double
+		lineageTag: fc88270b-ec44-4034-a1a4-0eb95473e2ae
+		summarizeBy: sum
+		sourceColumn: Budget 3rd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Estimate Budget 3rd'
+		dataType: double
+		lineageTag: 22300a13-9e12-4c9e-a2ce-a12385bdd2e1
+		summarizeBy: sum
+		sourceColumn: Estimate Budget 3rd
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Budget 4th'
+		dataType: double
+		lineageTag: 34bb12cb-4337-4a92-9ebd-627be41d4127
+		summarizeBy: sum
+		sourceColumn: Budget 4th
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Estimate budget 4th'
+		dataType: double
+		lineageTag: ae44c5b0-4560-452b-8b53-020e0cdc122d
+		summarizeBy: sum
+		sourceColumn: Estimate budget 4th
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Budget Source'
+		dataType: string
+		lineageTag: 90a5c8dd-e579-484d-a577-7bbc0abd92ce
+		summarizeBy: none
+		sourceColumn: Budget Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Projection_School = m
+		mode: import
+		queryGroup: 'Training Cost Disburshment'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"5-Disburse_School_Sheet" = Source{[Item="5-Disburse_School",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"5-Disburse_School_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", type date}, {"Contract #", type any}, {"Initiator", type text}, {"Skill", type text}, {"Session", type text}, {"Percentage 1st", type number}, {"Recruited Trainee 1st", Int64.Type}, {"Session Progress ", type text}, {"Budget 1st", type number}, {"Estimate Budget 1st", type any}, {"Date Estimate 1st", Int64.Type}, {"Text Date Estimate 1st", type text}, {"Track_PWS Estimate 1", type text}, {"Date Submit Doc 1st", Int64.Type}, {"Date Approved Doc 1st", type any}, {"Disbursed 1st Riels", type number}, {"Disbursed 1st $", type number}, {"Date Disbursed 1st", type any}, {"Text Date Disbursed 1st", type text}, {"Track_PWS Disburse 1", type text}, {"Percentage 2nd", type number}, {"Recruited Trainee 2nd", Int64.Type}, {"Budget 2nd", type any}, {"Estimate Budget 2nd", type any}, {"Date Estimate 2nd", Int64.Type}, {"Text Date Estimate 2nd", type text}, {"Track_PWS Estimate 2", type text}, {"Date Submit Doc 2nd", Int64.Type}, {"Date Approved Doc 2nd", Int64.Type}, {"Disbursed 2nd Riels", type number}, {"Disbursed 2nd $", type number}, {"Date Disbursed 2nd", type any}, {"Text Date Disbursed 2nd", type text}, {"Track_PWS Disburse 2", type text}, {"Percentage 3rd", type number}, {"Recruited Trainee 3rd", Int64.Type}, {"Budget 3rd", type any}, {"Estimate Budget 3rd", type any}, {"Date Estimate 3rd", type any}, {"Text Date Estimate 3rd", type text}, {"Track_PWS Estimate 3", type text}, {"Date Submit Doc 3rd", type any}, {"Date Approved Doc 3rd", Int64.Type}, {"Disbursed 3rd Riels", type number}, {"Disbursed 3rd $", type number}, {"Date Disbursed 3rd", Int64.Type}, {"Text Date Disbursed 3rd", type text}, {"Track_PWS Disburse 3", type text}, {"Percentage 4th", type number}, {"Recruited Trainee 4th", Int64.Type}, {"Budget 4th", type any}, {"Estimate budget 4th", type any}, {"Date Estimate 4th", Int64.Type}, {"Text Date Estimate 4th", type text}, {"Track_PWS Estimate 4", type text}, {"Date Submit Doc 4th", type any}, {"Date Approved Doc 4th", Int64.Type}, {"Disbursed 4th Riels", Int64.Type}, {"Disbursed 4th $", Int64.Type}, {"Date Disbursed 4th", Int64.Type}, {"Text Date Disbursed 4th", type text}, {"Track_PWS Disburse 4", type text}, {"Budget Source", type any}, {"Focal M&E", type any}, {"Column1", type any}, {"Column2", type text}, {"Column3", type any}, {"Column4", type any}, {"Column5", type any}, {"Column6", type any}, {"Column7", type any}, {"Column8", type any}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}, {"Column17", type text}, {"Column18", type text}, {"Column19", type text}, {"Column20", type any}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type", {"Budget 1st"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Errors",{{"Estimate Budget 1st", type number}, {"Date Estimate 1st", type date}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Changed Type1",{{"Text Date Estimate 1st", type date}}),
+				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Changed Type2", {{"Text Date Estimate 1st", type date}}, "id-ID"),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Changed Type with Locale",{{"Text Date Estimate 1st", type text}}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Changed Type3",{{"Text Date Estimate 1st", type date}}),
+				    #"Removed Errors2" = Table.RemoveRowsWithErrors(#"Changed Type4", {"Text Date Estimate 1st"}),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Removed Errors2",{{"Date Submit Doc 1st", type date}, {"Date Approved Doc 1st", type date}, {"Contract #", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type5", each true),
+				    #"Replaced Value" = Table.ReplaceValue(#"Filtered Rows",#date(206, 9, 25),#date(2026, 9, 25),Replacer.ReplaceValue,{"Date Estimate 1st"}),
+				    #"Changed Type with Locale1" = Table.TransformColumnTypes(#"Replaced Value", {{"Date Estimate 1st", type date}}, "id-ID"),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type with Locale1", {{"Date Estimate 1st", null}}),
+				    #"Changed Type6" = Table.TransformColumnTypes(#"Replaced Errors",{{"Disbursed 1st Riels", type number}}),
+				    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Changed Type6", {{"Disbursed 1st Riels", null}}),
+				    #"Changed Type7" = Table.TransformColumnTypes(#"Replaced Errors1",{{"Disbursed 1st $", Currency.Type}, {"Date Disbursed 1st", type date}, {"Text Date Disbursed 1st", type date}, {"Budget 2nd", type number}, {"Estimate Budget 2nd", type number}, {"Date Estimate 2nd", type date}, {"Text Date Estimate 2nd", type date}}),
+				    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Changed Type7", {{"Text Date Estimate 2nd", null}}),
+				    #"Changed Type8" = Table.TransformColumnTypes(#"Replaced Errors2",{{"Date Submit Doc 2nd", type date}, {"Date Approved Doc 2nd", type date}, {"Disbursed 2nd $", Currency.Type}, {"Date Disbursed 2nd", type date}, {"Text Date Disbursed 2nd", type date}}),
+				    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Changed Type8", {{"Text Date Disbursed 2nd", null}}),
+				    #"Changed Type9" = Table.TransformColumnTypes(#"Replaced Errors3",{{"Budget 3rd", type number}, {"Estimate Budget 3rd", type number}, {"Date Estimate 3rd", type date}, {"Text Date Estimate 3rd", type date}}),
+				    #"Replaced Errors4" = Table.ReplaceErrorValues(#"Changed Type9", {{"Text Date Estimate 3rd", null}}),
+				    #"Changed Type with Locale2" = Table.TransformColumnTypes(#"Replaced Errors4", {{"Date Estimate 3rd", type date}}, "id-ID"),
+				    #"Replaced Errors5" = Table.ReplaceErrorValues(#"Changed Type with Locale2", {{"Date Estimate 3rd", null}}),
+				    #"Changed Type10" = Table.TransformColumnTypes(#"Replaced Errors5",{{"Date Submit Doc 3rd", type date}, {"Date Approved Doc 3rd", type date}, {"Disbursed 3rd $", Currency.Type}, {"Date Disbursed 3rd", type date}, {"Text Date Disbursed 3rd", type date}}),
+				    #"Replaced Errors6" = Table.ReplaceErrorValues(#"Changed Type10", {{"Text Date Disbursed 3rd", null}}),
+				    #"Changed Type11" = Table.TransformColumnTypes(#"Replaced Errors6",{{"Budget 4th", type number}, {"Estimate budget 4th", type number}, {"Date Estimate 4th", type date}, {"Text Date Estimate 4th", type date}}),
+				    #"Replaced Errors7" = Table.ReplaceErrorValues(#"Changed Type11", {{"Text Date Estimate 4th", null}}),
+				    #"Changed Type12" = Table.TransformColumnTypes(#"Replaced Errors7",{{"Date Submit Doc 4th", type date}, {"Date Approved Doc 4th", type date}, {"Disbursed 4th Riels", type number}, {"Disbursed 4th $", Currency.Type}, {"Date Disbursed 4th", type date}, {"Text Date Disbursed 4th", type text}}),
+				    #"Changed Type13" = Table.TransformColumnTypes(#"Changed Type12",{{"Text Date Disbursed 4th", type date}}),
+				    #"Replaced Errors8" = Table.ReplaceErrorValues(#"Changed Type13", {{"Text Date Disbursed 4th", null}}),
+				    #"Changed Type14" = Table.TransformColumnTypes(#"Replaced Errors8",{{"Budget Source", type text}, {"Focal M&E", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type14",{"Column1", "Column2", "Column3", "Column4", "Column5", "Column6", "Column7", "Column8", "Column9", "Column10", "Column11", "Column12", "Column13", "Column14", "Column15", "Column16", "Column17", "Column18", "Column19", "Column20"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Columns", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Blank Rows",{"ID", "Budget 1st", "Estimate Budget 1st", "Budget 2nd", "Estimate Budget 2nd", "Budget 3rd", "Estimate Budget 3rd", "Budget 4th", "Estimate budget 4th", "Budget Source"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

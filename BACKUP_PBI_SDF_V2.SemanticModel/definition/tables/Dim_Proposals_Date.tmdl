@@ -1,0 +1,147 @@
+table Dim_Proposals_Date
+	lineageTag: 4be93eb2-5b4a-4528-9cd8-687f2b51564a
+
+	column ID
+		dataType: string
+		lineageTag: 08da469d-ce70-4fe6-816f-68f536f37801
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date_Proposal Review'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 89da6f43-8246-4c49-840b-d3baba4c9368
+		summarizeBy: none
+		sourceColumn: Date_Proposal Review
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_LPS Review'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8e4df247-4766-450d-bc6d-e4ee46fdc1cd
+		summarizeBy: none
+		sourceColumn: Date_LPS Review
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Date_Appraisal
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1e5ca609-4df9-4678-bb30-4b4100d88b0f
+		summarizeBy: none
+		sourceColumn: Date_Appraisal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Date_KYC
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4c9d518c-e8aa-4146-afb1-3ad7fce17706
+		summarizeBy: none
+		sourceColumn: Date_KYC
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Date_Pitching
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f6f35bd1-e933-4bc1-83da-bb63c57856df
+		summarizeBy: none
+		sourceColumn: Date_Pitching
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Revision after Pitching'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e39e176c-62f1-4c3d-860f-5122cadc0a61
+		summarizeBy: none
+		sourceColumn: Date_Revision after Pitching
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date_Report after Pitching'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 592ae712-1988-46eb-9754-37e48a284c38
+		summarizeBy: none
+		sourceColumn: Date_Report after Pitching
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Approved'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f1a56e17-d069-41fc-9ab0-dd270d150af8
+		summarizeBy: none
+		sourceColumn: Date Approved
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Approved Month'
+		dataType: string
+		lineageTag: b7c79588-981d-4569-bc97-734c991186d5
+		summarizeBy: none
+		sourceColumn: Date Approved Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date_Announce
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2bcf10e8-ee41-4d04-aaf5-d0c5ea4ea98d
+		summarizeBy: none
+		sourceColumn: Date_Announce
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Dim_Proposals_Date = m
+		mode: import
+		queryGroup: Proposal
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"1-Proposals_Sheet" = Source{[Item="1-Proposals",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"1-Proposals_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", type any}, {"Last Submission Date", Int64.Type}, {"Submission Date Month", type text}, {"Proposal Type", type text}, {"Proposal Type PS", type text}, {"Proposal Type Code", type text}, {"Initiator", type text}, {"Initiator Type", type text}, {"Skill Sector SOP", type text}, {"Skill Sector SOP PS", type text}, {"Skill", type text}, {"Skills Revised", type text}, {"Certificate Type Proposal", type text}, {"Classify CQF Short Course", type text}, {"CQF PS", type text}, {"Exact Training Days", Int64.Type}, {"Exact Training Month", type number}, {"TotalTraining Hours", Int64.Type}, {"School Hours", Int64.Type}, {"School Practice", Int64.Type}, {"Company Practice", Int64.Type}, {"Training Type", type text}, {"Training Type PS", type text}, {"Scheme", type text}, {"Trainees_Proposal", Int64.Type}, {"Female_Proposal", type number}, {"Date_Proposal Review", type any}, {"Date_LPS Review", type any}, {"Date_Appraisal", type any}, {"Date_KYC", type any}, {"Date_Pitching", type any}, {"Pitching Method", type any}, {"Date_Revision after Pitching", type any}, {"Date_Report after Pitching", type any}, {"Training Provider", type text}, {"Training Provider Type", type text}, {"Partnered Commpany", type text}, {"Enterprise Sector", type text}, {"Location", type text}, {"Cost of Proposal Riels", type number}, {"Cost of Proposal $", type number}, {"% Company", type number}, {"Company Contribution Riels", type number}, {"Company Contribution $", type number}, {"Verify Com", type any}, {"% School", type number}, {"School Contribution Riels", type number}, {"School Contribution $", type number}, {"Verify School", type any}, {"% SDF", type number}, {"SDF Contribution Riels", type number}, {"SDF Unit Cost Riels", type number}, {"SDF Contribution $", type number}, {"Verify SDF", type any}, {"SDF Unit Cost $", type number}, {"Awarded", type text}, {"Date Approved", Int64.Type}, {"Date Approved Month", type text}, {"Date_Announce", type any}, {"Budget Source", type text}, {"Trainer Fee", type number}, {"Trainee Allowance", type number}, {"Materials", type number}, {"Utilities", type number}, {"Others", type number}, {"Trainer Fee Company", type number}, {"Trainee Allowance Company", type number}, {"Materials Company", type number}, {"Utilities Company", type number}, {"Others Company", type number}, {"Trainer Fee School", type number}, {"Trainee Allowance School", type number}, {"Materials School", type number}, {"Utilities School", type number}, {"Others School", type number}, {"Trainer Fee SDF", type number}, {"Trainee Allowance SDF", type number}, {"Materials SDF", type number}, {"Utilities SDF", type number}, {"Others SDF", type number}, {"Appraisal PIC", type any}, {"Approval Duration", Int64.Type}, {"Column1", type any}, {"Column86", type any}, {"Column87", type any}, {"Column88", type any}, {"Column89", type any}, {"Column90", type any}, {"Column91", type any}, {"Column92", type any}, {"Column93", type any}, {"Column94", type any}, {"Column95", type any}, {"Column96", type any}, {"Column97", type any}, {"Column98", type any}, {"Column99", type any}, {"Column100", type any}, {"Column101", type any}, {"Column102", type any}, {"Column103", type any}, {"Banteay Meanchey", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1", "Column86", "Column87", "Column88", "Column89", "Column90", "Column91", "Column92", "Column93", "Column94", "Column95", "Column96", "Column97", "Column98", "Column99", "Column100", "Column101", "Column102", "Column103"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"ID", type text}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Changed Type1", {"ID"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Errors", {"ID"}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Removed Blank Rows",{{"Year Stage", type text}, {"Last Submission Date", type date}, {"Submission Date Month", type text}, {"Female_Proposal", Int64.Type}, {"Date_Proposal Review", type date}, {"Date_LPS Review", type date}, {"Date_Appraisal", type date}, {"Date_KYC", type date}, {"Date_Pitching", type date}, {"Pitching Method", type text}, {"Date_Revision after Pitching", type date}, {"Date_Report after Pitching", type date}, {"Company Contribution $", Currency.Type}, {"Verify Com", type text}, {"School Contribution $", Currency.Type}, {"Verify School", type text}, {"SDF Contribution $", Currency.Type}, {"Verify SDF", type text}, {"SDF Unit Cost $", Currency.Type}, {"Date Approved", type date}, {"Date_Announce", type date}, {"Appraisal PIC", type text}}),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Changed Type2", {"ID", "Year", "Year Stage", "Last Submission Date", "Submission Date Month", "Proposal Type", "Proposal Type PS", "Proposal Type Code", "Initiator", "Initiator Type", "Skill Sector SOP", "Skill Sector SOP PS", "Skill", "Skills Revised", "Certificate Type Proposal", "Classify CQF Short Course", "CQF PS", "Exact Training Days", "Exact Training Month", "TotalTraining Hours", "School Hours", "School Practice", "Company Practice", "Training Type", "Training Type PS", "Scheme", "Trainees_Proposal", "Female_Proposal", "Date_Proposal Review", "Date_LPS Review", "Date_Appraisal", "Date_KYC", "Date_Pitching", "Pitching Method", "Date_Revision after Pitching", "Date_Report after Pitching", "Training Provider", "Training Provider Type", "Partnered Commpany", "Enterprise Sector", "Location", "Cost of Proposal Riels", "Cost of Proposal $", "% Company", "Company Contribution Riels", "Company Contribution $", "Verify Com", "% School", "School Contribution Riels", "School Contribution $", "Verify School", "% SDF", "SDF Contribution Riels", "SDF Unit Cost Riels", "SDF Contribution $", "Verify SDF", "SDF Unit Cost $", "Awarded", "Date Approved", "Date Approved Month", "Date_Announce", "Budget Source", "Trainer Fee", "Trainee Allowance", "Materials", "Utilities", "Others", "Trainer Fee Company", "Trainee Allowance Company", "Materials Company", "Utilities Company", "Others Company", "Trainer Fee School", "Trainee Allowance School", "Materials School", "Utilities School", "Others School", "Trainer Fee SDF", "Trainee Allowance SDF", "Materials SDF", "Utilities SDF", "Others SDF", "Appraisal PIC", "Approval Duration", "Banteay Meanchey"}),
+				    #"Removed Blank Rows1" = Table.SelectRows(#"Removed Errors1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Blank Rows1"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Duplicates1",{"ID", "Date_Proposal Review", "Date_LPS Review", "Date_Appraisal", "Date_KYC", "Date_Pitching", "Date_Revision after Pitching", "Date_Report after Pitching", "Date Approved", "Date Approved Month", "Date_Announce"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Other Columns", "Unified_ID", each "EX-" & Text.From([ID])),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Changed Type3",{"Unified_ID"})
+				in
+				    #"Removed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,74 @@
+table Dim_Proposals_Awarded_Status_Mapping
+	lineageTag: 1ee06edd-e61e-4e52-8403-dacc400baba2
+
+	measure Total_Approved = ```
+			CALCULATE(
+			    COUNT('Dim_Proposals_Awarded_Status_Mapping'[Status]),
+			    'Dim_Proposals_Awarded_Status_Mapping'[Status] = "MANUALLY_APPROVED"
+			) 
+			```
+		formatString: 0
+		lineageTag: c1a17fef-6a52-45d6-8112-6fd8e2f69d2f
+
+	measure Grand_Total_Approved =
+			
+			[Total_Approved_pms] + [Total_Approved]
+		formatString: 0
+		lineageTag: a093853b-c221-4b94-958f-545735726350
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: dc02b0fc-7b6c-4789-8cc2-e8f70366b042
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Awarded
+		dataType: string
+		lineageTag: 96dbab00-44e1-4e39-bbdd-f86b5d66ec83
+		summarizeBy: none
+		sourceColumn: Awarded
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 7dc79f80-0d14-479e-8417-47ab9c5a8ca2
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unified_ID
+		dataType: string
+		lineageTag: d7c6890b-fe6d-4211-a42c-e4bdba14e9af
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Proposals_Awarded_Status_Mapping = m
+		mode: import
+		queryGroup: Proposal\PMS_Proposals
+		source =
+				let
+				    Source = Dim_Proposals_Awarded_Combined,
+				    #"Duplicated Column" = Table.DuplicateColumn(Source, "Awarded", "Awarded - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"Awarded - Copy", "Status"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns","approved","MANUALLY_APPROVED",Replacer.ReplaceText,{"Status"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","widraw","WITHDRAW",Replacer.ReplaceText,{"Status"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","failed","cancelled",Replacer.ReplaceText,{"Status"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","evaluating","Appraisal Verified ",Replacer.ReplaceText,{"Status"}),
+				    #"Added Custom" = Table.AddColumn(#"Replaced Value3", "Unified_ID", each if [ID] <= 616 then "EX-" & Text.From([ID])
+				else if [ID] <= 1000 then "KB-" & Text.From([ID])
+				else "PMS-" & Text.From([ID])),
+				    #"Filtered Rows" = Table.SelectRows(#"Added Custom", each ([Unified_ID] <> "KB-617" and [Unified_ID] <> "KB-618" and [Unified_ID] <> "KB-619" and [Unified_ID] <> "KB-623" and [Unified_ID] <> "KB-624" and [Unified_ID] <> "KB-625" and [Unified_ID] <> "KB-699"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

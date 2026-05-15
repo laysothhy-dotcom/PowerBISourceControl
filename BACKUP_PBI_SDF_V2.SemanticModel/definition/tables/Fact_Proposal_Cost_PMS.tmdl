@@ -1,0 +1,162 @@
+table Fact_Proposal_Cost_PMS
+	lineageTag: 527b2629-b641-4940-bad6-85e2e2cb9ccf
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 6802ce1c-ad62-44dd-8868-025c54f0ffd3
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Trainee'
+		dataType: int64
+		formatString: 0
+		lineageTag: 38a25a8e-f40e-4878-8201-a00d02e867f2
+		summarizeBy: sum
+		sourceColumn: Total Trainee
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Training Day'
+		dataType: double
+		lineageTag: c053970a-55ce-4082-bb89-479af0aeca62
+		summarizeBy: sum
+		sourceColumn: Training Day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Trainee Allowance'
+		dataType: double
+		lineageTag: eed139bd-802b-405e-ad5b-4c86a8283eba
+		summarizeBy: sum
+		sourceColumn: Total Trainee Allowance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Trainining Cost'
+		dataType: double
+		lineageTag: 98e24117-2184-4c45-9449-b06d9680bf04
+		summarizeBy: sum
+		sourceColumn: Total Trainining Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Cost'
+		dataType: double
+		lineageTag: a155169a-1973-438b-a720-7840961e8fe0
+		summarizeBy: sum
+		sourceColumn: Total Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'SDF Cost'
+		dataType: double
+		lineageTag: a2fc8cd0-1563-4d1d-88a9-70b45a41e0e5
+		summarizeBy: sum
+		sourceColumn: SDF Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'SDF Cost (%)'
+		dataType: double
+		lineageTag: 9ea71360-10dd-48ba-9f2c-260647771fee
+		summarizeBy: sum
+		sourceColumn: SDF Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Training Provider Cost'
+		dataType: double
+		lineageTag: 04435911-5722-4ac3-9162-e12278820fae
+		summarizeBy: sum
+		sourceColumn: Training Provider Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Training Provider Cost (%)'
+		dataType: double
+		lineageTag: 321131fa-210f-43e0-8fb8-804a4a978847
+		summarizeBy: sum
+		sourceColumn: Training Provider Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Enterprise Cost'
+		dataType: double
+		lineageTag: abf25e11-19aa-4df5-9ae8-749f59c4e827
+		summarizeBy: sum
+		sourceColumn: Enterprise Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Enterprise Cost (%)'
+		dataType: double
+		lineageTag: 2b35855c-21d4-4579-a71f-c5563855e47c
+		summarizeBy: sum
+		sourceColumn: Enterprise Cost (%)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Unified_ID
+		dataType: string
+		lineageTag: 3f0b61c5-6247-4607-a409-19ef513de4d8
+		summarizeBy: none
+		sourceColumn: Unified_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column New_ID
+		dataType: string
+		lineageTag: e52599e9-6cf2-4971-873c-bca88033c4c2
+		summarizeBy: none
+		sourceColumn: New_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Proposal_Cost_PMS = m
+		mode: import
+		queryGroup: 'Proposal\PMS_Proposals\PMS_Data Source'
+		source =
+				let
+				    Source = #"Trainee Allowances",
+				    #"Merged Queries" = Table.NestedJoin(Source, {"Proposal ID"}, Fact_PMS_TrainingCost_Excel, {"Proposal ID"}, "Fact_PMS_TrainingCost", JoinKind.LeftOuter),
+				    #"Renamed Columns" = Table.RenameColumns(#"Merged Queries",{{"Institute Name (KH)", "Institute Name (Khmer)"}, {"Total Trainee Allowance", "Total Trainee Allowance"}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Renamed Columns"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Added Custom" = Table.AddColumn(#"Removed Blank Rows", "Unified_ID", each "PMS-" & Text.From([ID])),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Unified_ID", type text}, {"ID", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type1", "New_ID", each [ID] + 1000),
+				    #"Expanded Fact_PMS_TrainingCost" = Table.ExpandTableColumn(#"Added Custom1", "Fact_PMS_TrainingCost", {"Proposal ID", "Total Trainee Allowance", "Total Trainining Cost", "Cost of Proposal $", "SDF Contribution $", "% SDF", "School Contribution $", "% School", "Company Contribution $", "% Company", "Unified_ID ", "New_ID"}, {"Fact_PMS_TrainingCost.Proposal ID", "Fact_PMS_TrainingCost.Total Trainee Allowance", "Fact_PMS_TrainingCost.Total Trainining Cost", "Fact_PMS_TrainingCost.Cost of Proposal $", "Fact_PMS_TrainingCost.SDF Contribution $", "Fact_PMS_TrainingCost.% SDF", "Fact_PMS_TrainingCost.School Contribution $", "Fact_PMS_TrainingCost.% School", "Fact_PMS_TrainingCost.Company Contribution $", "Fact_PMS_TrainingCost.% Company", "Fact_PMS_TrainingCost.Unified_ID ", "Fact_PMS_TrainingCost.New_ID"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Expanded Fact_PMS_TrainingCost",{{"Fact_PMS_TrainingCost.Total Trainining Cost", "PMS Total Trainining Cost"}, {"Fact_PMS_TrainingCost.Cost of Proposal $", "PMS Cost of Proposal $"}, {"Fact_PMS_TrainingCost.Total Trainee Allowance", "PMS Total Trainee Allowance"}, {"Fact_PMS_TrainingCost.SDF Contribution $", "PMS SDF Contribution $"}, {"Fact_PMS_TrainingCost.% SDF", "PMS % SDF"}, {"Fact_PMS_TrainingCost.School Contribution $", "PMS School Contribution $"}, {"Fact_PMS_TrainingCost.% School", "PMS % School"}, {"Fact_PMS_TrainingCost.Company Contribution $", "PMS Company Contribution $"}, {"Fact_PMS_TrainingCost.% Company", "PMS % Company"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns1",{"ID", "Total Trainee", "Training Day", "Total Trainee Allowance", "Total Trainining Cost", "Total Cost", "SDF Cost", "SDF Cost (%)", "Training Provider Cost", "Training Provider Cost (%)", "Enterprise Cost", "Enterprise Cost (%)", "PMS Total Trainee Allowance", "PMS Total Trainining Cost", "PMS Cost of Proposal $", "PMS SDF Contribution $", "PMS % SDF", "PMS School Contribution $", "PMS % School", "PMS Company Contribution $", "PMS % Company", "Unified_ID", "New_ID"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"New_ID", type text}}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Changed Type",{"ID", "Total Trainee", "Training Day", "Total Trainee Allowance", "Total Trainining Cost", "Total Cost", "SDF Cost", "SDF Cost (%)", "Training Provider Cost", "Training Provider Cost (%)", "Enterprise Cost", "Enterprise Cost (%)", "Unified_ID", "New_ID"})
+				in
+				    #"Removed Other Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

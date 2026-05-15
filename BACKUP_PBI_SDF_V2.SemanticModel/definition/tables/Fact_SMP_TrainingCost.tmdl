@@ -1,0 +1,220 @@
+table Fact_SMP_TrainingCost
+	lineageTag: 72eb3a35-1388-4ff1-920f-9c2975ae537d
+
+	measure 'Total Partner Cost' = SUM('Fact_SMP_TrainingCost'[Enterprise Contribution $])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 0f7d1287-5943-45f0-9bd6-1a8aa4a35554
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Total Proposal' = COUNTROWS('Fact_SMP_TrainingCost')
+		formatString: 0
+		lineageTag: daa4dd88-44f8-40c4-922f-70050febbdc3
+
+	measure 'Total Disburshment' = ```
+			sum('Fact_SMP_TrainingCost'[Disbursed 1st $]) + sum('Fact_SMP_TrainingCost'[Disbursed 2nd $]) 
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: c7665e4c-16f7-471d-9cc8-e892d714a519
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column ID
+		dataType: string
+		lineageTag: 4aab3e34-9d05-455d-ace2-6c373b2311bf
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Cost'
+		dataType: double
+		lineageTag: 094893c1-fe84-4e60-9bbd-cb3b006556a9
+		summarizeBy: sum
+		sourceColumn: Unit Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Unit Cost $'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 39e4bea8-8b34-4bec-80bd-3814fc0671f5
+		summarizeBy: sum
+		sourceColumn: Unit Cost $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column '% SDF'
+		dataType: double
+		lineageTag: 36040488-21a4-4914-b3ee-fdf396588847
+		summarizeBy: sum
+		sourceColumn: % SDF
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% Employer'
+		dataType: double
+		lineageTag: 7b8fe76f-4edc-4db0-af83-3ad97ddbb08d
+		summarizeBy: sum
+		sourceColumn: % Employer
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Recruited Trainees'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2afed1af-c9bf-425a-9d6a-11a321114e09
+		summarizeBy: sum
+		sourceColumn: Recruited Trainees
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recruited Trainees Female'
+		dataType: int64
+		formatString: 0
+		lineageTag: 34a58b31-5e9d-4991-a09e-b1ba94634c5a
+		summarizeBy: sum
+		sourceColumn: Recruited Trainees Female
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Cost'
+		dataType: double
+		lineageTag: d5ed9a3d-18d3-42c8-b7cf-a750b46348b9
+		summarizeBy: sum
+		sourceColumn: Total Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Cost $'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 873f64ef-79bb-449f-98f1-161ea85f0dea
+		summarizeBy: sum
+		sourceColumn: Total Cost $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'SDF Budget'
+		dataType: double
+		lineageTag: d6518e79-ead6-4869-804c-c88df3676908
+		summarizeBy: sum
+		sourceColumn: SDF Budget
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'SDF Budget $'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 5ba8ee7a-503a-4140-9c32-1e2c2607f5a8
+		summarizeBy: sum
+		sourceColumn: SDF Budget $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Enterprise Contribution'
+		dataType: double
+		lineageTag: 224e4afe-1bf5-4c2e-90df-bbf1820db29f
+		summarizeBy: sum
+		sourceColumn: Enterprise Contribution
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Enterprise Contribution $'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 82031e64-3dde-4731-9f70-603b3ce2722e
+		summarizeBy: sum
+		sourceColumn: Enterprise Contribution $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Disbursed 1st Riels'
+		dataType: double
+		lineageTag: d72fbcf2-bbbd-4e94-a75b-7f0153449efd
+		summarizeBy: sum
+		sourceColumn: Disbursed 1st Riels
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Disbursed 1st $'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 410a4971-9400-4a9c-a931-f11733799ca7
+		summarizeBy: sum
+		sourceColumn: Disbursed 1st $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Disbursed 2nd Riels'
+		dataType: double
+		lineageTag: 3a563f3c-48d9-4109-921e-91871fc23e13
+		summarizeBy: sum
+		sourceColumn: Disbursed 2nd Riels
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Disbursed 2nd $'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 5cf78b2d-9b25-4556-bae9-fdb201fe5ce3
+		summarizeBy: sum
+		sourceColumn: Disbursed 2nd $
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition Fact_SMP_TrainingCost = m
+		mode: import
+		queryGroup: 'SMP Programe'
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+				    #"3-SMP Training_Sheet" = Source{[Item="3-SMP Training",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"3-SMP Training_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", type text}, {"Year", type text}, {"Year Stage", type text}, {"Training Provider", type text}, {"Enterprise", type text}, {"Course Title", type text}, {"Session", type text}, {"Unit Cost", type number}, {"Unit Cost $", Currency.Type}, {"% SDF", Percentage.Type}, {"% Employer", Percentage.Type}, {"Certificate Type", type text}, {"Start Date", type date}, {"Year Start", type text}, {"End Date", type date}, {"Year Ended", type date}, {"Training Progress", type text}, {"Track_Training Date", type text}, {"Recruited Trainees", Int64.Type}, {"Recruited Trainees Female", Int64.Type}, {"Total Cost", type number}, {"Total Cost $", Currency.Type}, {"SDF Budget", type number}, {"SDF Budget $", Currency.Type}, {"Enterprise Contribution", type number}, {"Enterprise Contribution $", Currency.Type}, {"Date Doc Submit 1st", type date}, {"Date Approved 1st Doc", type date}, {"Date Received Budget 1st", type date}, {"Disbursed 1st Riels", type number}, {"Disbursed 1st $", Currency.Type}, {"Track_Disburse 1", type text}, {"Date Doc Submit 2nd", type date}, {"Date Approved 2nd Doc", type date}, {"Date Received Budget 2nd", type date}, {"Disbursed 2nd Riels", type number}, {"Disbursed 2nd $", Currency.Type}, {"Track_Disburse 2", type text}, {"Date_Visit", type date}, {"Budget Source", type text}, {"M and E", type text}}),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"M and E", null}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Replaced Errors"),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates", {"ID", "Year", "Year Stage", "Training Provider", "Enterprise", "Course Title", "Session", "Unit Cost", "Unit Cost $", "% SDF", "% Employer", "Certificate Type", "Start Date", "Year Start", "End Date", "Year Ended", "Training Progress", "Track_Training Date", "Recruited Trainees", "Recruited Trainees Female", "Total Cost", "Total Cost $", "SDF Budget", "SDF Budget $", "Enterprise Contribution", "Enterprise Contribution $", "Date Doc Submit 1st", "Date Approved 1st Doc", "Date Received Budget 1st", "Disbursed 1st Riels", "Disbursed 1st $", "Track_Disburse 1", "Date Doc Submit 2nd", "Date Approved 2nd Doc", "Date Received Budget 2nd", "Disbursed 2nd Riels", "Disbursed 2nd $", "Track_Disburse 2", "Date_Visit", "Budget Source", "M and E"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Errors"),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Blank Rows",{"ID", "Unit Cost", "Unit Cost $", "% SDF", "% Employer", "Recruited Trainees", "Recruited Trainees Female", "Total Cost", "Total Cost $", "SDF Budget", "SDF Budget $", "Enterprise Contribution", "Enterprise Contribution $", "Disbursed 1st Riels", "Disbursed 1st $", "Disbursed 2nd Riels", "Disbursed 2nd $"}),
+				    #"Removed Duplicates2" = Table.Distinct(#"Removed Other Columns", {"ID"}),
+				    #"Removed Duplicates3" = Table.Distinct(#"Removed Duplicates2"),
+				    #"Removed Blank Rows1" = Table.SelectRows(#"Removed Duplicates3", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Blank Rows1", {"ID", "Unit Cost", "Unit Cost $", "% SDF", "% Employer", "Recruited Trainees", "Recruited Trainees Female", "Total Cost", "Total Cost $", "SDF Budget", "SDF Budget $", "Enterprise Contribution", "Enterprise Contribution $", "Disbursed 1st Riels", "Disbursed 1st $", "Disbursed 2nd Riels", "Disbursed 2nd $"}),
+				    #"Removed Duplicates4" = Table.Distinct(#"Removed Errors1")
+				in
+				    #"Removed Duplicates4"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
