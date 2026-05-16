@@ -515,3 +515,161 @@ expression 'Invoked Function (3)' =
 
 	annotation PBI_ResultType = Function
 
+expression RangeStart = #datetime(2025, 11, 28, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 9d6b9375-8a44-449a-8b48-3b2fd841a5b7
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = DateTime
+
+expression RangeEnd = #datetime(2026, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 82e1c925-a180-4916-8031-d038c953412c
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = DateTime
+
+expression 'Traineess'' Satisfaction_Date_kb' =
+		let
+		    Source = #"Traineess' Satisfaction_KOBO",
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"start_date", "end_date", "feedback_date", "overall_score", "today", "_id"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"feedback_date", type date}, {"today", type date}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"today", "start_date", "end_date"})
+		in
+		    #"Removed Columns"
+	lineageTag: a93b1be9-08f3-4132-ad34-886a2a7c520a
+	queryGroup: 'Trainees'' Satisfaction_KOBO'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression '7-Network Support' =
+		let
+		    Source = Excel.Workbook(File.Contents("C:\Users\U-ser\OneDrive - sdfcambodia.org\BackUp_SDF_PBI_database_Sep2025\SDF_DATABASE_BACKUP_20251116.xlsx"), null, true),
+		    #"7-Network Support_Sheet" = Source{[Item="7-Network Support",Kind="Sheet"]}[Data],
+		    #"Promoted Headers" = Table.PromoteHeaders(#"7-Network Support_Sheet", [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Year", Int64.Type}, {"Year Stage", Int64.Type}, {"Date Approved", Int64.Type}, {"Text Date Approved", type date}, {"Initiator", type text}, {"Proposal Type", type text}, {"Skill Sector SOP", type text}, {"Skill", type text}, {"Joint Implementers", type text}, {"Enterprise Sector", type text}, {"Role Detail", type text}, {"Role General", type text}, {"Awarded", type text}, {"Contract #", type any}, {"Establised", type any}, {"Address", type text}, {"Province", type text}, {"Contact Person", type text}, {"Email", type text}, {"Phone", type any}, {"Budget Source", type text}, {"Track_Network", type text}, {"Focal M&E", type any}}),
+		    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type", {{"Year Stage", null}}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Errors",{{"ID", type text}, {"Date Approved", type date}, {"Contract #", type text}}),
+		    #"Replaced Errors1" = Table.ReplaceErrorValues(#"Changed Type1", {{"Contract #", null}}),
+		    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Errors1",{{"Establised", Int64.Type}}),
+		    #"Changed Type3" = Table.TransformColumnTypes(#"Changed Type2",{{"Establised", type date}}),
+		    #"Replaced Errors2" = Table.ReplaceErrorValues(#"Changed Type3", {{"Establised", null}}),
+		    #"Changed Type4" = Table.TransformColumnTypes(#"Replaced Errors2",{{"Phone", type text}, {"Focal M&E", type text}}),
+		    #"Replaced Errors3" = Table.ReplaceErrorValues(#"Changed Type4", {{"Focal M&E", null}}),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Replaced Errors3", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null})))
+		in
+		    #"Removed Blank Rows"
+	lineageTag: 9181fe88-a512-42cd-8712-429e5450a39d
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Traineess'' Satisfaction_KOBO' =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/azRmjXmFEJ2QoFnFcEHMML/export-settings/esWg6hvft4DeMa2vHDvZxqG/data.csv"),[Delimiter=";", Columns=56, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"q1_1", type number}, {"q1_2", type number}, {"q1_3", type number}, {"q1_4", type number}, {"q1_5", type number}, {"q1_6", type number}, {"q1_7", type number}, {"q1_8", type number}, {"q1_9", type number}, {"overall_score", type number}, {"overall_score_decimal", type number}, {"feedback_date", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: f7e38c9c-717f-4ad3-b0b2-710844085284
+	queryGroup: 'Trainees'' Satisfaction_KOBO'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Fact_Traineess_Score_kb =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/azRmjXmFEJ2QoFnFcEHMML/export-settings/esWg6hvft4DeMa2vHDvZxqG/data.csv"),[Delimiter=";", Columns=56, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"q1_1", type number}, {"q1_2", type number}, {"q1_3", type number}, {"q1_4", type number}, {"q1_5", type number}, {"q1_6", type number}, {"q1_7", type number}, {"q1_8", type number}, {"q1_9", type number}, {"overall_score", type number}, {"overall_score_decimal", type number}}),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"contract_No", "overall_score", "overall_score_decimal", "_id", "_index"}),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Removed Other Columns", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Blank Rows"),
+		    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+		    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates1", {"overall_score"}),
+		    #"Removed Blank Rows1" = Table.SelectRows(#"Removed Errors", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Blank Rows1", {"overall_score_decimal"}),
+		    #"Removed Blank Rows2" = Table.SelectRows(#"Removed Errors1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Blank Rows2",{{"overall_score", Int64.Type}}),
+		    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type1", {{"overall_score", null}}),
+		    #"Added Custom" = Table.AddColumn(#"Replaced Errors", "score_category", each if [overall_score] = null then "No Score"
+		else if [overall_score] >= 1 and [overall_score] <= 2 then "Unsatisfactory"
+		else if [overall_score] >= 3 and [overall_score] <= 5 then "Satisfactory"
+		else "Out of Range"),
+		    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"score_category", type text}})
+		in
+		    #"Changed Type2"
+	lineageTag: fc7fa7f1-912a-458c-b270-72e11f5f5825
+	queryGroup: 'Trainees'' Satisfaction_KOBO'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Dim_Trainees'' Institute_kb' =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/azRmjXmFEJ2QoFnFcEHMML/export-settings/esWg6hvft4DeMa2vHDvZxqG/data.csv"),[Delimiter=";", Columns=56, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"q1_1", type number}, {"q1_2", type number}, {"q1_3", type number}, {"q1_4", type number}, {"q1_5", type number}, {"q1_6", type number}, {"q1_7", type number}, {"q1_8", type number}, {"q1_9", type number}, {"overall_score", type number}, {"overall_score_decimal", type number}}),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"contract_No", "provider", "other_tp_name", "program_type", "batch_number", "_id", "_index"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Blank Rows", {"contract_No", "provider", "other_tp_name", "program_type", "batch_number", "_id", "_index"})
+		in
+		    #"Removed Errors"
+	lineageTag: 3ac8017f-6ebb-4b05-b566-6ddec45f61d4
+	queryGroup: 'Trainees'' Satisfaction_KOBO'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Dim_Commend_Kb =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/azRmjXmFEJ2QoFnFcEHMML/export-settings/esWg6hvft4DeMa2vHDvZxqG/data.csv"),[Delimiter=";", Columns=56, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"q1_1", type number}, {"q1_2", type number}, {"q1_3", type number}, {"q1_4", type number}, {"q1_5", type number}, {"q1_6", type number}, {"q1_7", type number}, {"q1_8", type number}, {"q1_9", type number}, {"overall_score", type number}, {"overall_score_decimal", type number}}),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"org", "If_other_specify", "q2_2", "_id", "_index"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([q2_2] <> "" and [q2_2] <> "-ស្នើសុំឯកសារវីដេអូ និង ស្លាយបង្រៀន#(lf)- ស្នើសុំកម្មសិក្សានៅកម្ពុជាបន្ថែម" and [q2_2] <> "aaaaa" and [q2_2] <> "aaaaaaaaaaa" and [q2_2] <> "After completing this course, I gain more knowledge. I want to have more training course in the future." and [q2_2] <> "Everything is good" and [q2_2] <> "Expect to have more courses" and [q2_2] <> "Good training" and [q2_2] <> "I am happy to learn this course" and [q2_2] <> "I am satisfied with this training course and want to have more training course in the future." and [q2_2] <> "I gain more knowledge after completing this course. I request to have more training course in the future." and [q2_2] <> "I hope that all of your team keep this teaching going on forward to the future because it might help some people that really want to learn." and [q2_2] <> "I like so much" and [q2_2] <> "I request to have more training in the future." and [q2_2] <> "I request to have more training." and [q2_2] <> "I think this training course is good and I request to have another training course in the future." and [q2_2] <> "I think this training course is good and request to have more in the future." and [q2_2] <> "I think this training course is good and want to have more training course in the future." and [q2_2] <> "I want to have another training course for improvement." and [q2_2] <> "I want to have more of this training course and improvement." and [q2_2] <> "I want to have more of this training course next time for our community." and [q2_2] <> "I want to have more of this training course." and [q2_2] <> "I want to have more training course in the future." and [q2_2] <> "I want to have more training course." and [q2_2] <> "I wish to join this course again in future." and [q2_2] <> "I would like to learn more" and [q2_2] <> "It would amazing if we get to learn more skill and hospitality." and [q2_2] <> "It would be more helpful or improve able if SDF and ILO should provide industry attachments or do RIS at BYD or at GTV Cambodia for a while in order to build our capacity with the actual workplace." and [q2_2] <> "Keep continue for this programs. This programs help a lot of people to boost their careers and productive." and [q2_2] <> "KPI more couse" and [q2_2] <> "Maybe need to upgrade the training materials to be English version and need more training about diagnostics." and [q2_2] <> "More detailed training on each part" and [q2_2] <> "More paper or notebook for trainers writing section, providing." and [q2_2] <> "more training" and [q2_2] <> "n" and [q2_2] <> "N/A" and [q2_2] <> "NA" and [q2_2] <> "na" and [q2_2] <> "Na" and [q2_2] <> "No" and [q2_2] <> "No everything is good" and [q2_2] <> "No have" and [q2_2] <> "No I like everything so much" and [q2_2] <> "No it's all good" and [q2_2] <> "No, comments #(lf)Thank you to SDF CWEA Trainer and  team work for provide this training to women entrepreneurs in Cambodia" and [q2_2] <> "None" and [q2_2] <> "Nope" and [q2_2] <> "Overall, a really engaging and interesting class with great teachers" and [q2_2] <> "Require​ to​ have​ more​ training​ for​ next​ skills​" and [q2_2] <> "Should be more than two days training" and [q2_2] <> "should develop more training for next" and [q2_2] <> "test" and [q2_2] <> "Thank you" and [q2_2] <> "Thank you NPIA for this course" and [q2_2] <> "Thanks" and [q2_2] <> "Thanks  you!" and [q2_2] <> "Thanks you" and [q2_2] <> "Thanks you!" and [q2_2] <> "គ្មាន" and [q2_2] <> "គ្មានទេ" and [q2_2] <> "គ្មាន​" and [q2_2] <> "អតមានទេ" and [q2_2] <> "អត់ទេ" and [q2_2] <> "អត់មាន" and [q2_2] <> "អត់មានទេ" and [q2_2] <> "អត់មានទេល្អអស់ហើយ" and [q2_2] <> "អត់មានអីទេស្របតាមគ្រប់យ៉ាង" and [q2_2] <> "អរគុណ និងសង្ឃឹមអោយមានវគ្គបណ្ដុះបណ្ដាលបន្ដទៀត" and [q2_2] <> "អរគុណលោកគ្រដែលបានបណ្តុះបណ្តាល គ្រប់វគ្គ គ្រប់មេរៀនធ្វើឲ្យស្រួលស្តាប់ និងយល់" and [q2_2] <> "អរគុណសម្រាប់វាគ្គបណ្ដុះបណ្តាលនេះ" and [q2_2] <> "អ្នកបកប្រែភាសារចិន" and [q2_2] <> "ិមិនមាន" and [q2_2] <> "១. មេរៀនមានតែមិនគ្រប់ ដូចជាមេរៀនទី៥ មិនបានអោយ#(lf)២. សំណូមពរអោយខាងសាលាជួយផ្តល់ video អនុវត្តន៍ដើម្បីអនុវត្តន៍ពេលត្រឡប់ទៅវិញ និងជាគម្រូដើម្បីធ្វើ video ថ្មីជា version ខ្មែរ។" and [q2_2] <> "​សូមអោយមានវគ្គបណ្ដុះបណ្ដាលច្រើនទៀត"))
+		in
+		    #"Filtered Rows"
+	lineageTag: 7e9bc429-d1c3-42ad-aaf6-3b4fcb54d29c
+	queryGroup: 'Trainees'' Satisfaction_KOBO'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Fact_Traineess_Score_SBJ_kb =
+		let
+		    Source = Csv.Document(Web.Contents("https://kf.kobotoolbox.org/api/v2/assets/azRmjXmFEJ2QoFnFcEHMML/export-settings/esWg6hvft4DeMa2vHDvZxqG/data.csv"),[Delimiter=";", Columns=56, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"q1_1", type number}, {"q1_2", type number}, {"q1_3", type number}, {"q1_4", type number}, {"q1_5", type number}, {"q1_6", type number}, {"q1_7", type number}, {"q1_8", type number}, {"q1_9", type number}, {"overall_score", type number}, {"overall_score_decimal", type number}}),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"contract_No", "overall_score", "overall_score_decimal", "_id", "_index"}),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Removed Other Columns", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Blank Rows"),
+		    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+		    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Duplicates1", {"overall_score"}),
+		    #"Removed Blank Rows1" = Table.SelectRows(#"Removed Errors", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Removed Errors1" = Table.RemoveRowsWithErrors(#"Removed Blank Rows1", {"overall_score_decimal"}),
+		    #"Removed Blank Rows2" = Table.SelectRows(#"Removed Errors1", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Blank Rows2",{{"overall_score", Int64.Type}}),
+		    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type1", {{"overall_score", null}}),
+		    #"Added Custom" = Table.AddColumn(#"Replaced Errors", "score_category", each if [overall_score] = null then "No Score"
+		else if [overall_score] >= 1 and [overall_score] <= 2 then "Unsatisfactory"
+		else if [overall_score] >= 3 and [overall_score] <= 5 then "Satisfactory"
+		else "Out of Range"),
+		    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"score_category", type text}})
+		in
+		    #"Changed Type2"
+	lineageTag: bf238bfc-83cb-4207-acf8-1277b92033c2
+	queryGroup: 'Trainees'' Satisfaction_KOBO'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

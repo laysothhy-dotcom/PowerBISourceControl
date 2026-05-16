@@ -113,7 +113,3 @@ relationship e2d19fac-ec19-39d9-29f7-f715482cfe05
 	fromColumn: 'Dim_Training Provider_Master'.New_ID
 	toColumn: 'Dim_Proposal Location_PMS'.New_ID
 
-relationship a5145c6b-915b-5922-0851-d6ff3d3f4ec0
-	fromColumn: Fact_Traineess_Score_kb._id
-	toColumn: 'Dim_Trainees'' Institute_kb'._id
-
